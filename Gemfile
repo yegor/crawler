@@ -7,7 +7,7 @@ gem 'rails', '3.1.0'
 
 gem 'mysql2'
 gem 'hpricot'
-gem 'whenever'
+gem 'whenever', :require => false
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -27,6 +27,8 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
+
+gem "rspec-rails", ">= 2.6.1", :group => [:development, :test]
 
 group :test do
   # Pretty printed test output

@@ -5,6 +5,8 @@ module AppStore
       base.extend URI
     end
     
+    ITUNES_LOOKUP_BASE_URL = "http://itunes.apple.com/lookup"
+    
     COUNTRIES = {"Algeria"=>"DZ", "Angola"=>"AO", "Anguilla"=>"AI", "Antigua and Barbuda"=>"AG", "Argentina"=>"AR", "Armenia"=>"AM", "Australia"=>"AU", "Austria"=>"AT", "Azerbaijan"=>"AZ", 
       "Bahamas"=>"BS", "Bahrain"=>"BH", "Barbados"=>"BB", "Belarus"=>"BY", "Belgium"=>"BE", "Belize"=>"BZ", "Bermuda"=>"BM", "Bolivia"=>"BO", "Botswana"=>"BW", "Brazil"=>"BR", 
       "British Virgin Islands"=>"VG", "Brunei Darussalam"=>"BN", "Bulgaria"=>"BG", "Canada"=>"CA", "Cayman Islands"=>"KY", "Chile"=>"CL", "China"=>"CN", "Colombia"=>"CO", "Costa Rica"=>"CR", 

@@ -29,7 +29,7 @@ describe MetaData do
     end
     
     it 'should create new MetaData object for a new game' do
-      @entry = AppStore::Entry.new @attributes
+      @entry = AppStore::ChartEntry.new @attributes
       
       lambda do
         @meta_data = MetaData.find_or_create_from_appstore :game => @game, :entry => @entry
@@ -41,11 +41,11 @@ describe MetaData do
     end
     
     it 'should track game updates by creating new MetaData objects' do
-      @entry = AppStore::Entry.new @attributes
+      @entry = AppStore::ChartEntry.new @attributes
       @meta_data = MetaData.find_or_create_from_appstore :game => @game, :entry => @entry
       
       lambda do
-        new_entry = AppStore::Entry.new @attributes.clone.update(:release_date => (Time.now + 2.days))
+        new_entry = AppStore::ChartEntry.new @attributes.clone.update(:release_date => (Time.now + 2.days))
         @new_meta_data = MetaData.find_or_create_from_appstore :game => @game, :entry => new_entry
         
         @new_meta_data.new_version.should be_true
@@ -57,11 +57,11 @@ describe MetaData do
     end
   
   it 'should track metadata changes for any game by creating new MetaData objects' do
-    @entry = AppStore::Entry.new @attributes
+    @entry = AppStore::ChartEntry.new @attributes
     @meta_data = MetaData.find_or_create_from_appstore :game => @game, :entry => @entry
     
     lambda do
-      new_entry = AppStore::Entry.new @attributes.clone.update(:summary => "Some new summary nahuj")
+      new_entry = AppStore::ChartEntry.new @attributes.clone.update(:summary => "Some new summary nahuj")
       @new_meta_data = MetaData.find_or_create_from_appstore :game => @game, :entry => new_entry
       
       @new_meta_data.new_version.should_not be_true
@@ -73,7 +73,7 @@ describe MetaData do
   
   it 'should not create new MetaData objects if nothing has changed' do
     
-    @entry = AppStore::Entry.new @attributes
+    @entry = AppStore::ChartEntry.new @attributes
     @meta_data = MetaData.find_or_create_from_appstore :game => @game, :entry => @entry
     lambda do
       @new_meta_data = MetaData.find_or_create_from_appstore :game => @game, :entry => @entry

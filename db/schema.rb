@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111218213238) do
+ActiveRecord::Schema.define(:version => 20111219230606) do
 
   create_table "chart_snapshots", :force => true do |t|
     t.integer  "import_id"
@@ -19,6 +19,9 @@ ActiveRecord::Schema.define(:version => 20111218213238) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "chart_snapshots", ["chart_id"], :name => "index_chart_snapshots_on_chart_id"
+  add_index "chart_snapshots", ["import_id"], :name => "index_chart_snapshots_on_import_id"
 
   create_table "charts", :force => true do |t|
     t.string   "country"
@@ -46,6 +49,8 @@ ActiveRecord::Schema.define(:version => 20111218213238) do
     t.integer  "itunes_id"
   end
 
+  add_index "games", ["itunes_id"], :name => "index_games_on_itunes_id"
+
   create_table "imports", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -53,9 +58,9 @@ ActiveRecord::Schema.define(:version => 20111218213238) do
 
   create_table "meta_data", :force => true do |t|
     t.string   "name"
-    t.string   "summary"
-    t.boolean  "new_version",                                  :default => false
-    t.decimal  "price",          :precision => 5, :scale => 2
+    t.text     "summary"
+    t.boolean  "new_version",                                                           :default => false
+    t.decimal  "price",                                   :precision => 5, :scale => 2
     t.integer  "game_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -64,6 +69,22 @@ ActiveRecord::Schema.define(:version => 20111218213238) do
     t.string   "screenshot_url"
     t.string   "icon_url"
     t.datetime "release_date"
+    t.decimal  "average_user_rating_for_current_version", :precision => 2, :scale => 1
+    t.integer  "user_rating_count_for_current_version"
+    t.decimal  "average_user_rating_for_all_versions",    :precision => 2, :scale => 1
+    t.integer  "user_rating_count_for_all_versions"
+    t.integer  "file_size_bytes"
+    t.string   "itunes_artwork_url"
+    t.integer  "itunes_id"
+    t.string   "release_notes"
+    t.boolean  "game_center_enabled"
+    t.string   "genres"
+    t.string   "screenshots"
+    t.string   "version"
+    t.boolean  "appstore_syncronized",                                                  :default => false
   end
+
+  add_index "meta_data", ["game_id"], :name => "index_meta_data_on_game_id"
+  add_index "meta_data", ["itunes_id"], :name => "index_meta_data_on_itunes_id"
 
 end

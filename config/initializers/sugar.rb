@@ -3,4 +3,5 @@ def returning(value)
   value
 end
 
-AppStore::Entry
+AppStore::ChartEntry
+AppStore::LookupEntry

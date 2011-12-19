@@ -6,7 +6,7 @@ describe Game do
       :publisher => "Zynga", :price => 0.99, :screenshot_url => "http://t3.gstatic.com/images?q=tbn:ANd9GcRGQAt5OuTxLg-1MXQ_ezgZXEspmSw6mnMqgOjd30H4hTn1R0380A",
       :icon_url => "http://t3.gstatic.com/images?q=tbn:ANd9GcRGQAt5OuTxLg-1MXQ_ezgZXEspmSw6mnMqgOjd30H4hTn1R0380A", :release_date => Time.now, :itunes_id => 137137}
       
-    @entry = AppStore::Entry.new @attributes
+    @entry = AppStore::ChartEntry.new @attributes
   end
   
   it "should create a new game for a new appstore entry" do

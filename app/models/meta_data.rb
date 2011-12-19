@@ -1,5 +1,6 @@
 class MetaData < ActiveRecord::Base
-  attr_accessor :itunes_id
+  serialize :genres, Array
+  serialize :screenshots, Array
   
   belongs_to :game
   
@@ -10,10 +11,13 @@ class MetaData < ActiveRecord::Base
   validates_presence_of :release_date
   validates_presence_of :screenshot_url
   validates_presence_of :icon_url
+  validates_presence_of :itunes_id
+  
+  scope :not_yet_sexy, where(:appstore_syncronized => false)
   
   class << self
     def find_or_create_from_appstore(opt = {})
-      new_meta_data = MetaData.new opt[:entry].to_attributes.merge(:game_id => opt[:game].id)
+      new_meta_data = MetaData.new opt[:entry].instance_values.symbolize_keys.merge(:game_id => opt[:game].id)
       latest_meta_data = MetaData.where(:game_id => opt[:game].id).last
       
       if latest_meta_data.blank?

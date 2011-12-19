@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111218152835) do
+ActiveRecord::Schema.define(:version => 20111218213238) do
 
   create_table "chart_snapshots", :force => true do |t|
     t.integer  "import_id"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20111218152835) do
 
   create_table "charts", :force => true do |t|
     t.string   "country"
+    t.integer  "limit"
     t.string   "kind",       :limit => 0
     t.string   "genre",      :limit => 0
     t.datetime "created_at"
@@ -42,6 +43,7 @@ ActiveRecord::Schema.define(:version => 20111218152835) do
     t.datetime "release_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "itunes_id"
   end
 
   create_table "imports", :force => true do |t|
@@ -52,12 +54,16 @@ ActiveRecord::Schema.define(:version => 20111218152835) do
   create_table "meta_data", :force => true do |t|
     t.string   "name"
     t.string   "summary"
-    t.string   "icon"
-    t.boolean  "new_version"
-    t.decimal  "price",       :precision => 5, :scale => 2
+    t.boolean  "new_version",                                  :default => false
+    t.decimal  "price",          :precision => 5, :scale => 2
     t.integer  "game_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "publisher"
+    t.string   "rights"
+    t.string   "screenshot_url"
+    t.string   "icon_url"
+    t.datetime "release_date"
   end
 
 end

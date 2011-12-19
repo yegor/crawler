@@ -47,6 +47,8 @@ GEM
     erubis (2.7.0)
     execjs (1.2.12)
       multi_json (~> 1.0)
+    factory_girl (2.3.2)
+      activesupport
     gem_plugin (0.2.3)
     hike (1.2.1)
     hpricot (0.8.5)
@@ -136,6 +138,7 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 3.1.0)
+  factory_girl
   hpricot
   jquery-rails
   mongrel (>= 1.2.0.pre2)

@@ -1,5 +1,10 @@
 module AppStore
-  module RSS
+  module ChartConfig
+    
+    def self.included(base)
+      base.extend URI
+    end
+    
     COUNTRIES = {"Algeria"=>"DZ", "Angola"=>"AO", "Anguilla"=>"AI", "Antigua and Barbuda"=>"AG", "Argentina"=>"AR", "Armenia"=>"AM", "Australia"=>"AU", "Austria"=>"AT", "Azerbaijan"=>"AZ", 
       "Bahamas"=>"BS", "Bahrain"=>"BH", "Barbados"=>"BB", "Belarus"=>"BY", "Belgium"=>"BE", "Belize"=>"BZ", "Bermuda"=>"BM", "Bolivia"=>"BO", "Botswana"=>"BW", "Brazil"=>"BR", 
       "British Virgin Islands"=>"VG", "Brunei Darussalam"=>"BN", "Bulgaria"=>"BG", "Canada"=>"CA", "Cayman Islands"=>"KY", "Chile"=>"CL", "China"=>"CN", "Colombia"=>"CO", "Costa Rica"=>"CR", 
@@ -20,14 +25,14 @@ module AppStore
       "lifestyle"=>"6012", "medical"=>"6020", "music"=>"6011", "navigation"=>"6010", "news"=>"6009", "newsstand"=>"6021", " video"=>"6008",
       "productivity"=>"6007", "reference"=>"6006", "social networking"=>"6005", "sports"=>"6004", "travel"=>"6003", "utilities"=>"6002", "weather"=>"6001"}
     
-    class << self
+    module URI
       def url_for(opt = {})
         country = COUNTRIES[opt[:country]] || "US"
         format = opt[:format] || "json"
         genre = opt[:genre].blank? ? "" : "genre=#{GENRES[opt[:genre]]}/"
         limit = opt[:limit] || 400
         kind = KINDS.include?(opt[:kind]) ? opt[:kind] : "toppaidapplications"
-        
+
         URI("http://itunes.apple.com/#{country}/rss/#{kind}/limit=#{limit}/#{genre}#{format}")
       end
     end

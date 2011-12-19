@@ -31,8 +31,8 @@ module AppStore
   
   module JSON
     class Entry < ::AppStore::Entry
-      def initialuze(attributes = {})
-        self.itunes_id = /id(d+)/.match(attributes["id"]["label"])[]
+      def initialize(attributes = {})
+        self.itunes_id = /id(\d+)/.match(attributes["id"]["label"])[1]
         
         self.name = attributes["im:name"]["label"]
         self.summary = attributes["summary"]

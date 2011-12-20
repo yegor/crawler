@@ -1,6 +1,7 @@
 require 'open-uri'
 require 'json'
 
+# FIXME: perfomance
 module AppStore  
   class Crawler
     class << self

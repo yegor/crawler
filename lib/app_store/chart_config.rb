@@ -20,12 +20,18 @@ module AppStore
       "Spain"=>"ES", "Sri Lanka"=>"LK", "St. Kitts and Nevis"=>"KN", "St. Lucia"=>"LC", "St. Vincent and The Grenadines"=>"VC", "Suriname"=>"SR", "Sweden"=>"SE", "Switzerland"=>"CH", 
       "Taiwan"=>"TW", "Tanzania"=>"TZ", "Thailand"=>"TH", "Trinidad and Tobago"=>"TT", "Tunisia"=>"TN", "Turkey"=>"TR", "Turks and Caicos Islands"=>"TC", "Uganda"=>"UG", "United Kingdom"=>"GB", 
       "United Arab Emirates"=>"AE", "Uruguay"=>"UY", "United States"=>"US", "Uzbekistan"=>"UZ", "Venezuela"=>"VE", "Vietnam"=>"VN", "Yemen"=>"YE"}
+      
+    SUPER_COUNTRIES = ["Australia", "Canada", "China", "France", "Germany", "Japan", "Korea", "Indonesia", "United Kingdom", "United States"]
     
     KINDS = ["topfreeapplications", "toppaidapplications", "topgrossingapplications", "topfreeipadapplications", "toppaidipadapplications", "topgrossingipadapplications", "newapplications", "newfreeapplications", "newpaidapplications"]
+    
+    SUPER_KINDS = ["topfreeapplications", "toppaidapplications", "topgrossingapplications", "topfreeipadapplications", "toppaidipadapplications", "topgrossingipadapplications"]
     
     GENRES = {"books"=>"6018", "business"=>"6000", "education"=>"6017", "entertainment"=>"6016", "finance"=>"6015", "games"=>"6014", " fitness"=>"6013",
       "lifestyle"=>"6012", "medical"=>"6020", "music"=>"6011", "navigation"=>"6010", "news"=>"6009", "newsstand"=>"6021", " video"=>"6008",
       "productivity"=>"6007", "reference"=>"6006", "social networking"=>"6005", "sports"=>"6004", "travel"=>"6003", "utilities"=>"6002", "weather"=>"6001"}
+      
+    SUPER_GENRES = ["games", nil]
     
     module URI
       def url_for(opt = {})

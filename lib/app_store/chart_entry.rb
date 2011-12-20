@@ -28,7 +28,12 @@ module AppStore
         self.rights = attributes["rights"]["label"]
         self.publisher = attributes["im:artist"]["label"]
         
-        self.screenshot_url = attributes["link"].last["attributes"]["href"]
+        if attributes["link"].is_a? Hash
+          self.screenshot_url = attributes["link"]["attributes"]["href"]
+        else
+          self.screenshot_url = attributes["link"].last["attributes"]["href"]
+        end
+        
         self.icon_url = attributes["im:image"].last["label"]
       end
     end

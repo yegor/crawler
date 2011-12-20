@@ -3,6 +3,7 @@ class Chart < ActiveRecord::Base
   
   validates_presence_of :country
   validates_inclusion_of :kind, :in => KINDS
+  validates_inclusion_of :genre, :in => GENRES, :allow_nil => true
   
   has_many :chart_snapshots
   

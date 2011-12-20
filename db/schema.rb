@@ -26,8 +26,8 @@ ActiveRecord::Schema.define(:version => 20111219230606) do
   create_table "charts", :force => true do |t|
     t.string   "country"
     t.integer  "limit"
-    t.string   "kind",       :limit => 0
-    t.string   "genre",      :limit => 0
+    t.string   "kind"
+    t.string   "genre"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -41,6 +41,10 @@ ActiveRecord::Schema.define(:version => 20111219230606) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "game_snapshots", ["chart_snapshot_id"], :name => "index_game_snapshots_on_chart_snapshot_id"
+  add_index "game_snapshots", ["game_id"], :name => "index_game_snapshots_on_game_id"
+  add_index "game_snapshots", ["meta_data_id"], :name => "index_game_snapshots_on_meta_data_id"
 
   create_table "games", :force => true do |t|
     t.datetime "release_date"

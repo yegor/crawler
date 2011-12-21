@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111221173717) do
+ActiveRecord::Schema.define(:version => 20111221212624) do
 
   create_table "chart_snapshots", :force => true do |t|
     t.integer  "import_id"
@@ -78,8 +78,6 @@ ActiveRecord::Schema.define(:version => 20111221173717) do
     t.datetime "updated_at"
     t.string   "publisher"
     t.text     "rights"
-    t.string   "screenshot_url"
-    t.string   "icon_url"
     t.datetime "release_date"
     t.integer  "file_size_bytes"
     t.string   "itunes_artwork_url"

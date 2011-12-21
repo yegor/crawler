@@ -5,8 +5,7 @@ describe MetaData do
     @game = Game.create :itunes_id => 137137, :release_date => Time.now
     
     @attributes = {:name => "Cham Cham", :summary => "The best game ever", :rights => "one1eleven (c)",
-      :publisher => "Zynga", :screenshot_url => "http://t3.gstatic.com/images?q=tbn:ANd9GcRGQAt5OuTxLg-1MXQ_ezgZXEspmSw6mnMqgOjd30H4hTn1R0380A",
-      :icon_url => "http://t3.gstatic.com/images?q=tbn:ANd9GcRGQAt5OuTxLg-1MXQ_ezgZXEspmSw6mnMqgOjd30H4hTn1R0380A", :release_date => Time.now, :itunes_id => 137137}
+      :publisher => "Zynga", :release_date => Time.now, :itunes_id => 137137}
   end
   
   it 'should be able to compare MetaData with each other' do

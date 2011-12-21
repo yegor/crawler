@@ -10,8 +10,6 @@ class MetaData < ActiveRecord::Base
   validates_presence_of :summary
   validates_presence_of :publisher
   validates_presence_of :release_date
-  validates_presence_of :screenshot_url
-  validates_presence_of :icon_url
   validates_presence_of :itunes_id
   
   class << self
@@ -39,9 +37,7 @@ class MetaData < ActiveRecord::Base
   end
   
   def ==(another)
-    self.name == another.name && self.summary == another.summary && 
-    self.rights == another.rights && self.publisher == another.publisher &&
-    self.screenshot_url == another.screenshot_url && self.icon_url == another.icon_url && self.release_date.to_i == another.release_date.to_i
+    self.name == another.name && self.summary == another.summary && self.rights == another.rights && self.publisher == another.publisher && self.release_date.to_i == another.release_date.to_i
   end
   
   def summary=(value)

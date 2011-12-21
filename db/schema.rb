@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111219230606) do
+ActiveRecord::Schema.define(:version => 20111221173717) do
 
   create_table "chart_snapshots", :force => true do |t|
     t.integer  "import_id"
@@ -40,8 +40,17 @@ ActiveRecord::Schema.define(:version => 20111219230606) do
     t.integer  "chart_snapshot_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "average_user_rating_for_current_version",              :precision => 2, :scale => 1
+    t.integer  "user_rating_count_for_current_version"
+    t.decimal  "average_user_rating_for_all_versions",                 :precision => 2, :scale => 1
+    t.integer  "user_rating_count_for_all_versions"
+    t.boolean  "appstore_syncronized",                                                               :default => false
+    t.decimal  "price",                                                :precision => 5, :scale => 2
+    t.string   "currency"
+    t.integer  "itunes_id",                               :limit => 8
   end
 
+  add_index "game_snapshots", ["appstore_syncronized"], :name => "index_game_snapshots_on_appstore_syncronized"
   add_index "game_snapshots", ["chart_snapshot_id"], :name => "index_game_snapshots_on_chart_snapshot_id"
   add_index "game_snapshots", ["game_id"], :name => "index_game_snapshots_on_game_id"
   add_index "game_snapshots", ["meta_data_id"], :name => "index_game_snapshots_on_meta_data_id"
@@ -50,7 +59,7 @@ ActiveRecord::Schema.define(:version => 20111219230606) do
     t.datetime "release_date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "itunes_id"
+    t.integer  "itunes_id",    :limit => 8
   end
 
   add_index "games", ["itunes_id"], :name => "index_games_on_itunes_id"
@@ -63,29 +72,23 @@ ActiveRecord::Schema.define(:version => 20111219230606) do
   create_table "meta_data", :force => true do |t|
     t.string   "name"
     t.text     "summary"
-    t.boolean  "new_version",                                                           :default => false
-    t.decimal  "price",                                   :precision => 5, :scale => 2
+    t.boolean  "new_version",                      :default => false
     t.integer  "game_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "publisher"
-    t.string   "rights"
+    t.text     "rights"
     t.string   "screenshot_url"
     t.string   "icon_url"
     t.datetime "release_date"
-    t.decimal  "average_user_rating_for_current_version", :precision => 2, :scale => 1
-    t.integer  "user_rating_count_for_current_version"
-    t.decimal  "average_user_rating_for_all_versions",    :precision => 2, :scale => 1
-    t.integer  "user_rating_count_for_all_versions"
     t.integer  "file_size_bytes"
     t.string   "itunes_artwork_url"
-    t.integer  "itunes_id"
+    t.integer  "itunes_id",           :limit => 8
     t.string   "release_notes"
     t.boolean  "game_center_enabled"
     t.string   "genres"
     t.string   "screenshots"
     t.string   "version"
-    t.boolean  "appstore_syncronized",                                                  :default => false
   end
 
   add_index "meta_data", ["game_id"], :name => "index_meta_data_on_game_id"

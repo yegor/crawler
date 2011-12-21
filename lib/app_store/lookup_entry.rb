@@ -1,7 +1,7 @@
 module AppStore
   class LookupEntry
     attr_accessor :average_user_rating_for_current_version, :user_rating_count_for_current_version, :average_user_rating_for_all_versions, :user_rating_count_for_all_versions, :file_size_bytes, :itunes_artwork_url,
-      :release_notes, :game_center_enabled, :genres, :screenshots, :version, :itunes_id
+      :release_notes, :game_center_enabled, :genres, :screenshots, :version, :itunes_id, :currency, :price
   end
   
   module JSON
@@ -19,6 +19,8 @@ module AppStore
         self.screenshots = attributes["screenshotUrls"]
         self.version = attributes["version"]
         self.itunes_id = attributes["trackId"]
+        self.price = attributes["price"]
+        self.currency = attributes["currency"]
       end
     end
   end

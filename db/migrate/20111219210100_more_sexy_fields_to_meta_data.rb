@@ -7,7 +7,7 @@ class MoreSexyFieldsToMetaData < ActiveRecord::Migration
     add_column :meta_data, :file_size_bytes, :integer
     
     add_column :meta_data, :itunes_artwork_url, :string
-    add_column :meta_data, :itunes_id, :integer
+    add_column :meta_data, :itunes_id, 'BIGINT(20)'
     
     add_column :meta_data, :release_notes, :string
     

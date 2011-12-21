@@ -5,7 +5,7 @@ module AppStore
       base.extend URI
     end
     
-    ITUNES_LOOKUP_BASE_URL = "http://itunes.apple.com/lookup"
+    ITUNES_LOOKUP_BASE_URL = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/wa/wsLookup"
     
     COUNTRIES = {"Algeria"=>"DZ", "Angola"=>"AO", "Anguilla"=>"AI", "Antigua and Barbuda"=>"AG", "Argentina"=>"AR", "Armenia"=>"AM", "Australia"=>"AU", "Austria"=>"AT", "Azerbaijan"=>"AZ", 
       "Bahamas"=>"BS", "Bahrain"=>"BH", "Barbados"=>"BB", "Belarus"=>"BY", "Belgium"=>"BE", "Belize"=>"BZ", "Bermuda"=>"BM", "Bolivia"=>"BO", "Botswana"=>"BW", "Brazil"=>"BR", 
@@ -38,7 +38,7 @@ module AppStore
         country = COUNTRIES[opt[:country]] || "US"
         format = opt[:format] || "json"
         genre = opt[:genre].blank? ? "" : "genre=#{GENRES[opt[:genre]]}/"
-        limit = opt[:limit] || 400
+        limit = opt[:limit] || 10
         kind = KINDS.include?(opt[:kind]) ? opt[:kind] : "toppaidapplications"
 
         URI("http://itunes.apple.com/#{country}/rss/#{kind}/limit=#{limit}/#{genre}#{format}")

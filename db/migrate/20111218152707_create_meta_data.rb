@@ -1,8 +1,8 @@
 class CreateMetaData < ActiveRecord::Migration
   def change
     create_table :meta_data do |t|
-      t.string :name
-      t.string :summary
+      t.column :name, :string
+      t.column :summary, :text
       t.string :icon
       
       t.boolean :new_version

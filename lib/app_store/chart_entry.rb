@@ -1,12 +1,11 @@
 module AppStore
   class ChartEntry
-    attr_accessor :name, :summary, :publisher, :price, :rights, :release_date, :screenshot_url, :icon_url, :itunes_id
+    attr_accessor :name, :summary, :publisher, :rights, :release_date, :screenshot_url, :icon_url, :itunes_id
     
     def initialize(attributes = {})
       self.name = attributes[:name]
       self.summary = attributes[:summary]
       self.publisher = attributes[:publisher]
-      self.price = attributes[:price]
       self.rights = attributes[:rights]
       self.release_date = attributes[:release_date]
       self.screenshot_url = attributes[:screenshot_url]
@@ -21,8 +20,8 @@ module AppStore
         self.itunes_id = /id(\d+)/.match(attributes["id"]["label"])[1]
         
         self.name = attributes["im:name"]["label"]
-        self.summary = attributes["summary"]
-        self.price = attributes["im:price"]["label"] == "Free" ? 0 : attributes["im:price"]["attributes"]["amount"].to_f
+        self.summary = attributes["summary"]["label"]
+        # self.price = attributes["im:price"]["label"] == "Free" ? 0 : attributes["im:price"]["attributes"]["amount"].to_f
         self.release_date = Time.parse(attributes["im:releaseDate"]["label"])
         
         self.rights = attributes["rights"]["label"]

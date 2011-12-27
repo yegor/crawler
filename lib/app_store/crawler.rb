@@ -20,19 +20,17 @@ module AppStore
             old_meta_data_count = MetaData.count
             
             ids = []
-            # ActiveRecord::Base.transaction do
-              feed = AppStore::Crawler.load(chart.url)["feed"]["entry"]
-              
-              puts "Parsing appstore feed"
-              feed.each_with_index do |entry_attributes, index|
-                entry = AppStore::JSON::ChartEntry.new entry_attributes
+            feed = AppStore::Crawler.load(chart.url)["feed"]["entry"]
+            
+            puts "Parsing appstore feed"
+            feed.each_with_index do |entry_attributes, index|
+              entry = AppStore::JSON::ChartEntry.new entry_attributes
 
-                game = Game.find_or_create_from_appstore :entry => entry
-                meta_data = MetaData.find_or_create_from_appstore :entry => entry, :game => game
+              game = Game.find_or_create_from_appstore :entry => entry
+              meta_data = MetaData.find_or_create_from_appstore :entry => entry, :game => game
 
-                ids << GameSnapshot.create(:game => game, :meta_data => meta_data, :chart_snapshot => chart_snapshot, :rank => (index + 1)).itunes_id
-              end
-            # end
+              ids << GameSnapshot.create(:game => game, :meta_data => meta_data, :chart_snapshot => chart_snapshot, :rank => (index + 1)).itunes_id
+            end
             
             puts "\t #{Game.count - old_games_count} new games added. \n"
             puts "\t #{MetaData.count - old_meta_data_count} new meta datas added. \n"
@@ -62,7 +60,8 @@ module AppStore
       #  * <tt>feed_url</tt>:: +URI::HTTP+ the feed url
       #
       def load(feed_url)
-        ::JSON.parse open(feed_url).read
+        json_file = open(feed_url)
+        (::JSON.parse(json_file.read)).tap { json_file.close }
       end
     end
   end

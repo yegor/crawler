@@ -3,8 +3,12 @@
 <head>
   <title>Crawler</title>
   
-  <%= stylesheet_link_tag    "application" %>
-  <%= javascript_include_tag "application", "FusionCharts", "FusionCharts.HC", "FusionCharts.HC.Charts" %>
+  <%= javascript_tag do %>
+    window.game_autocomplete_game_url = <%= raw autocomplete_game_path.inspect %>;
+  <% end %>
+  
+  <%= stylesheet_link_tag    "application", "jquery.autocomplete" %>
+  <%= javascript_include_tag "application", "FusionCharts", "FusionCharts.HC", "FusionCharts.HC.Charts", "jquery.autocomplete.min.js" %>
   
   <%= csrf_meta_tags %>
 </head>

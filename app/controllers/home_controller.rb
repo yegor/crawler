@@ -12,6 +12,11 @@ class HomeController < ApplicationController
   def filter
     index
   end
+  
+  def autocomplete_game
+    meta_data = MetaData.group(:game_id).where(["meta_data.name like ?", "%#{ params[:q] }%"]).limit(15)
+    render :text => meta_data.map(&:name).join("\n")
+  end
 
   def paid
     @rankings = Stats.raking_over_time(:game => @game, :charts => @charts.where(:kind => %w(toppaidapplications toppaidipadapplications)).all)
@@ -34,7 +39,7 @@ class HomeController < ApplicationController
 protected
 
   def prepare_params
-    @game = Game.find_by_id(params[:filter][:game]) rescue nil
+    @game = MetaData.where(:name => params[:filter][:game]).first.game rescue nil
     @game = Game.find(2137) if @game.blank?
     countries = params[:filter][:countries].select { |k, v| v == "1" }.keys rescue []
     countries = [SUPER_COUNTRIES.last] if countries.blank?

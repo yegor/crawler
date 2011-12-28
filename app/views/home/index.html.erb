@@ -8,7 +8,7 @@
   <%= form_tag filter_chart_path, :remote => true do %>
     <% fields_for :filter do |f| %>
       <div>
-        <%= f.select :game, game_options %>
+        <%= f.text_field :game %>
       </div>
     
       <div>

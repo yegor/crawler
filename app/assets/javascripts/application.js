@@ -7,3 +7,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+
+$(function() {
+  $("form input[name='filter[game]']").autocomplete(window.game_autocomplete_game_url);
+});

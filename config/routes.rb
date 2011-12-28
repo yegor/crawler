@@ -1,4 +1,8 @@
 Crawler::Application.routes.draw do
+  
+  root :to => "home#index"
+  get "home/data", :as => :chart_data
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

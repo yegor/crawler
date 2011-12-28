@@ -1,6 +1,7 @@
 class Game < ActiveRecord::Base
   has_many :game_snapshots
   has_many :meta_datas, :class_name => "MetaData"
+  has_one  :meta_data, :order => "meta_data.id DESC"
   
   validates_presence_of :itunes_id
   

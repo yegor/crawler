@@ -1,7 +1,42 @@
-<div id="chartContainer">FusionCharts will load here!</div>
+<div id="charts">
+  <div id="paidChartContainer"></div>
+  <div id="grossingChartContainer"></div>
+  <div id="freeChartContainer"></div>
+</div>
+
+<div id="controls">
+  <%= form_tag root_path do %>
+    <% fields_for :filter do |f| %>
+      <div>
+        <%= f.select :game, game_options %>
+      </div>
+    
+      <div>
+        <% @countries.each do |country| %>
+          <p><%= f.check_box "countries[#{country}]" %> <%= country %></p>
+        <% end %>
+      </div>
+    
+      <div>
+        <%= f.submit "Apply" %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
 
 <%= javascript_tag do %>
-  var rankingChart = new FusionCharts( "Charts/InverseMSLine.swf", "RankingChart", "950", "400", "0", "1" );
-  rankingChart.setXMLUrl(<%= raw chart_data_path(:format => :xml).inspect %>);
-  rankingChart.render("chartContainer");
+  // FusionCharts.setCurrentRenderer('JavaScript');
+
+  var paidChart = new FusionCharts( "Charts/InverseMSLine.swf", "PaidChart", "950", "400", "0", "1" );
+  paidChart.setXMLUrl(<%= raw paid_chart_data_path(:format => :xml, :filter => params[:filter]).inspect %>);
+  paidChart.render("paidChartContainer");
+  
+  var grossingChart = new FusionCharts( "Charts/InverseMSLine.swf", "GrossingChart", "950", "400", "0", "1" );
+  grossingChart.setXMLUrl(<%= raw grossing_chart_data_path(:format => :xml, :filter => params[:filter]).inspect %>);
+  grossingChart.render("grossingChartContainer");
+  
+  var freeChart = new FusionCharts( "Charts/InverseMSLine.swf", "FreeChart", "950", "400", "0", "1" );
+  freeChart.setXMLUrl(<%= raw free_chart_data_path(:format => :xml, :filter => params[:filter]).inspect %>);
+  freeChart.render("freeChartContainer");
 <% end %>
+

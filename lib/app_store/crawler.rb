@@ -11,32 +11,36 @@ module AppStore
       def fetch_charts
         import = Import.create
         
-        Chart.find_in_batches(:batch_size => 10) do |charts|
-          charts.each do |chart|
-            chart_snapshot = ChartSnapshot.create :import => import, :chart => chart
+        Chart.find_in_batches(:batch_size => 5) do |charts|
+          pids = charts.map do |chart|
+            fork do
+              chart_snapshot = ChartSnapshot.create :import => import, :chart => chart
             
-            puts "Fetching chart #{chart.url.to_s}... \n"
-            old_games_count = Game.count
-            old_meta_data_count = MetaData.count
+              puts "Fetching chart #{chart.url.to_s}... \n"
+              old_games_count = Game.count
+              old_meta_data_count = MetaData.count
             
-            ids = []
-            feed = AppStore::Crawler.load(chart.url)["feed"]["entry"]
+              ids = []
+              feed = AppStore::Crawler.load(chart.url)["feed"]["entry"]
             
-            puts "Parsing appstore feed"
-            feed.each_with_index do |entry_attributes, index|
-              entry = AppStore::JSON::ChartEntry.new entry_attributes
+              puts "Parsing appstore feed"
+              feed.each_with_index do |entry_attributes, index|
+                entry = AppStore::JSON::ChartEntry.new entry_attributes
 
-              game = Game.find_or_create_from_appstore :entry => entry
-              meta_data = MetaData.find_or_create_from_appstore :entry => entry, :game => game
+                game = Game.find_or_create_from_appstore :entry => entry
+                meta_data = MetaData.find_or_create_from_appstore :entry => entry, :game => game
 
-              ids << GameSnapshot.create(:game => game, :meta_data => meta_data, :chart_snapshot => chart_snapshot, :rank => (index + 1)).itunes_id
+                ids << GameSnapshot.create(:game => game, :meta_data => meta_data, :chart_snapshot => chart_snapshot, :rank => (index + 1)).itunes_id
+              end
+            
+              puts "\t #{Game.count - old_games_count} new games added. \n"
+              puts "\t #{MetaData.count - old_meta_data_count} new meta datas added. \n"
+            
+              fetch_meta_data :country => chart.country, :ids => ids
             end
-            
-            puts "\t #{Game.count - old_games_count} new games added. \n"
-            puts "\t #{MetaData.count - old_meta_data_count} new meta datas added. \n"
-            
-            fetch_meta_data :country => chart.country, :ids => ids
           end
+          
+          pids.each { |pid| Process.wait(pid) }
         end
       end
       

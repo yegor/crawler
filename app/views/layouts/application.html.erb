@@ -3,17 +3,8 @@
 <head>
   <title>Crawler</title>
   
-  <%= javascript_tag do %>
-    var AC_FL_RunContent = 0; 
-    var DetectFlashVer = 0;
-    var requiredMajorVersion = 10;
-    var requiredMinorVersion = 0;
-    var requiredRevision = 45;
-  <% end %>
-  
   <%= stylesheet_link_tag    "application" %>
-  <%= javascript_include_tag "application" %>
-  <%= javascript_include_tag "AC_RunActiveContent.js" %>
+  <%= javascript_include_tag "application", "FusionCharts", "FusionCharts.HC", "FusionCharts.HC.Charts" %>
   <%= csrf_meta_tags %>
 </head>
 <body>

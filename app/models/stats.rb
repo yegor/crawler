@@ -22,7 +22,7 @@ class Stats < ActiveRecord::Base
       results_by_chart_id = results.group_by(&:chart_id)
       
       results_by_chart_id.inject({}) do |memo, (chart_id, ranks)|
-        rankings = ranks.inject({}) { |memo, chart_rank| memo.merge(chart_rank.date.beginning_of_hour => chart_rank.rank) }
+        rankings = ranks.inject({}) { |memo, chart_rank| memo.merge(chart_rank.date.beginning_of_hour => chart_rank) }
         memo.merge(charts_by_id[chart_id] => rankings)
       end
     end

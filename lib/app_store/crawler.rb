@@ -14,6 +14,7 @@ module AppStore
         Chart.find_in_batches(:batch_size => 5) do |charts|
           pids = charts.map do |chart|
             fork do
+              ActiveRecord::Base.establish_connection
               chart_snapshot = ChartSnapshot.create :import => import, :chart => chart
             
               puts "Fetching chart #{chart.url.to_s}... \n"

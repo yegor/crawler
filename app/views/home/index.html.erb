@@ -1,7 +1,7 @@
 <div id="chartContainer">FusionCharts will load here!</div>
 
 <%= javascript_tag do %>
-  var rankingChart = new FusionCharts( "Charts/MSLine.swf", "RankingChart", "950", "400", "0", "1" );
+  var rankingChart = new FusionCharts( "Charts/InverseMSLine.swf", "RankingChart", "950", "400", "0", "1" );
   rankingChart.setXMLUrl(<%= raw chart_data_path(:format => :xml).inspect %>);
   rankingChart.render("chartContainer");
 <% end %>

@@ -30,7 +30,8 @@ class HomeController < ApplicationController
 protected
 
   def prepare_params
-    @game = Game.find_by_id(params[:filter][:game]) || Game.find(2137)
+    @game = Game.find_by_id(params[:filter][:game]) rescue nil
+    @game = Game.find(2137) if @game.blank?
     countries = params[:filter][:countries].select { |k, v| v == "1" }.keys rescue []
     countries = [SUPER_COUNTRIES.last] if countries.blank?
     @charts = Chart.where(:country => countries)

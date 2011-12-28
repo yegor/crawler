@@ -2,6 +2,7 @@ Crawler::Application.routes.draw do
   
   root :to => "home#index"
   
+  match "home/filter", :as => :filter_chart
   get "home/paid", :as => :paid_chart_data
   get "home/grossing", :as => :grossing_chart_data
   get "home/free", :as => :free_chart_data

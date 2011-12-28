@@ -8,6 +8,10 @@ class HomeController < ApplicationController
     @games = MetaData.select("game_id as id, name").group("game_id").limit(100).all
     @countries = SUPER_COUNTRIES
   end
+  
+  def filter
+    index
+  end
 
   def paid
     @rankings = Stats.raking_over_time(:game => @game, :charts => @charts.where(:kind => %w(toppaidapplications toppaidipadapplications)).all)

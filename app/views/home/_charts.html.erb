@@ -1,0 +1,17 @@
+<%= javascript_tag do %>
+  // FusionCharts.setCurrentRenderer('JavaScript');
+
+  $("#charts > div").html("");
+
+  var paidChart = new FusionCharts( "Charts/InverseMSLine.swf", "PaidChart", "950", "400", "0", "1" );
+  paidChart.setXMLUrl(<%= raw paid_chart_data_path(:format => :xml, :filter => params[:filter]).inspect %>);
+  paidChart.render("paidChartContainer");
+  
+  var grossingChart = new FusionCharts( "Charts/InverseMSLine.swf", "GrossingChart", "950", "400", "0", "1" );
+  grossingChart.setXMLUrl(<%= raw grossing_chart_data_path(:format => :xml, :filter => params[:filter]).inspect %>);
+  grossingChart.render("grossingChartContainer");
+  
+  var freeChart = new FusionCharts( "Charts/InverseMSLine.swf", "FreeChart", "950", "400", "0", "1" );
+  freeChart.setXMLUrl(<%= raw free_chart_data_path(:format => :xml, :filter => params[:filter]).inspect %>);
+  freeChart.render("freeChartContainer");
+<% end %>

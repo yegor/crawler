@@ -2,7 +2,7 @@ dates = @rankings.values.map { |v| v.values.map(&:keys) }.flatten.uniq
 max = @rankings.values.map { |v| v.values.map { |vv| vv.values.map(&:rank).max }.max }.max
 
 xml.instruct!
-xml.chart :caption => "Rankings over time",
+xml.chart :caption => chart_title(@filter),
           :showLegend => true,
           :legendPosition => :right,
           :yAxisMaxValue => [max.to_i, 15].max,

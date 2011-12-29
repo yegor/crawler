@@ -18,6 +18,14 @@ module HomeHelper
     "#{game.meta_data.name}: #{ COUNTRIES[chart.country] } #{ KINDS_TO_SHORTCUTS[chart.kind] } #{ chart.genre || "apps" }"
   end
   
+  #  Returns chart title to display above a graph.
+  #
+  #  * <tt>filter</tt>:: Filter record to process.
+  #
+  def chart_title(filter)
+    "#{ COUNTRIES[filter.country] } top #{ KINDS_TO_SHORTCUTS[filter.chart_kinds.first] } rankings"
+  end
+  
   #  Returns filter countries to be used.
   #
   def filter_countries

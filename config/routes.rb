@@ -5,8 +5,7 @@ Crawler::Application.routes.draw do
   resource :home, :controller => "home" do
     collection do
       post :filter
-      post :autocomplete_game
-      
+      get :autocomplete_game
       get :chart
       
       # get :paid

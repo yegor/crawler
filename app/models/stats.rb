@@ -26,7 +26,7 @@ class Stats < ActiveRecord::Base
       results_by_chart_id = results.group_by(&:chart_id)
       
       results_by_chart_id.inject({}) do |memo, (chart_id, ranks)|
-        memo.merge(charts_by_id[chart_id]] => ranks.group_by(&:game_id).inject({}) do |m, (game_id, rankings)|
+        memo.merge(charts_by_id[chart_id] => ranks.group_by(&:game_id).inject({}) do |m, (game_id, rankings)|
           m.merge( games_by_id[game_id] => rankings.index_by(&:date) )
         end)
       end

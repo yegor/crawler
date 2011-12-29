@@ -30,6 +30,10 @@ module HomeHelper
     KINDS_TO_SHORTCUTS
   end
   
+  def filter_categories
+    %w(all games)
+  end
+  
   #  Returns options for game select.
   #
   def game_options

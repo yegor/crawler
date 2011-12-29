@@ -23,6 +23,13 @@
           <p><%= check_box_tag("filter_settings[chart_kinds][]", kind, @filter.chart_kinds.include?(kind), :id => "kind-#{kind.object_id}") %><%= label_tag "kind-#{kind.object_id}", "Top #{shortcut}" %></p>
         <% end %>
       </div>
+      
+      <h3>Genres</h3>
+      <div>
+        <% filter_categories.each do |category| %>
+          <p><%= check_box_tag("filter_settings[categories][]", category, @filter.categories.include?(category), :id => "category-#{category.object_id}") %><%= label_tag "category-#{category.object_id}", "#{category.capitalize}" %></p>
+        <% end %>
+      </div>
     
       <div>
         <%= submit_tag "Apply" %>

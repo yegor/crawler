@@ -1,5 +1,5 @@
-dates = @rankings.values.map(&:keys).flatten.uniq.sort
-max = @rankings.values.map { |v| v.values.map(&:rank).max }.max
+dates = @rankings.values.map { |v| v.values.map(&:keys) }.flatten.uniq 
+max = @rankings.values.map { |v| v.values.map { |vv| vv.values.map(&:rank).max }.max }.max
 
 xml.instruct!
 xml.chart :caption => "Rankings over time",

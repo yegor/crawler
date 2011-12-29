@@ -1,12 +1,12 @@
 class Filter
-  attr_accessor :countries, :game_names, :chart_kinds
+  attr_accessor :countries, :categories, :game_names, :chart_kinds
   
   def initialize(attributes = {})
     self.attributes = attributes if attributes.present?
   end
   
   def attributes
-    %w(countries game_names chart_kinds).inject({}) do |result, name|
+    %w(countries game_names chart_kinds categories).inject({}) do |result, name|
       result.merge(name => send(name))
     end.with_indifferent_access
   end
@@ -22,7 +22,7 @@ class Filter
   end
   
   def charts
-    Chart.where(:country => self.countries, :kind => self.chart_kinds)
+    Chart.where(:country => self.countries, :genre => self.categories.map { |g| g == "all" ? nil : g }, :kind => self.chart_kinds)
   end
   
   def split_into_charts

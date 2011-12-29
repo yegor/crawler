@@ -5,7 +5,7 @@ class HomeController < ApplicationController
   before_filter :prepare_params
   
   def index
-    @filter ||= Filter.new(:game_names => %w(Angry\ Birds), :chart_kinds => %w(toppaidapplications), :countries => %w(United\ States))
+    @filter ||= Filter.new(:game_names => %w(Angry\ Birds), :categories => %w(all games), :chart_kinds => %w(toppaidapplications), :countries => %w(United\ States))
   end
   
   def filter

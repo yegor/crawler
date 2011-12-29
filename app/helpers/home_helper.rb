@@ -23,7 +23,7 @@ module HomeHelper
   #  * <tt>filter</tt>:: Filter record to process.
   #
   def chart_title(filter)
-    "#{ COUNTRIES[filter.country] } top #{ KINDS_TO_SHORTCUTS[filter.chart_kinds.first] } rankings"
+    "Top #{ KINDS_TO_SHORTCUTS[filter.chart_kinds.first] } rankings"
   end
   
   #  Returns filter countries to be used.

@@ -7,14 +7,15 @@
 //= require jquery
 //= require jquery_ujs
 //= require FusionCharts
-//= require_tree .
+//= require jquery.autocomplete.min
 
 $(function() {
-  $("form input[name='filter[game]']").autocomplete(window.game_autocomplete_game_url);
+  $("form .game_names input").autocomplete(window.game_autocomplete_game_url);
 
 	$("form .game-names p a.plus").live("click", function() {
 		var newField = $(this).parents("p").clone();
 		newField.children("input").val("");
+		newField.autocomplete(window.game_autocomplete_game_url);
 		
 		$(this).parents(".game-names").append( newField );
 	});

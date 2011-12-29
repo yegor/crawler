@@ -10,7 +10,7 @@
 //= require jquery.autocomplete.min
 
 $(function() {
-  $("form .game_names input").autocomplete(window.game_autocomplete_game_url);
+  $("form .game-names input").autocomplete(window.game_autocomplete_game_url);
 
 	$("form .game-names p a.plus").live("click", function() {
 		var newField = $(this).parents("p").clone();

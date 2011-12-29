@@ -1,0 +1,9 @@
+<%= javascript_tag do %>
+  // FusionCharts.setCurrentRenderer('JavaScript');
+
+  $("#charts > div").html("");
+
+  var topChart = new FusionCharts( "Charts/InverseMSLine.swf", "TopChart", "950", "400", "0", "1" );
+  topChart.setXMLUrl(<%= raw chart_home_path(:format => :xml, :filter_settings => @filter.attributes).inspect %>);
+  topChart.render("chartContainer");
+<% end %>

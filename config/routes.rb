@@ -1,4 +1,20 @@
 Crawler::Application.routes.draw do
+  
+  root :to => "home#index"
+  
+  resource :home, :controller => "home" do
+    collection do
+      post :filter
+      post :autocomplete_game
+      
+      get :chart
+      
+      # get :paid
+      # get :grossing
+      # get :free
+    end
+  end
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

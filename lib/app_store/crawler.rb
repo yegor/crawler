@@ -11,20 +11,19 @@ module AppStore
       def fetch_charts
         import_id = Import.create.id
         
-        Chart.find_in_batches(:batch_size => 5) do |combined_charts|
-          pids = combined_charts.map do |chart|
+        Chart.find_in_batches(:batch_size => 5) do |charts|
+          pids = charts.map do |chart|
             fork do
               ActiveRecord::Base.establish_connection
-              
               chart_snapshot = ChartSnapshot.create :import_id => import_id, :chart => chart
-          
+            
               puts "Fetching chart #{chart.url.to_s}... \n"
               old_games_count = Game.count
               old_meta_data_count = MetaData.count
-          
+            
               ids = []
               feed = AppStore::Crawler.load(chart.url)["feed"]["entry"]
-          
+            
               puts "Parsing appstore feed"
               feed.each_with_index do |entry_attributes, index|
                 entry = AppStore::JSON::ChartEntry.new entry_attributes
@@ -34,15 +33,15 @@ module AppStore
 
                 ids << GameSnapshot.create(:game => game, :meta_data => meta_data, :chart_snapshot => chart_snapshot, :rank => (index + 1)).itunes_id
               end
-          
+            
               puts "\t #{Game.count - old_games_count} new games added. \n"
               puts "\t #{MetaData.count - old_meta_data_count} new meta datas added. \n"
-          
+            
               fetch_meta_data :country => chart.country, :ids => ids
             end
           end
           
-          pids.each { |pid| Process.waitpid(pid) }
+          pids.each { |pid| Process.wait(pid) }
         end
       end
       

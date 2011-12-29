@@ -1,0 +1,40 @@
+<div id="charts">
+  <div id="chartContainer"></div>
+</div>
+
+<div id="controls">
+  <%= form_tag filter_home_path, :remote => true do %>
+    <% fields_for :filter_settings do |f| %>
+    
+      <h3>Game title</h3>
+      <div class="game-names">
+        <% @filter.game_names.each do |game_name| %>
+          <p><%= f.text_field "game_names[]", :value => game_name %><%= link_to "+", "#", :class => "plus" %><%= link_to "&ndash;".html_safe, "#", :class => "minus" %></p>
+        <% end %>
+      </div>
+    
+      <h3>Countries</h3>
+      <div>
+        <% filter_countries.each do |country| %>
+          <p><%= f.check_box "countries[#{country}]", :checked => @filter.countries.include?(country) %><%= f.label "countries[#{country}]", country %></p>
+        <% end %>
+      </div>
+      
+      <h3>Charts</h3>
+      <div>
+        <% filter_charts.each do |kind, shortcut| %>
+          <p><%= f.check_box "chart_kinds[#{kind}]", :checked => @filter.chart_kinds.include?(kind) %><%= f.label "chart_kinds[#{kind}]", "Top #{shortcut}" %></p>
+        <% end %>
+      </div>
+    
+      <div>
+        <%= f.submit "Apply" %>
+      </div>
+      
+    <% end %>
+  <% end %>
+</div>
+
+<div id="charts-js">
+  <%= render "charts" %>
+</div>

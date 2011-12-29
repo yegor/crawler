@@ -7,3 +7,18 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+
+$(function() {
+  $("form input[name='filter[game]']").autocomplete(window.game_autocomplete_game_url);
+
+	$("form .game-names p a.plus").live("click", function() {
+		var newField = $(this).parents("p").clone();
+		newField.children("input").val("");
+		
+		$(this).parents(".game-names").append( newField );
+	});
+	
+	$("form .game-names p a.minus").live("click", function() {
+		$(this).parents("p").remove();
+	});
+});

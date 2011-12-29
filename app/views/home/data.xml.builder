@@ -4,7 +4,7 @@ max = @rankings.values.map { |v| v.values.map { |vv| vv.values.map(&:rank).max }
 xml.instruct!
 xml.chart :caption => chart_title(@filter),
           :showLegend => true,
-          :legendPosition => :bottom,
+          :legendPosition => :right,
           :yAxisMaxValue => [max.to_i, 15].max,
           :yAxisMinValue => 1,
           :showBorder => 0,

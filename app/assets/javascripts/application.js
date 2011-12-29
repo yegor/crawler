@@ -6,6 +6,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require FusionCharts
 //= require_tree .
 
 $(function() {

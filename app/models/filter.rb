@@ -25,4 +25,10 @@ class Filter
     Chart.where(:country => self.countries, :kind => self.chart_kinds)
   end
   
+  def split_into_charts
+    self.chart_kinds.map do |chart_kind|
+      self.class.new(self.attributes.merge(:chart_kinds => [chart_kind]))
+    end
+  end
+  
 end

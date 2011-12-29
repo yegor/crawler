@@ -14,9 +14,10 @@ class Stats < ActiveRecord::Base
       imports = Import.where("created_at >= ? and created_at <= ?", options[:timespan].min, options[:timespan].max).all
       
       results = ChartSnapshot
-        .select("game_snapshots.rank as rank, chart_snapshots.chart_id as chart_id, chart_snapshots.created_at as date")
+        .select("game_snapshots.rank as rank, meta_data.name as game_name, chart_snapshots.chart_id as chart_id, chart_snapshots.created_at as date")
         .where(:import_id => imports, :chart_id => options[:charts])
         .joins("INNER JOIN game_snapshots ON game_snapshots.chart_snapshot_id = chart_snapshots.id AND game_snapshots.game_id IN ( #{options[:games].map(&:id).map(&:to_i).join(", ") } )")
+        .joins("INNER JOIN meta_data ON meta_data.id = game_snapshots.meta_data_id")
     
       charts_by_id = options[:charts].index_by(&:id)
       results_by_chart_id = results.group_by(&:chart_id)

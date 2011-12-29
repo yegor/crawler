@@ -15,7 +15,7 @@ module HomeHelper
   #  * <tt>chart</tt>:: +Chart+ to use.
   #
   def series_name(chart)
-    "#{ COUNTRIES[chart.country] } #{ KINDS_TO_SHORTCUTS[chart.kind] } #{ chart.genre || "apps" }"
+    "#{chart.game_name}: #{ COUNTRIES[chart.country] } #{ KINDS_TO_SHORTCUTS[chart.kind] } #{ chart.genre || "apps" }"
   end
   
   #  Returns filter countries to be used.

@@ -5,7 +5,7 @@ class HomeController < ApplicationController
   before_filter :prepare_params
   
   def index
-    @filter = Filter.new(:game_names => %w(Angry\ Birds), :chart_kinds => %w(toppaidapplications), :countries => %w(United\ States))
+    @filter ||= Filter.new(:game_names => %w(Angry\ Birds), :chart_kinds => %w(toppaidapplications), :countries => %w(United\ States))
   end
   
   def filter
@@ -23,11 +23,14 @@ class HomeController < ApplicationController
   end
   
 protected
-
+  
   #  Attempts to preload the filter.
   #
   def prepare_params
-    @filter = Filter.new(params[:filter_settings])
+    params[:filter_settings][:countries].compact! rescue nil
+    params[:filter_settings][:chart_kinds].compact! rescue nil
+    
+    @filter = Filter.new(params[:filter_settings]) if params[:filter_settings]
   end
 
 end

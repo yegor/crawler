@@ -17,10 +17,12 @@ xml.chart :caption => "Rankings over time",
     end
   end
    
-  @rankings.each do |chart, ranks|
-    xml.dataset :seriesName => series_name(chart) do
-      dates.each do |date|
-        xml.set :value => (ranks[date].try(:rank) || 400), :showValue => 0
+  @rankings.each do |chart, game_ranks|
+    game_ranks.each do |game, ranks|
+      xml.dataset :seriesName => series_name(chart, game) do
+        dates.each do |date|
+          xml.set :value => (ranks[date].try(:rank) || 400), :showValue => 0
+        end
       end
     end
   end

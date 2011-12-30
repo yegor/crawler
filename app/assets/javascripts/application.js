@@ -23,4 +23,8 @@ $(function() {
 	$("form .game-names p a.minus").live("click", function() {
 		$(this).parents("p").remove();
 	});
+	
+	$(".app-store-top ul li[game-url]").live("click", function() {
+		window.open($(this).attr("game-url"), "_blank");
+	});
 });

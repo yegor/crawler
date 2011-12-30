@@ -7,6 +7,7 @@ Crawler::Application.routes.draw do
       post :filter
       get :autocomplete_game
       get :chart
+      get :top
       
       # get :paid
       # get :grossing

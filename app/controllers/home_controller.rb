@@ -12,6 +12,10 @@ class HomeController < ApplicationController
     index
   end
   
+  def top
+    @import = Import.last(:include => {:chart_snapshots => [{:game_snapshots => [:game, :meta_data]}, :chart]})
+  end
+  
   def autocomplete_game
     meta_data = MetaData.group(:game_id).where(["meta_data.name like ?", "%#{ params[:q] }%"]).limit(15)
     render :text => meta_data.map(&:name).join("\n")

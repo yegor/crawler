@@ -30,6 +30,13 @@
           <p><%= check_box_tag("filter_settings[categories][]", category, @filter.categories.include?(category), :id => "category-#{category.object_id}") %><%= label_tag "category-#{category.object_id}", "#{category.capitalize}" %></p>
         <% end %>
       </div>
+      
+      <%= fields_for :filter_settings, @filter do |f| %>
+      <h3>Time span</h3>
+      <div>
+        <p><%= f.date_select :time_from %> &mdash; <%= f.date_select :time_to %></p>
+      </div>
+      <% end %>
     
       <div>
         <%= submit_tag "Apply" %>

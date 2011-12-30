@@ -31,8 +31,8 @@ protected
       fs[:countries].compact!
       fs[:chart_kinds].compact!
       
-      fs[:time_from] = "#{ fs.delete("time_from(1i)") }-#{ fs.delete("time_from(2i)") }-#{ fs.delete("time_from(3i)") }".to_date if fs[:"time_from(1)"].present?
-      fs[:time_to] = "#{ fs.delete("time_to(1i)") }-#{ fs.delete("time_to(2i)") }-#{ fs.delete("time_to(3i)") }".to_date if fs[:"time_to(1)"].present?
+      fs[:time_from] = "#{ fs.delete("time_from(1i)") }-#{ fs.delete("time_from(2i)") }-#{ fs.delete("time_from(3i)") }".to_date if fs[:"time_from(1i)"].present?
+      fs[:time_to] = "#{ fs.delete("time_to(1i)") }-#{ fs.delete("time_to(2i)") }-#{ fs.delete("time_to(3i)") }".to_date if fs[:"time_to(1i)"].present?
     end if params[:filter_settings].present?
   
     @filter = Filter.new(params[:filter_settings]) if params[:filter_settings]

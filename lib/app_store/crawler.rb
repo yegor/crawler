@@ -15,29 +15,39 @@ module AppStore
           pids = charts.map do |chart|
             fork do
               ActiveRecord::Base.establish_connection
+
               chart_snapshot = ChartSnapshot.create :import_id => import_id, :chart => chart
             
               puts "Fetching chart #{chart.url.to_s}... \n"
-              old_games_count = Game.count
-              old_meta_data_count = MetaData.count
+              # old_games_count = Game.count
+              # old_meta_data_count = MetaData.count
             
-              ids = []
+              # ids = []
               feed = AppStore::Crawler.load(chart.url)["feed"]["entry"]
             
               puts "Parsing appstore feed"
-              feed.each_with_index do |entry_attributes, index|
-                entry = AppStore::JSON::ChartEntry.new entry_attributes
-
-                game = Game.find_or_create_from_appstore :entry => entry
-                meta_data = MetaData.find_or_create_from_appstore :entry => entry, :game => game
-
-                ids << GameSnapshot.create(:game => game, :meta_data => meta_data, :chart_snapshot => chart_snapshot, :rank => (index + 1)).itunes_id
-              end
+              entries = feed.map.with_index { |attrs, rank| AppStore::JSON::ChartEntry.new(attrs.merge("rank" => rank + 1)) }.index_by(&:itunes_id)
+              self.fetch_meta_data(entries, chart.country)
+              
+              games = Game.bulk_create(entries)
+              metas = MetaData.bulk_create(games, entries).index_by(&:game_id)
+              GameSnapshot.bulk_create(games, metas, entries, chart_snapshot)
+              
+              # feed.each_with_index do |entry_attributes, index|
+              #                 entry = AppStore::JSON::ChartEntry.new entry_attributes
+              # 
+              #                 game = Game.find_or_create_from_appstore :entry => entry
+              #                 meta_data = MetaData.find_or_create_from_appstore :entry => entry, :game => game
+              # 
+              #                 ids << GameSnapshot.create(:game => game, :meta_data => meta_data, :chart_snapshot => chart_snapshot, :rank => (index + 1)).itunes_id
+              #               end
             
-              puts "\t #{Game.count - old_games_count} new games added. \n"
-              puts "\t #{MetaData.count - old_meta_data_count} new meta datas added. \n"
+              # puts "\t #{Game.count - old_games_count} new games added. \n"
+              #               puts "\t #{MetaData.count - old_meta_data_count} new meta datas added. \n"
             
-              fetch_meta_data :country => chart.country, :ids => ids
+              # fetch_meta_data :country => chart.country, :ids => ids
+              
+              
             end
           end
           
@@ -47,17 +57,26 @@ module AppStore
       
       #  Fetches meta data for loaded games
       #      
-      def fetch_meta_data(opt = {})
-        puts "Updating #{opt[:ids].size} game snapshot objects through lookup API... \n"
-
-        opt[:ids].each_slice(200).each do |ids|
-          # ActiveRecord::Base.transaction do
-            AppStore::Crawler.load(URI("#{AppStore::ChartConfig::ITUNES_LOOKUP_BASE_URL}?id=#{ids.join(",")}&country=#{AppStore::ChartConfig::COUNTRIES[opt[:country]]}"))["results"].each do |game_meta_data|
-              entry = AppStore::JSON::LookupEntry.new(game_meta_data)
-              GameSnapshot.includes(:meta_data).where(:itunes_id => entry.itunes_id).first.update_with_entry(entry)
-            end
-          # end
+      def fetch_meta_data(entries, country)
+        puts "Updating #{entries.size} game snapshot objects through lookup API... \n"
+        
+        all_ids = entries.keys
+        
+        all_ids.each_slice(200).each do |ids|
+          AppStore::Crawler.load(URI("#{AppStore::ChartConfig::ITUNES_LOOKUP_BASE_URL}?id=#{ids.join(",")}&country=#{AppStore::ChartConfig::COUNTRIES[country]}"))["results"].each do |game_meta_data|
+            lookup_entry = AppStore::JSON::LookupEntry.new(game_meta_data)
+            entries[ lookup_entry.itunes_id ].lookup_entry = lookup_entry
+          end
         end
+          
+        # opt[:ids].each_slice(200).each do |ids|
+        #           # ActiveRecord::Base.transaction do
+        #             AppStore::Crawler.load(URI("#{AppStore::ChartConfig::ITUNES_LOOKUP_BASE_URL}?id=#{ids.join(",")}&country=#{AppStore::ChartConfig::COUNTRIES[opt[:country]]}"))["results"].each do |game_meta_data|
+        #               entry = AppStore::JSON::LookupEntry.new(game_meta_data)
+        #               GameSnapshot.includes(:meta_data).where(:itunes_id => entry.itunes_id).first.update_with_entry(entry)
+        #             end
+        #           # end
+        #         end
       end
       
       #  Fetches RSS feed with specified url   

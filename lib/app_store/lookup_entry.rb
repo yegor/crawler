@@ -18,7 +18,7 @@ module AppStore
         self.genres = attributes["genres"]
         self.screenshots = attributes["screenshotUrls"]
         self.version = attributes["version"]
-        self.itunes_id = attributes["trackId"]
+        self.itunes_id = attributes["trackId"].to_i
         self.price = attributes["price"]
         self.currency = attributes["currency"]
       end

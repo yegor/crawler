@@ -20,6 +20,12 @@ class ActiveRecord::Base
     
     self.update_attributes sutable_attributes
   end
+  
+  def smart_assign_attributes(attrs)
+    attrs.each do |key, value|
+      send(key.to_s + "=", value) if self.respond_to? key
+    end
+  end
 end
 
 class Time

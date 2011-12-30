@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111221212624) do
+ActiveRecord::Schema.define(:version => 20111230100813) do
 
   create_table "chart_snapshots", :force => true do |t|
     t.integer  "import_id"
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(:version => 20111221212624) do
     t.integer  "itunes_id",    :limit => 8
   end
 
-  add_index "games", ["itunes_id"], :name => "index_games_on_itunes_id"
+  add_index "games", ["itunes_id"], :name => "index_games_on_itunes_id", :unique => true
 
   create_table "imports", :force => true do |t|
     t.datetime "created_at"
@@ -87,8 +87,10 @@ ActiveRecord::Schema.define(:version => 20111221212624) do
     t.string   "genres"
     t.string   "screenshots"
     t.string   "version"
+    t.string   "hashcode",                         :default => "",    :null => false
   end
 
+  add_index "meta_data", ["game_id", "hashcode"], :name => "index_meta_data_on_game_id_and_hashcode", :unique => true
   add_index "meta_data", ["game_id"], :name => "index_meta_data_on_game_id"
   add_index "meta_data", ["itunes_id"], :name => "index_meta_data_on_itunes_id"
 

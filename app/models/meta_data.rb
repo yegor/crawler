@@ -1,4 +1,5 @@
 require "iconv"
+require "digest/sha2"
 
 class MetaData < ActiveRecord::Base
   serialize :genres, Array
@@ -11,6 +12,8 @@ class MetaData < ActiveRecord::Base
   validates_presence_of :publisher
   validates_presence_of :release_date
   validates_presence_of :itunes_id
+  
+  before_save :ensure_hashcode!
   
   class << self
     def find_or_create_from_appstore(opt = {})
@@ -34,6 +37,32 @@ class MetaData < ActiveRecord::Base
       
       return latest_meta_data
     end
+    
+    def bulk_create(games, entries)
+      columns = self.new.send(:arel_attributes_values).keys.map(&:name)
+      
+      sql = "INSERT IGNORE INTO meta_data ( #{columns.join ", "} ) VALUES "
+      metas = games.map do |game|
+        meta = self.new( :created_at => Time.now, :updated_at => Time.now, :game_id => game.id, :new_version => true )
+        
+        meta.smart_assign_attributes( entries[ game.itunes_id ].instance_values )
+        meta.smart_assign_attributes( entries[ game.itunes_id ].lookup_entry.instance_values )
+        
+        meta.ensure_hashcode!
+        
+        vals = [0] + meta.send(:arel_attributes_values).values[1..-1]
+        sql << "( #{ vals.map { |v| connection.quote(v) }.join ", " } ),"
+        
+        meta
+      end
+      
+      connection.execute(sql.chop)
+      where(:game_id => metas.map(&:game_id), :hashcode => metas.map(&:hashcode)).all
+    end
+  end
+  
+  def ensure_hashcode!
+    self.hashcode = Digest::SHA2.hexdigest("#{self.name}-#{self.summary}-#{self.rights}-#{self.publisher}-#{self.release_date}")
   end
   
   def ==(another)

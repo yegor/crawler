@@ -1,6 +1,6 @@
 module AppStore
   class ChartEntry
-    attr_accessor :name, :summary, :publisher, :rights, :release_date, :itunes_id
+    attr_accessor :name, :summary, :publisher, :rights, :release_date, :itunes_id, :lookup_entry, :rank
     
     def initialize(attributes = {})
       self.name = attributes[:name]
@@ -8,14 +8,14 @@ module AppStore
       self.publisher = attributes[:publisher]
       self.rights = attributes[:rights]
       self.release_date = attributes[:release_date]
-      self.itunes_id = attributes[:itunes_id]
+      self.itunes_id = attributes[:itunes_id].to_i
     end
   end
   
   module JSON
     class ChartEntry < ::AppStore::ChartEntry
       def initialize(attributes = {})
-        self.itunes_id = /id(\d+)/.match(attributes["id"]["label"])[1]
+        self.itunes_id = /id(\d+)/.match(attributes["id"]["label"])[1].to_i
         
         self.name = attributes["im:name"]["label"]
         self.summary = attributes["summary"]["label"]
@@ -24,6 +24,7 @@ module AppStore
         
         self.rights = attributes["rights"]["label"]
         self.publisher = attributes["im:artist"]["label"]
+        self.rank = attributes["rank"]
         
         # if attributes["link"].is_a? Hash
         #   self.screenshot_url = attributes["link"]["attributes"]["href"]

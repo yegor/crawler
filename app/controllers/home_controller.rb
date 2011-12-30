@@ -13,7 +13,8 @@ class HomeController < ApplicationController
   end
   
   def top
-    @import = Import.last(:include => {:chart_snapshots => [{:game_snapshots => [:game, :meta_data]}, :chart]})
+    import = Import.last(:include => {:chart_snapshots => [{:game_snapshots => [:game, :meta_data]}, :chart]})
+    @snapshots = import.chart_snapshots.select { |cs| cs.chart.country == "United States" }
   end
   
   def autocomplete_game

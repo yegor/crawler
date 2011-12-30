@@ -15,14 +15,11 @@ module AppStore
           pids = charts.map do |chart|
             fork do
               ActiveRecord::Base.establish_connection
+              # ActiveRecord::Base.logger = Logger.new(STDOUT)
 
               chart_snapshot = ChartSnapshot.create :import_id => import_id, :chart => chart
             
               puts "Fetching chart #{chart.url.to_s}... \n"
-              # old_games_count = Game.count
-              # old_meta_data_count = MetaData.count
-            
-              # ids = []
               feed = AppStore::Crawler.load(chart.url)["feed"]["entry"]
             
               puts "Parsing appstore feed"
@@ -32,22 +29,6 @@ module AppStore
               games = Game.bulk_create(entries)
               metas = MetaData.bulk_create(games, entries).index_by(&:game_id)
               GameSnapshot.bulk_create(games, metas, entries, chart_snapshot)
-              
-              # feed.each_with_index do |entry_attributes, index|
-              #                 entry = AppStore::JSON::ChartEntry.new entry_attributes
-              # 
-              #                 game = Game.find_or_create_from_appstore :entry => entry
-              #                 meta_data = MetaData.find_or_create_from_appstore :entry => entry, :game => game
-              # 
-              #                 ids << GameSnapshot.create(:game => game, :meta_data => meta_data, :chart_snapshot => chart_snapshot, :rank => (index + 1)).itunes_id
-              #               end
-            
-              # puts "\t #{Game.count - old_games_count} new games added. \n"
-              #               puts "\t #{MetaData.count - old_meta_data_count} new meta datas added. \n"
-            
-              # fetch_meta_data :country => chart.country, :ids => ids
-              
-              
             end
           end
           
@@ -68,15 +49,6 @@ module AppStore
             entries[ lookup_entry.itunes_id ].lookup_entry = lookup_entry
           end
         end
-          
-        # opt[:ids].each_slice(200).each do |ids|
-        #           # ActiveRecord::Base.transaction do
-        #             AppStore::Crawler.load(URI("#{AppStore::ChartConfig::ITUNES_LOOKUP_BASE_URL}?id=#{ids.join(",")}&country=#{AppStore::ChartConfig::COUNTRIES[opt[:country]]}"))["results"].each do |game_meta_data|
-        #               entry = AppStore::JSON::LookupEntry.new(game_meta_data)
-        #               GameSnapshot.includes(:meta_data).where(:itunes_id => entry.itunes_id).first.update_with_entry(entry)
-        #             end
-        #           # end
-        #         end
       end
       
       #  Fetches RSS feed with specified url   

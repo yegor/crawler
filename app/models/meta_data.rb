@@ -57,7 +57,11 @@ class MetaData < ActiveRecord::Base
       end
       
       connection.execute(sql.chop)
-      where(:game_id => metas.map(&:game_id), :hashcode => metas.map(&:hashcode)).all
+      where(:game_id => metas.map(&:game_id), :hashcode => metas.map(&:hashcode)).all.tap do |created_or_updated_metas|
+        ids = created_or_updated_metas.map(&:id)
+        non_versions = MetaData.joins("INNER JOIN meta_data m ON m.game_id = meta_data.game_id AND m.release_date = meta_data.release_date AND m.id < meta_data.id").where(:id => ids).select("meta_data.id").map(&:id)
+        MetaData.where(:id => non_versions).update_all(:new_version => false)
+      end
     end
   end
   

@@ -1,0 +1,10 @@
+<% @snapshots.each do |snapshot| %>
+<div class="app-store-top">
+  <h3><%= top_title snapshot %></h3>
+  <ul>
+    <% snapshot.game_snapshots.limit(100).each do |game_snapshot| %>
+      <li game-url="http://itunes.apple.com/us/app/id<%= game_snapshot.game.itunes_id %>"><%= image_tag game_snapshot.meta_data.itunes_artwork_url, :width => 32, :height => 32 %> <%= game_snapshot.meta_data.name %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>

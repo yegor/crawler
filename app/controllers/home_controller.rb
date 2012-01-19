@@ -12,6 +12,11 @@ class HomeController < ApplicationController
     index
   end
   
+  def by_publisher
+    games = MetaData.where(:publisher => @filter.publisher).group(&:game_id).select("name")
+    @filter.game_names = games.map(&:name)
+  end
+  
   def top
     import = Import.last(:include => {:chart_snapshots => [{:game_snapshots => [:game, :meta_data]}, :chart]})
     @snapshots = import.chart_snapshots.select { |cs| cs.chart.country == "United States" }
@@ -20,6 +25,11 @@ class HomeController < ApplicationController
   def autocomplete_game
     meta_data = MetaData.group(:game_id).where(["meta_data.name like ?", "%#{ params[:q] }%"]).limit(15)
     render :text => meta_data.map(&:name).join("\n")
+  end
+  
+  def autocomplete_publisher
+    publishers = MetaData.where(["publisher like CONCAT('%', '?', '%')", 'g5']).select("DISTINCT publisher")
+    render :text => publishers.map(&:publisher).join("\n")
   end
 
   def chart

@@ -4,7 +4,8 @@
   <title>Crawler</title>
   
   <%= javascript_tag do %>
-    window.game_autocomplete_game_url = <%= raw autocomplete_game_home_path.inspect %>;
+    window.autocomplete_game_url = <%= raw autocomplete_game_home_path.inspect %>;
+    window.autocomplete_publisher_url = <%= raw autocomplete_publisher_home_path.inspect %>;
   <% end %>
   
   <%= stylesheet_link_tag    "application" %>

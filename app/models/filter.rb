@@ -1,5 +1,5 @@
 class Filter
-  attr_accessor :countries, :categories, :game_names, :chart_kinds, :time_from, :time_to
+  attr_accessor :countries, :categories, :game_names, :chart_kinds, :time_from, :time_to, :publisher
   
   def initialize(attributes = {})
     self.attributes = attributes if attributes.present?

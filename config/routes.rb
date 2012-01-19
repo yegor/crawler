@@ -5,7 +5,9 @@ Crawler::Application.routes.draw do
   resource :home, :controller => "home" do
     collection do
       post :filter
+      post :by_publisher
       get :autocomplete_game
+      get :autocomplete_publisher
       get :chart
       get :top
       

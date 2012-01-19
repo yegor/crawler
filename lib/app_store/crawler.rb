@@ -11,7 +11,7 @@ module AppStore
       def fetch_charts
         import_id = Import.create.id
         
-        Chart.find_in_batches(:batch_size => 5) do |charts|
+        Chart.find_in_batches(:batch_size => 15) do |charts|
           pids = charts.map do |chart|
             fork do
               ActiveRecord::Base.establish_connection

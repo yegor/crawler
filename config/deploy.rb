@@ -37,6 +37,8 @@ namespace :deploy do
   end
 end
 
+set :job_template, "bash -l -c 'rvm 1.9.2 && :job'"
+
 namespace :whenever do
   desc "Update the crontab file"
   task :update_crontab, :only => { :primary => true } do

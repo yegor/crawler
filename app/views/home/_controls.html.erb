@@ -1,0 +1,47 @@
+<%= form_tag filter_home_path, :remote => true do %>
+    <h3>Game title</h3>
+    <div class="game-names">
+      <% @filter.game_names.each do |game_name| %>
+        <p><%= text_field_tag "filter_settings[game_names][]", game_name %><%= link_to "+", "#", :class => "plus" %><%= link_to "&ndash;".html_safe, "#", :class => "minus" %></p>
+      <% end %>
+    </div>
+  
+    <h3>Countries</h3>
+    <div>
+      <% filter_countries.each do |country| %>
+        <p><%= check_box_tag("filter_settings[countries][]", country, @filter.countries.include?(country), :id => "country-#{country.object_id}") %><%= label_tag "country-#{country.object_id}", country %></p>
+      <% end %>
+    </div>
+    
+    <h3>Charts</h3>å
+    <div>
+      <% filter_charts.each do |kind, shortcut| %>
+        <p><%= check_box_tag("filter_settings[chart_kinds][]", kind, @filter.chart_kinds.include?(kind), :id => "kind-#{kind.object_id}") %><%= label_tag "kind-#{kind.object_id}", "Top #{shortcut}" %></p>
+      <% end %>
+    </div>
+    
+    <h3>Genres</h3>
+    <div>
+      <% filter_categories.each do |category| %>
+        <p><%= check_box_tag("filter_settings[categories][]", category, @filter.categories.include?(category), :id => "category-#{category.object_id}") %><%= label_tag "category-#{category.object_id}", "#{category.capitalize}" %></p>
+      <% end %>
+    </div>
+    
+    <%= fields_for :filter_settings, @filter do |f| %>
+    <h3>Time span</h3>
+    <div>
+      <p><%= f.date_select :time_from %> &mdash; <%= f.date_select :time_to %></p>
+    </div>
+    <% end %>
+  
+    <div>
+      <%= submit_tag "Apply" %>
+    </div>
+<% end %>
+
+<%= form_tag by_publisher_home_path, :remote => true do %>
+  <h3>Publisher title</h3>
+  <div class="publisher-name">
+    <%= text_field_tag "filter_settings[publisher]", @filter.publisher %>
+  </div>
+<% end %>

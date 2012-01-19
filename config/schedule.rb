@@ -7,8 +7,8 @@
 #
 # set :output, "/path/to/my/cron_log.log"
 #
-every 2.hours do
-  rake "some:great:rake:task"
+every 1.hour do
+  rake "crawler:sync"
 end
 #
 # every 4.days do

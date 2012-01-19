@@ -1,1 +1,4 @@
 $("#charts-js").html(<%= raw render("charts").inspect %>);
+
+$("form .game-names input").autocomplete(window.autocomplete_game_url);
+$("form .publisher-name input").autocomplete(window.autocomplete_publisher_url);

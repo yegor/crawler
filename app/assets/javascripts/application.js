@@ -11,7 +11,7 @@
 
 $(function() {
   $("form .game-names input").autocomplete(window.autocomplete_game_url);
-	$("form .publisher-name input").autocomplete(window.autocomplete_publisher_url)
+	$("form .publisher-name input").autocomplete(window.autocomplete_publisher_url);
 
 	$("form .game-names p a.plus").live("click", function() {
 		var newField = $(this).parents("p").clone();

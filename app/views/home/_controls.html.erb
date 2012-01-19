@@ -13,7 +13,7 @@
       <% end %>
     </div>
     
-    <h3>Charts</h3>å
+    <h3>Charts</h3>
     <div>
       <% filter_charts.each do |kind, shortcut| %>
         <p><%= check_box_tag("filter_settings[chart_kinds][]", kind, @filter.chart_kinds.include?(kind), :id => "kind-#{kind.object_id}") %><%= label_tag "kind-#{kind.object_id}", "Top #{shortcut}" %></p>

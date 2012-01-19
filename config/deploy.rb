@@ -39,11 +39,11 @@ end
 namespace :whenever do
   desc "Update the crontab file"
   task :update_crontab, :only => { :primary => true } do
-    run "cd #{release_path} && RAILS_ENV=#{rails_env} bundle exec whenever --set environment=#{rails_env} --update-crontab #{application}"
+    run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec whenever --set environment=#{rails_env} --update-crontab #{application}"
   end
   desc "Clear application's crontab entries using Whenever"
   task :clear_crontab, :only => { :primary => true } do
-    run "cd #{release_path} && RAILS_ENV=#{rails_env} bundle exec whenever --set environment=#{rails_env} --clear-crontab #{application}"
+    run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec whenever --set environment=#{rails_env} --clear-crontab #{application}"
   end
 end
 

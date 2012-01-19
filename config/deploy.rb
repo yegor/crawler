@@ -1,5 +1,9 @@
 require "bundler/capistrano"
+
+set :whenever_command, "bundle exec whenever"
+set :job_template, "bash -l -c 'rvm 1.9.2 && :job'"
 require "whenever/capistrano"
+
 $:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 require "rvm/capistrano" 
 
@@ -24,8 +28,6 @@ default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
 
 set :rails_env, "production"
-
-set :job_template, "bash -l -c 'rvm 1.9.2 && :job'"
 
 namespace :deploy do
   desc "Link in the database.yml and memcached.yml"

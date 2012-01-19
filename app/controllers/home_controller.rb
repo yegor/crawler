@@ -43,8 +43,8 @@ protected
   #
   def prepare_params
     params[:filter_settings].tap do |fs|
-      fs[:countries].compact!
-      fs[:chart_kinds].compact!
+      fs[:countries].try(:compact!) 
+      fs[:chart_kinds].try(:compact!)
       
       fs[:time_from] = "#{ fs.delete("time_from(1i)") }-#{ fs.delete("time_from(2i)") }-#{ fs.delete("time_from(3i)") }".to_date if fs[:"time_from(1i)"].present?
       fs[:time_to] = "#{ fs.delete("time_to(1i)") }-#{ fs.delete("time_to(2i)") }-#{ fs.delete("time_to(3i)") }".to_date if fs[:"time_to(1i)"].present?

@@ -23,12 +23,12 @@ class HomeController < ApplicationController
   end
   
   def autocomplete_game
-    meta_data = MetaData.group(:game_id).where(["meta_data.name like ?", "%#{ params[:q] }%"]).limit(15)
+    meta_data = MetaData.group(:game_id).where(["meta_data.name like CONCAT('%', ?, '%')", params[:q]]).limit(15)
     render :text => meta_data.map(&:name).join("\n")
   end
   
   def autocomplete_publisher
-    publishers = MetaData.where(["publisher like CONCAT('%', '?', '%')", 'g5']).select("DISTINCT publisher")
+    publishers = MetaData.where(["publisher like CONCAT('%', ?, '%')", params[:q]]).select("DISTINCT publisher")
     render :text => publishers.map(&:publisher).join("\n")
   end
 

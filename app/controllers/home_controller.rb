@@ -14,7 +14,7 @@ class HomeController < ApplicationController
   
   def by_publisher
     games = MetaData.where(:publisher => @filter.publisher).group(&:game_id).select("name")
-    @filter = Filter.new(:time_from => 1.week.ago, :game_names => games.map(&:name), :time_to => Time.now, :game_names => %w(Angry\ Birds), :categories => %w(all games), :chart_kinds => %w(toppaidapplications), :countries => %w(United\ States))
+    @filter = Filter.new(:time_from => 1.week.ago, :game_names => games.map(&:name), :time_to => Time.now, :categories => %w(all games), :chart_kinds => %w(toppaidapplications), :countries => %w(United\ States))
   end
   
   def top

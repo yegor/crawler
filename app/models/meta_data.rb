@@ -42,7 +42,7 @@ class MetaData < ActiveRecord::Base
       columns = self.new.send(:arel_attributes_values).keys.map(&:name)
       
       sql = "INSERT IGNORE INTO meta_data ( #{columns.join ", "} ) VALUES "
-      metas = games.map do |game|
+      metas = games.sort_by(&:id).map do |game|
         meta = self.new( :created_at => Time.now, :updated_at => Time.now, :game_id => game.id, :new_version => true )
         
         meta.smart_assign_attributes( entries[ game.itunes_id ].instance_values )

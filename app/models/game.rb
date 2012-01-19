@@ -17,7 +17,7 @@ class Game < ActiveRecord::Base
     
     def bulk_create(entries)
       sql = "INSERT IGNORE INTO games (release_date, created_at, updated_at, itunes_id) VALUES "
-      entries.each do |itunes_id, entry|
+      entries.sort_by(&:itunes_id).each do |itunes_id, entry|
         sql << " ( #{ [ entry.release_date, Time.now, Time.now, itunes_id ].map { |v| connection.quote(v) }.join(", ") } ),"
       end
       

@@ -19,7 +19,7 @@ class GameSnapshot < ActiveRecord::Base
       columns = self.new.send(:arel_attributes_values).keys.map(&:name)
       
       sql = "INSERT IGNORE INTO game_snapshots ( #{columns.join ", "} ) VALUES "
-      games.each do |game|
+      games.sort_by(&:id).each do |game|
         snapshot = self.new(:created_at => Time.now, :updated_at => Time.now, :game_id => game.id, :rank => entries[ game.itunes_id ].rank, :meta_data_id => metas[ game.id ].id, :chart_snapshot_id => chart_snapshot.id)
         
         snapshot.smart_assign_attributes( entries[ game.itunes_id ].instance_values )

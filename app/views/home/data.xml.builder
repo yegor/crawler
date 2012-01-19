@@ -14,7 +14,6 @@ xml.chart :caption => chart_title(@filter),
   xml.categories do
     dates.each do |date|
       xml.category :label => (date.hour == 0 ? date.strftime("%h %d") : date.hour)
-      xml.vLine :color => 'FF5904', :thickness => 3, :linePosition => 0
     end
   end
    

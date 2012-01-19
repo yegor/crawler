@@ -7,6 +7,8 @@
 #
 # set :output, "/path/to/my/cron_log.log"
 #
+set :job_template, "bash -l -c 'rvm 1.9.2 && :job'"
+
 every 1.hour do
   rake "crawler:sync"
 end

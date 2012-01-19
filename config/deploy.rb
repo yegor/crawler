@@ -1,7 +1,6 @@
 require "bundler/capistrano"
 
 set :whenever_command, "bundle exec whenever"
-set :job_template, "bash -l -c 'rvm 1.9.2 && :job'"
 require "whenever/capistrano"
 
 $:.unshift(File.expand_path('./lib', ENV['rvm_path']))

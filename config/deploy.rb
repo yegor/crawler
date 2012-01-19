@@ -1,4 +1,5 @@
 require "bundler/capistrano"
+require "whenever/capistrano"
 $:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 require "rvm/capistrano" 
 
@@ -24,6 +25,8 @@ ssh_options[:forward_agent] = true
 
 set :rails_env, "production"
 
+set :job_template, "bash -l -c 'rvm 1.9.2 && :job'"
+
 namespace :deploy do
   desc "Link in the database.yml and memcached.yml"
   task :link_configs do
@@ -37,18 +40,5 @@ namespace :deploy do
   end
 end
 
-set :job_template, "bash -l -c 'rvm 1.9.2 && :job'"
-
-namespace :whenever do
-  desc "Update the crontab file"
-  task :update_crontab, :only => { :primary => true } do
-    run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec whenever --set environment=#{rails_env} --update-crontab #{application}"
-  end
-  desc "Clear application's crontab entries using Whenever"
-  task :clear_crontab, :only => { :primary => true } do
-    run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec whenever --set environment=#{rails_env} --clear-crontab #{application}"
-  end
-end
 
 after 'deploy:update_code', 'deploy:link_configs'
-after "deploy:symlink",     'whenever:update_crontab'

@@ -22,6 +22,7 @@ class Game < ActiveRecord::Base
       end
       
       connection.execute(sql.chop)
+      
       where(:itunes_id => entries.keys).all
     end
     

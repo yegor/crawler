@@ -26,8 +26,8 @@ module AppStore
               entries = feed.map.with_index { |attrs, rank| AppStore::JSON::ChartEntry.new(attrs.merge("rank" => rank + 1)) }.index_by(&:itunes_id)
               self.fetch_meta_data(entries, chart.country)
               
-              games = Game.bulk_create(entries)
-              metas = MetaData.bulk_create(games, entries).index_by(&:game_id)
+              games = Game.bulk_create(entries) rescue Game.bulk_create(entries)
+              metas = MetaData.bulk_create(games, entries).index_by(&:game_id) rescue MetaData.bulk_create(games, entries).index_by(&:game_id)
               GameSnapshot.bulk_create(games, metas, entries, chart_snapshot)
             end
           end

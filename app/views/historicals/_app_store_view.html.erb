@@ -75,7 +75,7 @@
     <div class="span8">
       <blockquote>
         <% meta_data.screenshots.each do |url| %>
-          <%= image_tag url %>
+          <%= image_tag url if url.present? %>
         <% end %>
       </blockquote>
     </div>

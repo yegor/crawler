@@ -34,6 +34,96 @@ body {
         }
     }
     
+    .nav {
+        .date-select {
+            input {
+                width: 100px;
+                margin: 4px;
+            }
+        }
+        
+        .rightmost {
+            float: right;
+        }
+    }
+    
+    .ui-datepicker {
+        padding: 3px 10px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+
+        border-width: 1px;
+        border-style: solid;
+       
+        background-image: linear-gradient(bottom, rgb(255,255,255) 0%, rgb(250,250,250) 93%);
+        background-image: -o-linear-gradient(bottom, rgb(255,255,255) 0%, rgb(250,250,250) 93%);
+        background-image: -moz-linear-gradient(bottom, rgb(255,255,255) 0%, rgb(250,250,250) 93%);
+        background-image: -webkit-linear-gradient(bottom, rgb(255,255,255) 0%, rgb(250,250,250) 93%);
+        background-image: -ms-linear-gradient(bottom, rgb(255,255,255) 0%, rgb(250,250,250) 93%);
+
+        background-image: -webkit-gradient(
+        	linear,
+        	left bottom,
+        	left top,
+        	color-stop(0,    rgb(255,255,255)),
+        	color-stop(0.53, rgb(250,250,250))
+        );
+        
+        border-color: rgba(82, 168, 236, 0.8);
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+        -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+        
+        margin-top: 3px;
+        
+        .ui-datepicker-calendar {
+            tbody {
+                tr {
+                    td {
+                        padding: 2px 5px;
+                        text-align: center;
+                    }
+                    
+                    td:hover {
+                        background: rgba(82, 168, 236, 0.3);
+                    }
+                    
+                    td.ui-datepicker-current-day {
+                        a {
+                            text-decoration: none !important;
+                            color: white !important;
+                        }
+                        background: rgba(82, 168, 236, 0.8);
+                    }
+                }
+            }
+        }
+        
+        a, td {
+            cursor: pointer;
+        }
+        
+        .ui-datepicker-prev {
+            position: absolute;
+            left: 13px;
+            top: 7px;
+        }
+        
+        .ui-datepicker-next {
+            position: absolute;
+            right: 13px;
+            top: 7px;
+        }
+        
+        .ui-datepicker-title {
+            text-align: center;
+            padding: 4px 0px 4px;
+            margin-bottom: 4px;
+            border-bottom: 1px solid #ccc;
+        }
+    }
+    
     .ui-autocomplete {
         z-index: 100000 !important;
     }

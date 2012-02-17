@@ -17,8 +17,10 @@ protected
     params[:genre] ||= "games"
     params[:kind] ||= "toppaidapplications"
     params[:game_id] ||= 343200656
+    params[:date_since] ||= 1.week.ago
+    params[:date_till] ||= 0.days.ago
     
-    @timespan = 1.year.ago..Date.today
+    @timespan = (params[:date_since].to_date .. params[:date_till].to_date)
     
     @charts = Chart.where(:country => params[:country], :genre => params[:genre], :kind => params[:kind]).all
     @chart_snapshots = ChartSnapshot.with_includes_for_charts.where(:chart_id => @charts, :import_id => Import.last).all

@@ -31,6 +31,15 @@ $(function() {
     
     $('.automagic-tabs li:not(.dropdown) a').attr('data-toggle', 'tab');
     $('.automagic-tabs li:first a').tab('show');
+    
+    $('.date-select input').datepicker({
+      "dateFormat": "yy-mm-dd",
+      
+      onClose: function(dateText, inst) {
+         $(this).parents(".date-select").attr("data-value", dateText);
+         $(".historical-graph-chart #fusion-chart").historicalChart($(this).parents(".historical-graph-filter").uberFormData());
+       }
+    });
   }
   
   /**************************************************************************************************************

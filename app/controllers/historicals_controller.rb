@@ -22,7 +22,7 @@ protected
     
     @timespan = (params[:date_since].to_date .. params[:date_till].to_date)
     
-    @charts = Chart.where(:country => params[:country], :genre => params[:genre], :kind => params[:kind]).all
+    @charts = Chart.where(["country = ? AND COALESCE(genre, 'all') = ? AND kind = ?", params[:country], params[:genre], params[:kind]]).all
     @chart_snapshots = ChartSnapshot.with_includes_for_charts.where(:chart_id => @charts, :import_id => Import.last).all
     @games = Game.where(:itunes_id => params[:game_id]).all
     

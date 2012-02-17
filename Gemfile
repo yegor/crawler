@@ -31,6 +31,7 @@ gem 'jquery-rails'
 gem "rspec-rails", ">= 2.6.1", :group => [:development, :test]
 gem 'factory_girl', :group => [:development, :test]
 gem 'whenever'
+gem 'thinking-sphinx'
 
 group :test do
   # Pretty printed test output
@@ -39,4 +40,5 @@ end
 
 group :development do
   gem 'mongrel', '>= 1.2.0.pre2'
+  gem 'annotate', :git => 'git://github.com/jeremyolliver/annotate_models.git', :branch => 'rake_compatibility'
 end

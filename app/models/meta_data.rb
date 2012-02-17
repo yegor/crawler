@@ -1,3 +1,32 @@
+# == Schema Information
+#
+# Table name: meta_data
+#
+#  id                  :integer(4)      not null, primary key
+#  name                :string(255)
+#  summary             :text
+#  new_version         :boolean(1)      default(FALSE)
+#  game_id             :integer(4)
+#  created_at          :datetime
+#  updated_at          :datetime
+#  publisher           :string(255)
+#  rights              :text
+#  release_date        :datetime
+#  file_size_bytes     :integer(4)
+#  itunes_artwork_url  :string(255)
+#  itunes_id           :integer(8)
+#  release_notes       :string(255)
+#  game_center_enabled :boolean(1)
+#  genres              :string(255)
+#  screenshots         :string(255)
+#  version             :string(255)
+#
+# Indexes
+#
+#  index_meta_data_on_game_id    (game_id)
+#  index_meta_data_on_itunes_id  (itunes_id)
+#
+
 require "iconv"
 require "digest/sha2"
 
@@ -14,6 +43,11 @@ class MetaData < ActiveRecord::Base
   validates_presence_of :itunes_id
   
   before_save :ensure_hashcode!
+  
+  define_index do
+    indexes name
+    indexes publisher
+  end
   
   class << self
     def find_or_create_from_appstore(opt = {})

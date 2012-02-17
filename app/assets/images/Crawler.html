@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Crawler</title>
+  
+  <link href="/assets/application.css?body=1" media="screen" rel="stylesheet" type="text/css" />
+<link href="/assets/bootstrap-responsive.css?body=1" media="screen" rel="stylesheet" type="text/css" />
+<link href="/assets/bootstrap.css?body=1" media="screen" rel="stylesheet" type="text/css" />
+<link href="/assets/charts.css?body=1" media="screen" rel="stylesheet" type="text/css" />
+<link href="/assets/home.css?body=1" media="screen" rel="stylesheet" type="text/css" />
+<link href="/assets/jquery.autocomplete.css?body=1" media="screen" rel="stylesheet" type="text/css" />
+  <script src="/assets/jquery.js?body=1" type="text/javascript"></script>
+<script src="/assets/jquery_ujs.js?body=1" type="text/javascript"></script>
+<script src="/assets/FusionCharts.js?body=1" type="text/javascript"></script>
+<script src="/assets/jquery.autocomplete.min.js?body=1" type="text/javascript"></script>
+<script src="/assets/bootstrap.js?body=1" type="text/javascript"></script>
+<script src="/assets/application.js?body=1" type="text/javascript"></script>
+  
+  <meta content="authenticity_token" name="csrf-param" />
+<meta content="DO6gV8S/aks9jsKpuJpYHPOu03HMH3B+emzCM9W4W0o=" name="csrf-token" />
+</head>
+<body>
+  
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="brand" href="#">Crawler</a>
+        
+        <ul class="nav">
+            <li class="">
+              <a href="/home">Home</a>
+            </li>
+            <li class="active">
+              <a href="/charts">Charts</a>
+            </li>
+            <li class="">
+              <a href="/historical">Historical</a>
+            </li>
+            <li class="">
+              <a href="/publishers">Publishers</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <div class="container content-container">
+
+    <div class="row current-charts">
+  <div class="span4">
+    <div class="subnav">
+      <ul class="nav nav-pills chart-config">
+  <li class="dropdown" data-name="chart_kind" data-value="topfreeapplications">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+      Top free
+      <b class="caret"></b>
+</a>
+    <ul class="dropdown-menu">
+      <li><a href="#" data-value="topfreeapplications">Top free</a></li>
+      <li><a href="#" data-value="toppaidapplications">Top paid</a></li>
+      <li><a href="#" data-value="topgrossingapplications">Top grossing</a></li>
+      <li><a href="#" data-value="topfreeipadapplications">Top free iPad</a></li>
+      <li><a href="#" data-value="toppaidipadapplications">Top paid iPad</a></li>
+      <li><a href="#" data-value="topgrossingipadapplications">Top grossing iPad</a></li>
+    </ul>
+  </li>
+  
+  <li class="dropdown" data-name="category" data-value="games">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+      Games
+      <b class="caret"></b>
+</a>
+    <ul class="dropdown-menu">
+      <li><a href="#" data-value="all">All</a></li>
+      <li><a href="#" data-value="games">Games</a></li>
+    </ul>
+  </li>
+  
+  <li class="dropdown" data-name="country" data-value="United States">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+      US
+      <b class="caret"></b>
+</a>
+    <ul class="dropdown-menu">
+      <li><a href="#" data-value="Australia">Australia</a></li>
+      <li><a href="#" data-value="Canada">Canada</a></li>
+      <li><a href="#" data-value="China">China</a></li>
+      <li><a href="#" data-value="France">France</a></li>
+      <li><a href="#" data-value="Germany">Germany</a></li>
+      <li><a href="#" data-value="Japan">Japan</a></li>
+      <li><a href="#" data-value="Korea">Korea</a></li>
+      <li><a href="#" data-value="Indonesia">Indonesia</a></li>
+      <li><a href="#" data-value="United Kingdom">United Kingdom</a></li>
+      <li><a href="#" data-value="United States">United States</a></li>
+    </ul>
+  </li>
+</ul>
+
+    </div>
+  </div>
+  <div class="span4">
+    <div class="subnav">
+      <ul class="nav nav-pills chart-config">
+  <li class="dropdown" data-name="chart_kind" data-value="toppaidapplications">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+      Top paid
+      <b class="caret"></b>
+</a>
+    <ul class="dropdown-menu">
+      <li><a href="#" data-value="topfreeapplications">Top free</a></li>
+      <li><a href="#" data-value="toppaidapplications">Top paid</a></li>
+      <li><a href="#" data-value="topgrossingapplications">Top grossing</a></li>
+      <li><a href="#" data-value="topfreeipadapplications">Top free iPad</a></li>
+      <li><a href="#" data-value="toppaidipadapplications">Top paid iPad</a></li>
+      <li><a href="#" data-value="topgrossingipadapplications">Top grossing iPad</a></li>
+    </ul>
+  </li>
+  
+  <li class="dropdown" data-name="category" data-value="games">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+      Games
+      <b class="caret"></b>
+</a>
+    <ul class="dropdown-menu">
+      <li><a href="#" data-value="all">All</a></li>
+      <li><a href="#" data-value="games">Games</a></li>
+    </ul>
+  </li>
+  
+  <li class="dropdown" data-name="country" data-value="United States">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+      US
+      <b class="caret"></b>
+</a>
+    <ul class="dropdown-menu">
+      <li><a href="#" data-value="Australia">Australia</a></li>
+      <li><a href="#" data-value="Canada">Canada</a></li>
+      <li><a href="#" data-value="China">China</a></li>
+      <li><a href="#" data-value="France">France</a></li>
+      <li><a href="#" data-value="Germany">Germany</a></li>
+      <li><a href="#" data-value="Japan">Japan</a></li>
+      <li><a href="#" data-value="Korea">Korea</a></li>
+      <li><a href="#" data-value="Indonesia">Indonesia</a></li>
+      <li><a href="#" data-value="United Kingdom">United Kingdom</a></li>
+      <li><a href="#" data-value="United States">United States</a></li>
+    </ul>
+  </li>
+</ul>
+
+    </div>
+  </div>
+  <div class="span4">
+    <div class="subnav">
+      <ul class="nav nav-pills chart-config">
+  <li class="dropdown" data-name="chart_kind" data-value="topgrossingapplications">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+      Top grossing
+      <b class="caret"></b>
+</a>
+    <ul class="dropdown-menu">
+      <li><a href="#" data-value="topfreeapplications">Top free</a></li>
+      <li><a href="#" data-value="toppaidapplications">Top paid</a></li>
+      <li><a href="#" data-value="topgrossingapplications">Top grossing</a></li>
+      <li><a href="#" data-value="topfreeipadapplications">Top free iPad</a></li>
+      <li><a href="#" data-value="toppaidipadapplications">Top paid iPad</a></li>
+      <li><a href="#" data-value="topgrossingipadapplications">Top grossing iPad</a></li>
+    </ul>
+  </li>
+  
+  <li class="dropdown" data-name="category" data-value="games">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+      Games
+      <b class="caret"></b>
+</a>
+    <ul class="dropdown-menu">
+      <li><a href="#" data-value="all">All</a></li>
+      <li><a href="#" data-value="games">Games</a></li>
+    </ul>
+  </li>
+  
+  <li class="dropdown" data-name="country" data-value="United States">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+      US
+      <b class="caret"></b>
+</a>
+    <ul class="dropdown-menu">
+      <li><a href="#" data-value="Australia">Australia</a></li>
+      <li><a href="#" data-value="Canada">Canada</a></li>
+      <li><a href="#" data-value="China">China</a></li>
+      <li><a href="#" data-value="France">France</a></li>
+      <li><a href="#" data-value="Germany">Germany</a></li>
+      <li><a href="#" data-value="Japan">Japan</a></li>
+      <li><a href="#" data-value="Korea">Korea</a></li>
+      <li><a href="#" data-value="Indonesia">Indonesia</a></li>
+      <li><a href="#" data-value="United Kingdom">United Kingdom</a></li>
+      <li><a href="#" data-value="United States">United States</a></li>
+    </ul>
+  </li>
+</ul>
+
+    </div>
+  </div>
+</div>
+  
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+<div class="row current-charts">
+<% @snapshots.each do |snapshot| %>
+  <div class="span4">
+    <div class="subnav">
+      <%= render "top", :snapshot => snapshot %>
+    </div>
+  </div>
+<% end %>
+</div>

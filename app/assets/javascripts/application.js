@@ -6,26 +6,84 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
 //= require FusionCharts
-//= require jquery.autocomplete.min
+//= require bootstrap.js
+//= require bootstrap-tab.js
 
 $(function() {
-  $("form .game-names input").autocomplete(window.autocomplete_game_url);
-	$("form .publisher-name input").autocomplete(window.autocomplete_publisher_url);
+  
+  $.setupUI = function() {
+    $(".historical-graph-filter input.search-query").autocomplete({source: window.game_autocomplete_url});
+    
+    $(".historical-graph-filter input.search-query").bind("autocompletesearch", function(e, ui) {
+      $(this).removeAttr("data-value");
+    });
+    
+    $(".historical-graph-filter input.search-query").bind("autocompleteselect", function(e, ui) {
+      $(this).attr("data-value", ui.item.value);
+      $(this).val(ui.item.label);
 
-	$("form .game-names p a.plus").live("click", function() {
-		var newField = $(this).parents("p").clone();
-		newField.children("input").val("");
-		newField.children("input").autocomplete(window.game_autocomplete_game_url);
-		
-		$(this).parents(".game-names").append( newField );
+      $(".historical-graph-chart #fusion-chart").historicalChart($(this).parents(".historical-graph-filter").uberFormData());
+
+      return false;
+    });
+    
+    $('.automagic-tabs li:not(.dropdown) a').attr('data-toggle', 'tab');
+    $('.automagic-tabs li:first a').tab('show');
+  }
+  
+  /**************************************************************************************************************
+  
+                                                  Common functions
+  
+  ***************************************************************************************************************/
+  
+  $.fn.uberFormData = function() {
+    var data = {};
+    
+    $.each($(this).children("*[data-name]"), function() {
+      data[ $(this).attr("data-name") ] = $(this).attr("data-value");
+    });
+    
+    return data;
+  }
+  
+  $(".dropdown-menu li a").live("click", function() {
+    $(this).parents(".dropdown").attr("data-value", $(this).attr("data-value"));
+  })
+  
+  $.fn.historicalChart = function(params) {
+    $.getScript(window.historical_url + "?" + $.param(params));
+	}
+  
+  /**************************************************************************************************************
+  
+                                                  UI handler functions
+  
+  ***************************************************************************************************************/ 
+  
+  $(".historical-graph-filter .dropdown-menu li a").live("click", function() {
+    $(".historical-graph-chart #fusion-chart").historicalChart($(".historical-graph-filter").uberFormData());
+  })
+  
+	$(".chart-config .dropdown-menu li a").live("click", function() {
+	  var data = $(this).parents(".chart-config").uberFormData();
+	  var chartContainer = $(this).parents(".subnav");
+	  
+	  chartContainer.html(window.loading_span);
+	  
+	  $.ajax({
+	    "url": window.show_chart_url + ".js", 
+	    "data": data, 
+	    "success": function(html) {
+	      chartContainer.html(html);
+      },
+      "type": "get",
+      "dataType": "html"
+	  });
 	});
 	
-	$("form .game-names p a.minus").live("click", function() {
-		$(this).parents("p").remove();
-	});
+	$.setupUI();
 	
-	$(".app-store-top ul li[game-url]").live("click", function() {
-		window.open($(this).attr("game-url"), "_blank");
-	});
 });

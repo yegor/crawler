@@ -1,3 +1,32 @@
+# == Schema Information
+#
+# Table name: meta_data
+#
+#  id                  :integer(4)      not null, primary key
+#  name                :string(255)
+#  summary             :text
+#  new_version         :boolean(1)      default(FALSE)
+#  game_id             :integer(4)
+#  created_at          :datetime
+#  updated_at          :datetime
+#  publisher           :string(255)
+#  rights              :text
+#  release_date        :datetime
+#  file_size_bytes     :integer(4)
+#  itunes_artwork_url  :string(255)
+#  itunes_id           :integer(8)
+#  release_notes       :string(255)
+#  game_center_enabled :boolean(1)
+#  genres              :string(255)
+#  screenshots         :string(255)
+#  version             :string(255)
+#
+# Indexes
+#
+#  index_meta_data_on_game_id    (game_id)
+#  index_meta_data_on_itunes_id  (itunes_id)
+#
+
 require 'spec_helper'
 
 describe MetaData do
@@ -80,3 +109,4 @@ describe MetaData do
   end
   
 end
+

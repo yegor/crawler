@@ -1,0 +1,32 @@
+<div class="row historical-graph">
+  <div class="span12">
+    <div class="subnav">
+      <%= render "filter" %>
+    </div>
+  </div>
+</div>
+
+<div class="row historical-graph-chart">
+  <%= render "chart" %>
+</div>
+
+<div class="row historical-details">
+  <div class="span12">
+  
+    <ul class="nav nav-tabs automagic-tabs">
+      <li>
+        <%= link_to "Ranking table", "#ranking-table" %>
+      </li>
+      
+      <li>
+        <%= link_to "App Store", "#app-store-view" %>
+      </li>
+
+    </ul>
+  
+  </div>
+  
+  <div class="tab-content">
+    <%= render "app_details" %>
+  </div>
+</div>

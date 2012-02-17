@@ -1,0 +1,4 @@
+<ul class="nav nav-pills historical-graph-filter">
+  <%= text_field_tag :application_name, @games.first.meta_data.name, :class => "input-medium search-query", "data-name" => "game_id", "data-value" => @games.first.itunes_id %>
+  <%= render "/common/chart_filter", :snapshot => @chart_snapshots.first %>
+</ul>

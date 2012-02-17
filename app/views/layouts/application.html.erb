@@ -4,8 +4,14 @@
   <title>Crawler</title>
   
   <%= javascript_tag do %>
-    window.autocomplete_game_url = <%= raw autocomplete_game_home_path.inspect %>;
-    window.autocomplete_publisher_url = <%= raw autocomplete_publisher_home_path.inspect %>;
+    window.show_chart_url = <%= raw charts_path.inspect %>;
+    window.game_autocomplete_url = <%= raw game_autocomplete_path.inspect %>;
+    
+    window.historical_url = <%= raw historicals_path(:format => :js).inspect %>;
+    window.table_ranking_chart_url = <%= raw table_historicals_path.inspect %>;
+    
+    window.loading_span = '<span class="loading-stub">Loading...</span>';
+    window.no_data_span = '<span class="no-data-stub">No data to display</span>';
   <% end %>
   
   <%= stylesheet_link_tag    "application" %>
@@ -14,8 +20,28 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="brand" href="#">Crawler</a>
+        
+        <ul class="nav">
+          <% %w(home charts historicals publishers).each do |cn| %>
+            <li class="<%= controller.controller_name == cn ? "active" : "" %>">
+              <%= link_to cn.capitalize, send("#{cn}_path") %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <div class="container content-container">
 
-<%= yield %>
+    <%= yield %>
+  
+  </div>
 
 </body>
 </html>

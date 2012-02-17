@@ -1,7 +1,23 @@
+# == Schema Information
+#
+# Table name: games
+#
+#  id           :integer(4)      not null, primary key
+#  release_date :datetime
+#  created_at   :datetime
+#  updated_at   :datetime
+#  itunes_id    :integer(8)
+#
+# Indexes
+#
+#  index_games_on_itunes_id  (itunes_id)
+#
+
 class Game < ActiveRecord::Base
   has_many :game_snapshots
   has_many :meta_datas, :class_name => "MetaData"
   has_one  :meta_data, :order => "meta_data.id DESC"
+  has_one  :first_meta_data, :class_name => "MetaData", :order => "meta_data.id ASC"
   
   validates_presence_of :itunes_id
   
@@ -30,3 +46,4 @@ class Game < ActiveRecord::Base
     
   end
 end
+

@@ -24,6 +24,11 @@ module HomeHelper
     "Top #{ snapshot.chart.country } #{ KINDS_TO_SHORTCUTS[snapshot.chart.kind] } #{ snapshot.chart.genre || "apps" }"
   end
   
+  #  Returns shorted country names
+  def country_shortcuts
+    COUNTRIES
+  end
+  
   #  Returns chart title to display above a graph.
   #
   #  * <tt>filter</tt>:: Filter record to process.

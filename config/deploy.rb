@@ -32,11 +32,17 @@ namespace :deploy do
   desc "Link in the database.yml and memcached.yml"
   task :link_configs do
     run "ln -nfs #{deploy_to}/#{shared_dir}/config/database.yml #{release_path}/config/database.yml"
+    run "ln -nfs #{deploy_to}/#{shared_dir}/config/sphinx.yml #{release_path}/config/sphinx.yml"
+    run "ln -nfs #{deploy_to}/#{shared_dir}/db/sphinx #{release_path}/db/sphinx"
   end
+  
   task :start do ; end
   task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "touch #{File.join(current_path,'tmp','restart.txt')}"
+    run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec rake ts:config"
+    run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec rake ts:index"
+    run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec rake ts:restart"
     run "cd #{current_path} && RAILS_ENV=#{rails_env} bundle exec rake assets:precompile"
   end
 end

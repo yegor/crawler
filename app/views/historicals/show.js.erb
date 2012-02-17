@@ -1,0 +1,10 @@
+$(".historical-graph .subnav").html(<%= raw render("filter").inspect %>);
+$(".historical-details .tab-content").html(<%= raw render("app_details").inspect %>);
+
+<% if @rankings.present? %>
+  $(".historical-graph-chart").html(<%= raw render("chart").inspect %>);
+<% else %>
+  $(".historical-graph-chart").html(window.no_data_span);
+<% end %>
+
+$.setupUI();

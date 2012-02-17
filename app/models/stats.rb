@@ -16,7 +16,7 @@ class Stats < ActiveRecord::Base
       results = ChartSnapshot
         .select("game_snapshots.rank as rank, meta_data.release_date as release_date, meta_data.new_version as new_version, meta_data.game_id as game_id, chart_snapshots.chart_id as chart_id, chart_snapshots.created_at as date")
         .where(:import_id => imports, :chart_id => options[:charts])
-        .joins("INNER JOIN game_snapshots ON game_snapshots.chart_snapshot_id = chart_snapshots.id AND game_snapshots.game_id IN ( #{options[:games].map(&:id).map(&:to_i).join(", ") } )")
+        .joins("INNER JOIN game_snapshots ON game_snapshots.chart_snapshot_id = chart_snapshots.id AND game_snapshots.game_id IN ( #{options[:games].map(&:id).join(", ") } )")
         .joins("INNER JOIN meta_data ON meta_data.id = game_snapshots.meta_data_id")
     
       charts_by_id = options[:charts].index_by(&:id)

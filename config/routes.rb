@@ -1,21 +1,28 @@
 Crawler::Application.routes.draw do
   
-  root :to => "home#index"
+  get "historical/show"
+
+  root :to => "home#show"
   
-  resource :home, :controller => "home" do
-    collection do
-      post :filter
-      post :by_publisher
-      get :autocomplete_game
-      get :autocomplete_publisher
-      get :chart
-      get :top
-      
-      # get :paid
-      # get :grossing
-      # get :free
+  resource :home, :controller => "home"
+  resource :charts 
+  
+  resource :historicals do
+    member do
+      get :show
+      get :ranking
+      get :table
     end
   end
+  
+  resource :autocomplete do
+    member do 
+      get :game
+      get :publisher
+    end
+  end
+  
+  resource :publishers
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

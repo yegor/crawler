@@ -1,0 +1,18 @@
+<div id="fusion-chart" class="span12">
+  <div id="chart-placeholder"><span>No data to display</span></div>
+</div>
+
+<% if @game_snapshot %>
+  <%= javascript_tag do %>
+    $(function() {
+      var chart = new FusionCharts( "Charts/InverseMSLine.swf", "Top Chart", "1028", "400", "0", "1" );
+      chart.setXMLUrl(<%= ranking_historicals_path(:game_id => @game_snapshot.itunes_id, 
+                                                  :kind => @game_snapshot.chart_snapshot.chart.kind, 
+                                                  :country => @game_snapshot.chart_snapshot.chart.country, 
+                                                  :genre => @game_snapshot.chart_snapshot.chart.genre, 
+                                                
+                                                  :format => "xml").inspect.html_safe %>);
+      chart.render("chart-placeholder");
+    })
+  <% end %>
+<% end %>

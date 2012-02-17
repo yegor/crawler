@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: games
+#
+#  id           :integer(4)      not null, primary key
+#  release_date :datetime
+#  created_at   :datetime
+#  updated_at   :datetime
+#  itunes_id    :integer(8)
+#
+# Indexes
+#
+#  index_games_on_itunes_id  (itunes_id)
+#
+
 require 'spec_helper'
 
 describe Game do

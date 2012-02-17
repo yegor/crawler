@@ -1,0 +1,17 @@
+<ul class="nav nav-pills chart-config">
+  <%= render "/common/chart_filter", :snapshot => snapshot %>
+</ul>
+
+<table class="table table-striped table-bordered table-condensed app-chart">
+  <thead>
+  </thead>
+  <tbody>
+    <% snapshot.game_snapshots.each do |game_snapshot| %>
+    <tr>
+      <td><%= game_snapshot.rank %></td>
+      <td class="app-icon"><%= image_tag game_snapshot.meta_data.itunes_artwork_url, :width => "24", :height => "24" %></td>
+      <td><%= link_to game_snapshot.meta_data.name, itunes_game_url(game_snapshot.game) %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

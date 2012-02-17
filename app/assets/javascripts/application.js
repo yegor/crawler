@@ -29,6 +29,7 @@ $(function() {
       return false;
     });
     
+    $('.automagic-tabs li').removeClass('active');
     $('.automagic-tabs li:not(.dropdown) a').attr('data-toggle', 'tab');
     $('.automagic-tabs li:first a').tab('show');
     

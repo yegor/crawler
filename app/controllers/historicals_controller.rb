@@ -13,12 +13,12 @@ protected
   #  Parses params and sets defaults if needed.
   #
   def parse_params
-    params[:country] ||= "United States"
-    params[:genre] ||= "games"
-    params[:kind] ||= "toppaidapplications"
-    params[:game_id] ||= 343200656
+    params[:country]    ||= "United States"
+    params[:genre]      ||= "games"
+    params[:kind]       ||= "toppaidapplications"
+    params[:game_id]    ||= 343200656
     params[:date_since] ||= 1.week.ago
-    params[:date_till] ||= 0.days.ago
+    params[:date_till]  ||= 0.days.ago
     
     @timespan = (params[:date_since].to_date .. params[:date_till].to_date)
     

@@ -124,6 +124,10 @@ body {
         }
     }
     
+    #ui-datepicker-div {
+        display: none;
+    }
+    
     .ui-autocomplete {
         z-index: 100000 !important;
     }

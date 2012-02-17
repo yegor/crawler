@@ -29,6 +29,7 @@ protected
     @game_snapshot = GameSnapshot.find_by_game_id_and_chart_snapshot_id(@games, @chart_snapshots)
     @rankings = Stats.raking_over_time(:games => @games, :charts => @charts, :timespan => @timespan) rescue []
     @table_rankings = @rankings.values.first.values.first rescue {}
+    @metas = @games.first.meta_datas
   end
 
 end

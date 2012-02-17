@@ -1,5 +1,6 @@
 $(".historical-graph .subnav").html(<%= raw render("filter").inspect %>);
 $(".historical-details .tab-content").html(<%= raw render("app_details").inspect %>);
+$(".historical-details .versions-dropdown").html(<%= raw render("versions_dropdown").inspect %>);
 
 <% if @rankings.present? %>
   $(".historical-graph-chart").html(<%= raw render("chart").inspect %>);

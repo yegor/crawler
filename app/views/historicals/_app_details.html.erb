@@ -5,3 +5,9 @@
 <div id="app-store-view" class="span12 tab-pane">
   <%= render "app_store_view", :meta_data => (@game_snapshot.meta_data || @games.first.meta_data) %>
 </div>
+
+<% @metas.each do |meta| %>
+<div id="meta<%= meta.id %>" class="span12 tab-pane">
+  <%= render "app_store_view", :meta_data => meta %>
+</div>
+<% end %>

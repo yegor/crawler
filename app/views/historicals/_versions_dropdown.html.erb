@@ -1,0 +1,9 @@
+<%= link_to "#", "data-toggle" => "dropdown" do %>
+  Versions <b class="caret"></b>
+<% end %>
+
+<ul class="dropdown-menu">
+  <% @metas.each do |meta| %>
+  <li><%= link_to "v#{ meta.version }", "#meta#{ meta.id }" %></li>
+  <% end %>
+</ul>

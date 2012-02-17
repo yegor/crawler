@@ -62,7 +62,7 @@
   
     <div class="span8">
       <blockquote>
-        <%= meta_data.summary.html_safe %>
+        <%= meta_data.summary.gsub(/\n/m, "<br />").html_safe %>
       </blockquote>
     </div>
   </div>

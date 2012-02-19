@@ -16,7 +16,7 @@ module AppStore
       ITUNES_IPHONE_URL_SUFFIX = "&pillIdentifier=iphone"
       ITUNES_IPAD_URL_SUFFIX = "&pillIdentifier=ipad"
       
-      SUPER_FEATURING_CSS_PATH = "body .content .showcase .stage a"
+      SUPER_FEATURING_CSS_PATH = "body .content .showcase a"
       BRICK_FEATURING_BRICK_CSS_PATH = "body .content .bricks a"
       SWOOSH_FEATURING_BRICK_CSS_PATH = "body .content .swoosh .lockup a.artwork-link"
       

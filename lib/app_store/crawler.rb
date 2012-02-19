@@ -39,12 +39,10 @@ module AppStore
         
         pids = Chart.group("country").all.map do |chart|
           fork do
-            import_id = import_id
-            
             ActiveRecord::Base.establish_connection
             
             features = AppStore::ItunesStore.crawl(chart.country)
-            snapshots = GameSnapshot.joins("INNER JOIN chart_snapshots ON chart_snapshots.chart_id = #{chart.id} AND chart_snapshots.import_id = #{ import_id.to_i } AND chart_snapshots.id = game_snapshots.chart_snapshot_id").where(:itunes_id => features.keys)
+            snapshots = GameSnapshot.select("game_snapshots.id").joins("INNER JOIN chart_snapshots ON chart_snapshots.chart_id = #{chart.id} AND chart_snapshots.import_id = #{ import_id.to_i } AND chart_snapshots.id = game_snapshots.chart_snapshot_id").where(:itunes_id => features.keys)
             
             bulk_sql = snapshots.map do |snapshot|
               features[ snapshot.itunes_id.to_s ].map do |feature|

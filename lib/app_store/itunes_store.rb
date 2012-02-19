@@ -18,7 +18,7 @@ module AppStore
       
       SUPER_FEATURING_CSS_PATH = "body .content .showcase a"
       BRICK_FEATURING_BRICK_CSS_PATH = "body .content .bricks a"
-      SWOOSH_FEATURING_BRICK_CSS_PATH = "body .content .swoosh .lockup a.artwork-link"
+      SWOOSH_FEATURING_BRICK_CSS_PATH = "body .content .lockup a.artwork-link"
       
       CATEGORIES_CSS_PATH = "body .right-stack form select option"
       QUICK_LINKS_CSS_PATH = "body .right-stack .chart[@metric-loc='Listbox_App Store Quick Links'] li a"
@@ -143,7 +143,7 @@ module AppStore
         
         return [:category, url.match(/viewGenre\?id\=(\d+)/)[1]] if url.include?("viewGenre?id=")
         return [:category, url.match(/viewGrouping\?id\=(\d+)/)[1]] if url.include?("viewGrouping?id=")
-        return [:room, url.match(/viewMultiRoom\?fcId\=(\d+)/)[1]] if url.include?("viewMultiRoom?fcId=")
+        return [:room, url.match(/viewMultiRoom=\?fcId\=(\d+)/)[1]] if url.include?("viewMultiRoom?fcId=")
         return [:app, url.match(/.+id(\d+)/)[1]] if url =~ /\/id\d+/
         
         [nil, nil]

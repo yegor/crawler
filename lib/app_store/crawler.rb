@@ -42,7 +42,7 @@ module AppStore
             ActiveRecord::Base.establish_connection
             
             features = AppStore::ItunesStore.crawl(chart.country)
-            snapshots = GameSnapshot.where(:itunes_id => features.keys, :import_id => import_id)
+            snapshots = GameSnapshot.joins("INNER JOIN chart_snapshots ON chart_snapshots.chart_id = #{chart.id} AND chart_snapshots.import_id = #{ import_id.to_i } AND chart_snapshots.id = game_snapshots.chart_snapshot_id").where(:itunes_id => features.keys)
             
             bulk_sql = snapshots.map do |snapshot|
               features[ snapshot.itunes_id.to_s ].map do |feature|

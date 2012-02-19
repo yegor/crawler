@@ -110,7 +110,7 @@ module AppStore
           document.search(CATEGORIES_CSS_PATH).each do |opt|
             url = page_path_from_url(opt["value"])
             uid = uid_from_path(url, base_store_url)
-
+          
             urls << url_for_store(url, store) if (uid.first.present? and uid.first != :app and crawled_urls[url_signature(url)].blank?)
           end
         end

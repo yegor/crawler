@@ -39,6 +39,8 @@ module AppStore
         
         pids = Chart.group("country").all.map do |chart|
           fork do
+            import_id = import_id
+            
             ActiveRecord::Base.establish_connection
             
             features = AppStore::ItunesStore.crawl(chart.country)

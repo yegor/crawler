@@ -10,7 +10,7 @@ module AppStore
       
       include AppStore::ChartConfig
       
-      ITUNES_MAIN_PAGE_URL = "/WebObjects/MZStore.woa/wa/viewGrouping?id=25204&mt=8"
+      ITUNES_STORE_FRONT_URL = "/WebObjects/MZStore.woa/wa/viewGenre?id=36&mt=8"
       
       ITUNES_UA_HEADERS = {"User-Agent" => "iTunes/10.5.2"}
       ITUNES_IPHONE_URL_SUFFIX = "&pillIdentifier=iphone"
@@ -28,10 +28,13 @@ module AppStore
       #  * <tt>country_name</tt>:: Name of the country to collect featuring for.
       #
       def crawl(country_name)
-        urls = [ ITUNES_MAIN_PAGE_URL + ITUNES_IPAD_URL_SUFFIX, ITUNES_MAIN_PAGE_URL + ITUNES_IPHONE_URL_SUFFIX ]
-        
         http = Net::HTTP.new("itunes.apple.com", 80)
         headers = ITUNES_UA_HEADERS.merge("X-Apple-Store-Front" => COUNTRY_TO_STORE_FRONTS[ country_name ])
+        
+        body = http.get(ITUNES_STORE_FRONT_URL, headers).body
+        base_store_url = CGI.unescapeHTML(body.match(/\<string\>(http\:\/\/[^\<]+)\<\/string\>/m)[1])
+        
+        urls = [ base_store_url + ITUNES_IPAD_URL_SUFFIX, base_store_url + ITUNES_IPHONE_URL_SUFFIX ]
         
         crawled_urls = {}
         result = {}
@@ -49,7 +52,9 @@ module AppStore
           body = http.get(url, headers).body
           
           unless body =~ /\<body/
-            go_to_url = CGI.unescapeHTML(body.match(/\<string\>(http\:\/\/.+)\<\/string\>/m)[1])
+            next if body =~ /\<key\>failureType\<\/key\>/
+            
+            go_to_url = CGI.unescapeHTML(body.match(/\<string\>(http\:\/\/[^\<]+)\<\/string\>/m)[1])
             puts "Just got a plist from #{url} - redirecting ourselves to #{go_to_url}"
             
             crawled_urls[ url_signature(url) ] = true
@@ -65,7 +70,7 @@ module AppStore
           
           puts "#{url} - #{ title } for #{ store }, still has to fuck through #{ urls.size }"
                     
-          page = Featuring::Page::Base.for_uid(store, uid_from_path(url), title)
+          page = Featuring::Page::Base.for_uid(store, uid_from_path(url, base_store_url), title)
           
           # iterate over all features
           {Featuring::Feature::Super => SUPER_FEATURING_CSS_PATH, 
@@ -79,7 +84,7 @@ module AppStore
               next unless link["href"].starts_with?("http://")
               
               url = page_path_from_url(link["href"])              
-              uid = uid_from_path(url)
+              uid = uid_from_path(url, base_store_url)
 
               if uid.first == :app
                 featuring = klass.find_or_create_by_page_id_and_rank(page.id, index)
@@ -96,7 +101,7 @@ module AppStore
           # iterate over quick links
           document.search(QUICK_LINKS_CSS_PATH).each do |link|
             url = page_path_from_url(link["href"])
-            uid = uid_from_path(url)
+            uid = uid_from_path(url, base_store_url)
             
             urls << url_for_store(url, store) if (uid.first.present? and uid.first != :app and crawled_urls[url_signature(url)].blank?)
           end
@@ -104,7 +109,7 @@ module AppStore
           # iterate over all categories
           document.search(CATEGORIES_CSS_PATH).each do |opt|
             url = page_path_from_url(opt["value"])
-            uid = uid_from_path(url)
+            uid = uid_from_path(url, base_store_url)
 
             urls << url_for_store(url, store) if (uid.first.present? and uid.first != :app and crawled_urls[url_signature(url)].blank?)
           end
@@ -127,7 +132,7 @@ module AppStore
       
       def url_signature(url)
         url, store = store_and_url_from_url(url)
-        (uid_from_path(url) + [store]).join("_")
+        (uid_from_path(url, "I don't give a fuck about main page here") + [store]).join("_")
       end
     
       #  Extracts path from an URL.
@@ -138,11 +143,9 @@ module AppStore
       
       #  Extracts an UID (room, grouping or app) from an URL/path.
       #
-      def uid_from_path(url)
-        return [:main, 0] if url.include?(ITUNES_MAIN_PAGE_URL)
+      def uid_from_path(url, base_store_url)
+        return [:main, 0] if url.include?(base_store_url)
 
-        p url
-        
         return [:category, url.match(/viewGenre\?id\=(\d+)/)[1]] if url.include?("viewGenre?id=")
         return [:category, url.match(/viewGrouping\?id\=(\d+)/)[1]] if url.include?("viewGrouping?id=")
         return [:room, url.match(/viewMultiRoom\?fcId\=(\d+)/)[1]] if url.include?("viewMultiRoom?fcId=")

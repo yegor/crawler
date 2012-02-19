@@ -38,6 +38,8 @@ class GameSnapshot < ActiveRecord::Base
   validates_presence_of :chart_snapshot
   validates_presence_of :itunes_id
   
+  has_and_belongs_to_many :featurings, :class_name => "Featuring::Feature::Base"
+  
   # before_validation :set_itunes_id
   
   scope :not_yet_sexy, where(:appstore_syncronized => false)

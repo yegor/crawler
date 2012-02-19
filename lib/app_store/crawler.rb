@@ -34,6 +34,27 @@ module AppStore
           
           pids.each { |pid| Process.wait(pid) }
         end
+        
+        ActiveRecord::Base.establish_connection
+        
+        pids = Chart.group("country").all.map do |chart|
+          fork do
+            ActiveRecord::Base.establish_connection
+            
+            features = AppStore::ItunesStore.crawl(chart.country)
+            snapshots = GameSnapshot.where(:itunes_id => features.keys, :import_id => import_id)
+            
+            bulk_sql = snapshots.map do |snapshot|
+              features[ snapshot.itunes_id.to_s ].map do |feature|
+                "(#{ snapshot.id }, #{ feature.id })"
+              end
+            end.flatten.join(", ")
+            
+            GameSnapshot.connection.execute "INSERT INTO featurings_game_snapshots (game_snapshot_id, featuring_id) VALUES #{ bulk_sql }"
+          end
+        end
+        
+        pids.each { |pid| Process.wait(pid) }
       end
       
       #  Fetches meta data for loaded games

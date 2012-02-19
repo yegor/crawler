@@ -32,6 +32,7 @@ gem "rspec-rails", ">= 2.6.1", :group => [:development, :test]
 gem 'factory_girl', :group => [:development, :test]
 gem 'whenever'
 gem 'thinking-sphinx'
+gem 'hpricot'
 
 group :test do
   # Pretty printed test output

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111230100813) do
+ActiveRecord::Schema.define(:version => 20120219180321) do
 
   create_table "chart_snapshots", :force => true do |t|
     t.integer  "import_id"
@@ -31,6 +31,23 @@ ActiveRecord::Schema.define(:version => 20111230100813) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "featurings", :force => true do |t|
+    t.string   "type",       :limit => 0
+    t.integer  "rank",                    :null => false
+    t.integer  "page_id",                 :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "featurings", ["type", "page_id", "rank"], :name => "index_featurings_on_type_and_page_id_and_rank", :unique => true
+
+  create_table "featurings_game_snapshots", :id => false, :force => true do |t|
+    t.integer "featuring_id",     :null => false
+    t.integer "game_snapshot_id", :null => false
+  end
+
+  add_index "featurings_game_snapshots", ["featuring_id", "game_snapshot_id"], :name => "idx_featurings_game_snapshots", :unique => true
 
   create_table "game_snapshots", :force => true do |t|
     t.integer  "rank"
@@ -93,5 +110,16 @@ ActiveRecord::Schema.define(:version => 20111230100813) do
   add_index "meta_data", ["game_id", "hashcode"], :name => "index_meta_data_on_game_id_and_hashcode", :unique => true
   add_index "meta_data", ["game_id"], :name => "index_meta_data_on_game_id"
   add_index "meta_data", ["itunes_id"], :name => "index_meta_data_on_itunes_id"
+
+  create_table "pages", :force => true do |t|
+    t.string   "title",                   :null => false
+    t.string   "uid",                     :null => false
+    t.string   "store",      :limit => 0, :null => false
+    t.string   "type",       :limit => 0, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "pages", ["store", "uid"], :name => "index_pages_on_store_and_uid", :unique => true
 
 end

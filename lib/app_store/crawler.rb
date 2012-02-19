@@ -1,4 +1,4 @@
-require 'open-uri'
+  require 'open-uri'
 require 'json'
 
 # FIXME: perfomance

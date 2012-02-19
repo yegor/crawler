@@ -140,10 +140,12 @@ module AppStore
       #
       def uid_from_path(url)
         return [:main, 0] if url.include?(ITUNES_MAIN_PAGE_URL)
+
+        p url
         
         return [:category, url.match(/viewGenre\?id\=(\d+)/)[1]] if url.include?("viewGenre?id=")
         return [:category, url.match(/viewGrouping\?id\=(\d+)/)[1]] if url.include?("viewGrouping?id=")
-        return [:room, url.match(/viewMultiRoom=\?fcId\=(\d+)/)[1]] if url.include?("viewMultiRoom?fcId=")
+        return [:room, url.match(/viewMultiRoom\?fcId\=(\d+)/)[1]] if url.include?("viewMultiRoom?fcId=")
         return [:app, url.match(/.+id(\d+)/)[1]] if url =~ /\/id\d+/
         
         [nil, nil]

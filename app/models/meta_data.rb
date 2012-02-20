@@ -44,7 +44,7 @@ class MetaData < ActiveRecord::Base
   
   before_save :ensure_hashcode!
   
-  scope :with_country, select("meta_data.*, charts.country as country").
+  scope :with_country, select("meta_data.*, GROUP_CONCAT(charts.country SEPARATOR ', ') as country").
                        group("meta_data.id").
                        joins("INNER JOIN game_snapshots  ON game_snapshots.meta_data_id = meta_data.id
                               INNER JOIN chart_snapshots ON game_snapshots.chart_snapshot_id = chart_snapshots.id

@@ -20,8 +20,8 @@ module HomeHelper
   
   #  Returns the title for the top.
   #
-  def top_title(snapshot)
-    "Top #{ snapshot.chart.country } #{ KINDS_TO_SHORTCUTS[snapshot.chart.kind] } #{ snapshot.chart.genre || "apps" }"
+  def chart_title(chart)
+    "#{ COUNTRIES[chart.country] } #{ KINDS_TO_SHORTCUTS[chart.kind] } #{ chart.genre || "apps" } rank"
   end
   
   #  Returns shorted country names

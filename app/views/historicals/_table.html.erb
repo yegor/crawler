@@ -3,15 +3,21 @@
     <tr>
       <th>Date</th>
       <th>Hour</th>
-      <th>Rank</th>
+      
+      <% @rankings.each do |chart, data| %>
+      <th><%= chart_title(chart) %></th>
+      <% end %>
     </tr>
   </thead>
   <tbody>
-    <% @table_rankings.keys.sort.reverse.each do |date| %>
+    <% @dates.each do |date| %>
     <tr>
       <td><%= date.strftime("%d %h") %></td>
       <td><%= date.hour %></td>
-      <td><%= @table_rankings[date].rank %></td>
+      
+      <% @rankings.each do |chart, data| %> 
+      <td><%= data.first.try(:[], date).try(:rank) || "&mdash;".html_safe %></td>
+      <% end %>
     </tr>
     <% end %>
   </tbody>

@@ -16,7 +16,7 @@
       <td><%= date.hour %></td>
       
       <% @rankings.each do |chart, data| %> 
-      <td><%= data.first.try(:[], date).try(:rank) || "&mdash;".html_safe %></td>
+      <td><%= data.values.first.try(:[], date).try(:rank) || "&mdash;".html_safe %></td>
       <% end %>
     </tr>
     <% end %>

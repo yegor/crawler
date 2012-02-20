@@ -1,0 +1,2 @@
+module FeaturingsHelper
+end

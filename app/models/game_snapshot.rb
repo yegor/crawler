@@ -38,7 +38,7 @@ class GameSnapshot < ActiveRecord::Base
   validates_presence_of :chart_snapshot
   validates_presence_of :itunes_id
   
-  has_and_belongs_to_many :featurings, :class_name => "Featuring::Feature::Base"
+  has_and_belongs_to_many :featurings, :join_table => :featurings_game_snapshots, :association_foreign_key => :featuring_id, :class_name => "Featuring::Feature::Base"
   
   # before_validation :set_itunes_id
   

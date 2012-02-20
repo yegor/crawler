@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120219180321) do
+ActiveRecord::Schema.define(:version => 20120220202435) do
 
   create_table "chart_snapshots", :force => true do |t|
     t.integer  "import_id"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(:version => 20120219180321) do
   end
 
   add_index "featurings_game_snapshots", ["featuring_id", "game_snapshot_id"], :name => "idx_featurings_game_snapshots", :unique => true
+  add_index "featurings_game_snapshots", ["game_snapshot_id", "featuring_id"], :name => "idx_featurings_game_snapshots2", :unique => true
 
   create_table "game_snapshots", :force => true do |t|
     t.integer  "rank"

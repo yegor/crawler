@@ -28,15 +28,7 @@ module HomeHelper
   def country_shortcuts
     COUNTRIES
   end
-  
-  #  Returns chart title to display above a graph.
-  #
-  #  * <tt>filter</tt>:: Filter record to process.
-  #
-  def chart_title(filter)
-    "Top #{ KINDS_TO_SHORTCUTS[filter.chart_kinds.first] } rankings"
-  end
-  
+    
   #  Returns filter countries to be used.
   #
   def filter_countries

@@ -1,5 +1,7 @@
 Crawler::Application.routes.draw do
   
+  get "featurings/show"
+
   get "historical/show"
 
   root :to => "home#show"
@@ -21,6 +23,8 @@ Crawler::Application.routes.draw do
       get :publisher
     end
   end
+  
+  resource :featurings
   
   resource :publishers
   

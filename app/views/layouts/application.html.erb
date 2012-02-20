@@ -27,7 +27,7 @@
         <a class="brand" href="#">Crawler</a>
         
         <ul class="nav">
-          <% %w(home charts historicals publishers).each do |cn| %>
+          <% %w(home charts historicals featurings publishers).each do |cn| %>
             <li class="<%= controller.controller_name == cn ? "active" : "" %>">
               <%= link_to cn.capitalize, send("#{cn}_path") %>
             </li>

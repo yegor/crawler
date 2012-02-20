@@ -4,6 +4,6 @@
 
 <ul class="dropdown-menu">
   <% @metas.each do |meta| %>
-  <li><%= link_to "v#{ meta.version } – #{ meta.country }".html_safe, "#meta#{ meta.id }" %></li>
+  <li><%= link_to "v#{ meta.version } – #{ meta.countries }".html_safe, "#meta#{ meta.id }" %></li>
   <% end %>
 </ul>

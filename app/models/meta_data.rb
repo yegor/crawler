@@ -31,6 +31,8 @@ require "iconv"
 require "digest/sha2"
 
 class MetaData < ActiveRecord::Base
+  include AppStore::ChartConfig
+  
   serialize :genres, Array
   serialize :screenshots, Array
   
@@ -44,7 +46,7 @@ class MetaData < ActiveRecord::Base
   
   before_save :ensure_hashcode!
   
-  scope :with_country, select("meta_data.*, GROUP_CONCAT(charts.country SEPARATOR ', ') as country").
+  scope :with_country, select("meta_data.*, GROUP_CONCAT(charts.country SEPARATOR '|') as country_array").
                        group("meta_data.id").
                        joins("INNER JOIN game_snapshots  ON game_snapshots.meta_data_id = meta_data.id
                               INNER JOIN chart_snapshots ON game_snapshots.chart_snapshot_id = chart_snapshots.id
@@ -103,6 +105,10 @@ class MetaData < ActiveRecord::Base
         MetaData.where(:id => non_versions).update_all(:new_version => false)
       end
     end
+  end
+  
+  def countries
+    @countries ||= self.country_array.split("|").uniq.map { |full_name| COUNTRIES[full_name] }.join(", ")
   end
   
   def ensure_hashcode!

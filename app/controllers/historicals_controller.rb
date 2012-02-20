@@ -25,10 +25,10 @@ protected
     @charts = Chart.find_or_initialize_with(params)
     @game = Game.find_by_itunes_id(params[:game_id])
     
-    @rankings = Stats.raking_over_time(:games => @games, :charts => @charts, :timespan => @timespan) rescue {}   
+    @rankings = Stats.raking_over_time(:games => [@game], :charts => @charts, :timespan => @timespan) rescue {}   
     @table_rankings = @rankings.values.first.values.first rescue {}
     
-    @metas = MetaData.with_country.where(:itunes_id => params[:game_id]).all
+    @metas = MetaData.with_country.includes(:game).where(:itunes_id => params[:game_id]).all
     @meta = @metas.detect { |m| params[:country].to_a.include?(m.country) } || @metas.sort_by(&:updated_at).last
   end
 

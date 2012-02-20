@@ -112,7 +112,7 @@ class MetaData < ActiveRecord::Base
   end
   
   def country_array
-    @country_array = read_attribute(:country).split("|").uniq.select(&:present?)
+    @country_array = read_attribute(:country_array).split("|").uniq.select(&:present?)
   end
   
   def ensure_hashcode!

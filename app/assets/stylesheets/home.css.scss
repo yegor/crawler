@@ -183,7 +183,10 @@ body {
     
     .versions-dropdown {
         .dropdown-menu {
-            width: 250px !important;
+            width: 350px !important;
+            li {
+                width: 350px !important;
+            }
         }
     }
     

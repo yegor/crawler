@@ -108,7 +108,11 @@ class MetaData < ActiveRecord::Base
   end
   
   def countries
-    @countries ||= self.country_array.split("|").uniq.compact.map { |full_name| COUNTRIES[full_name] }.join(", ")
+    @countries ||= self.country_array.map { |full_name| COUNTRIES[full_name] }.join(", ")
+  end
+  
+  def country_array
+    @country_array = read_attribute(:country).split("|").uniq.select(&:present?)
   end
   
   def ensure_hashcode!

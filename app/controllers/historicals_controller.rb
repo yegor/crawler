@@ -29,7 +29,7 @@ protected
     @table_rankings = @rankings.values.first.values.first rescue {}
     
     @metas = MetaData.with_country.includes(:game).where(:itunes_id => params[:game_id]).all
-    @meta = @metas.detect { |m| (params[:country] & m.country_array.split("|")).present? } } || @metas.sort_by(&:updated_at).last
+    @meta = @metas.detect { |m| (params[:country] & m.country_array.split("|")).present? } || @metas.sort_by(&:updated_at).last
   end
 
 end

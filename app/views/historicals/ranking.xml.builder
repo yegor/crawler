@@ -3,7 +3,7 @@ max = @rankings.values.map { |v| v.values.map { |vv| vv.values.map(&:rank).max }
 
 xml.instruct!
 xml.chart :caption => "Rankings over time",
-          :showLegend => 0,
+          :showLegend => 1,
           :yAxisMaxValue => [max.to_i, 15].max,
           :yAxisMinValue => 1,
           :showBorder => 0,

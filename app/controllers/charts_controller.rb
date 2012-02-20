@@ -10,8 +10,6 @@ class ChartsController < ApplicationController
       end
       
       format.js do
-        params[:genre] = nil if params[:genre] == "all"
-        
         @chart = Chart.find_or_initialize_with(params).first
         @snapshot = ChartSnapshot.with_includes_for_charts.where(:chart_id => @chart, :import_id => Import.last).first
       end

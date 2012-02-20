@@ -13,9 +13,10 @@ protected
   #  Parses params and sets defaults if needed.
   #
   def parse_params
-    params[:country]    ||= "United States"
-    params[:genre]      ||= "games"
-    params[:kind]       ||= "toppaidapplications"
+    params[:country]    = (params[:country] || "United States").split(",")
+    params[:genre]      = (params[:genre] || "games").split(",")
+    params[:kind]       = (params[:kind] || "toppaidapplications").split(",")
+    
     params[:game_id]    ||= 343200656
     params[:date_since] ||= 1.week.ago
     params[:date_till]  ||= 0.days.ago

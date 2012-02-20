@@ -46,11 +46,11 @@ module HomeHelper
   #  Returns available charts to draw.
   #
   def filter_charts
-    KINDS_TO_SHORTCUTS
+    KINDS_TO_SHORTCUTS.inject({}) { |m, (c, d)| m.merge(c => "Top #{d}") }
   end
   
   def filter_categories
-    %w(all games)
+    %w(all games).inject({}) { |m, c| m.merge(c => c.capitalize) }
   end
   
   #  Returns options for game select.

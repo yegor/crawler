@@ -28,7 +28,9 @@ class Chart < ActiveRecord::Base
     #
     def find_or_initialize_with(attrs)
       countries, genres, kinds = attrs[:country].to_a, attrs[:genre].to_a, attrs[:kind].to_a
+      
       countries.product(genres).product(kinds).map(&:flatten).map do |settings|
+        settings[1] = nil if settings[1] == "all"
         find_or_initialize_by_country_and_genre_and_kind(*settings)
       end
     end

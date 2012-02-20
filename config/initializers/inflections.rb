@@ -12,7 +12,7 @@
 # I want this shit!
 class Object
   def to_a
-    return self if self.is_a?(Array)
+    return self if self.is_a?(Enumerable)
     [self]
   end
 end

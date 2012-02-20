@@ -1,0 +1,22 @@
+<%= content_tag :li, :class => "dropdown #{ multiple ? "multiple-options" : "" }", :"data-value" => selected_values.to_a.join(","), :"data-name" => field do %>
+  <%= link_to "#", :class => "dropdown-toggle", :"data-toggle" => "dropdown" do %>
+    <%= display_value %>
+    <b class="caret"></b>
+  <% end %>
+
+  <ul class="dropdown-menu">
+    <% choices.each do |value, display_value| %>
+    
+      <% if multiple %>
+      <li>
+        <%= link_to "#", :"data-value" => value do %>
+          <%= check_box_tag "option", value, selected_values.to_a.include?(value) %> <%= display_value %>
+        <% end %>
+      </li>
+      <% else %>
+      <li><%= link_to display_value, "#", :"data-value" => value %></li>
+      <% end %>
+    
+    <% end %>
+  </ul>
+<% end %>

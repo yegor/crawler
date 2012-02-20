@@ -6,9 +6,9 @@
   $(function() {
     var chart = new FusionCharts( "Charts/InverseMSLine.swf", "Top Chart", "1028", "400", "0", "1" );
     chart.setXMLUrl(<%= ranking_historicals_path(:game_id => @meta.itunes_id, 
-                                                :kind => @charts.map(&:kind), 
-                                                :country => @charts.map(&:country), 
-                                                :genre => @charts.map(&:genre), 
+                                                :kind => @charts.map(&:kind).uniq.join(","), 
+                                                :country => @charts.map(&:country).uniq.join(","), 
+                                                :genre => @charts.map(&:genre).uniq.join(","), 
                                                 :date_since => @timespan.first.to_date,
                                                 :date_till => @timespan.last.to_date,
                                               

@@ -59,8 +59,30 @@ $(function() {
     return data;
   }
   
-  $(".dropdown-menu li a").live("click", function() {
-    $(this).parents(".dropdown").attr("data-value", $(this).attr("data-value"));
+  $(".dropdown-menu li a").live("click", function(e) {
+    var dropdown = $(this).parents(".dropdown");
+    
+    if (dropdown.hasClass("multiple-options")) {
+      
+      if (e.target.tagName != "INPUT") {
+        var checkbox = $(this).find("input");
+      
+        if (checkbox.attr("checked")) {
+          checkbox.removeAttr("checked");
+        } else {
+          checkbox.attr("checked", "");
+        }
+      }
+      
+      var currentOptions = [];
+      $.each(dropdown.find("input[checked]"), function(i) {
+        currentOptions.push( $(this).val() );
+      });
+      
+      dropdown.attr("data-value", currentOptions);
+    } else {
+      dropdown.attr("data-value", $(this).attr("data-value"));
+    }
   })
   
   $.fn.historicalChart = function(params) {

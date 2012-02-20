@@ -2,19 +2,17 @@
   <div id="chart-placeholder"><span>No data to display</span></div>
 </div>
 
-<% if @game_snapshot %>
-  <%= javascript_tag do %>
-    $(function() {
-      var chart = new FusionCharts( "Charts/InverseMSLine.swf", "Top Chart", "1028", "400", "0", "1" );
-      chart.setXMLUrl(<%= ranking_historicals_path(:game_id => @game_snapshot.itunes_id, 
-                                                  :kind => @game_snapshot.chart_snapshot.chart.kind, 
-                                                  :country => @game_snapshot.chart_snapshot.chart.country, 
-                                                  :genre => @game_snapshot.chart_snapshot.chart.genre, 
-                                                  :date_since => @timespan.first.to_date,
-                                                  :date_till => @timespan.last.to_date,
-                                                
-                                                  :format => "xml").inspect.html_safe %>);
-      chart.render("chart-placeholder");
-    })
-  <% end %>
+<%= javascript_tag do %>
+  $(function() {
+    var chart = new FusionCharts( "Charts/InverseMSLine.swf", "Top Chart", "1028", "400", "0", "1" );
+    chart.setXMLUrl(<%= ranking_historicals_path(:game_id => @meta.itunes_id, 
+                                                :kind => @charts.map(&:kind), 
+                                                :country => @charts.map(&:country), 
+                                                :genre => @charts.map(&:genre), 
+                                                :date_since => @timespan.first.to_date,
+                                                :date_till => @timespan.last.to_date,
+                                              
+                                                :format => "xml").inspect.html_safe %>);
+    chart.render("chart-placeholder");
+  })
 <% end %>

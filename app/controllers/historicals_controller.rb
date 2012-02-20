@@ -22,14 +22,14 @@ protected
     
     @timespan = (params[:date_since].to_date .. params[:date_till].to_date)
     
-    @charts = Chart.where(["country = ? AND COALESCE(genre, 'all') = ? AND kind = ?", params[:country], params[:genre], params[:kind]]).all
-    @chart_snapshots = ChartSnapshot.with_includes_for_charts.where(:chart_id => @charts, :import_id => Import.last).all
-    @games = Game.where(:itunes_id => params[:game_id]).all
+    @charts = Chart.find_or_initialize_with(params)
+    @game = Game.find_by_itunes_id(params[:game_id])
     
-    @game_snapshot = GameSnapshot.find_by_game_id_and_chart_snapshot_id(@games, @chart_snapshots)
-    @rankings = Stats.raking_over_time(:games => @games, :charts => @charts, :timespan => @timespan) rescue []
+    @rankings = Stats.raking_over_time(:games => @games, :charts => @charts, :timespan => @timespan) rescue {}   
     @table_rankings = @rankings.values.first.values.first rescue {}
-    @metas = @games.first.meta_datas
+    
+    @metas = MetaData.with_country.where(:itunes_id => params[:game_id]).all
+    @meta = @metas.detect { |m| params[:country].to_a.include?(m.country) } || @metas.sort_by(&:updated_at).last
   end
 
 end

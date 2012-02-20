@@ -1,6 +1,6 @@
 <ul class="nav nav-pills historical-graph-filter">
-  <%= text_field_tag :application_name, @games.first.meta_data.name, :class => "input-medium search-query", "data-name" => "game_id", "data-value" => @games.first.itunes_id %>
-  <%= render "/common/chart_filter", :snapshot => @chart_snapshots.first %>
+  <%= text_field_tag :application_name, @game.try(:meta_data).try(:name), :class => "input-medium search-query", "data-name" => "game_id", "data-value" => params[:game_id] %>
+  <%= render "/common/chart_filter", :chart => @charts.first %>
 
   <li class="date-select rightmost" data-name="date_till" data-value="<%= @timespan.last.to_date %>">
     &mdash;<%= text_field_tag :date_till, @timespan.last.to_date %>

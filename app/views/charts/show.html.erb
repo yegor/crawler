@@ -1,8 +1,8 @@
 <div class="row current-charts">
-<% @snapshots.each do |snapshot| %>
+<% @charts.each do |chart| %>
   <div class="span4">
     <div class="subnav">
-      <%= render "top", :snapshot => snapshot %>
+      <%= render "top", :chart => chart, :snapshot => @snapshots.detect { |sn| sn.chart == chart } %>
     </div>
   </div>
 <% end %>

@@ -1,6 +1,6 @@
-<li class="dropdown" data-name="kind" data-value="<%= snapshot.chart.kind %>">
+<li class="dropdown" data-name="kind" data-value="<%= chart.kind %>">
   <%= link_to "#", :class => "dropdown-toggle", :"data-toggle" => "dropdown" do %>
-    Top <%= filter_charts[ snapshot.chart.kind ] %>
+    Top <%= filter_charts[ chart.kind ] %>
     <b class="caret"></b>
   <% end %>
 
@@ -11,9 +11,9 @@
   </ul>
 </li>
 
-<li class="dropdown" data-name="genre" data-value="<%= snapshot.chart.genre %>">
+<li class="dropdown" data-name="genre" data-value="<%= chart.genre %>">
   <%= link_to "#", :class => "dropdown-toggle", :"data-toggle" => "dropdown" do %>
-    <%= (snapshot.chart.genre || "all").capitalize %>
+    <%= (chart.genre || "all").capitalize %>
     <b class="caret"></b>
   <% end %>
 
@@ -24,9 +24,9 @@
   </ul>
 </li>
 
-<li class="dropdown" data-name="country" data-value="<%= snapshot.chart.country %>">
+<li class="dropdown" data-name="country" data-value="<%= chart.country %>">
   <%= link_to "#", :class => "dropdown-toggle", :"data-toggle" => "dropdown" do %>
-    <%= country_shortcuts[snapshot.chart.country] %>
+    <%= country_shortcuts[chart.country] %>
     <b class="caret"></b>
   <% end %>
 

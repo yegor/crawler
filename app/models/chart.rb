@@ -20,6 +20,21 @@ class Chart < ActiveRecord::Base
   
   has_many :chart_snapshots
   
+  class << self
+    
+    #  Finds or initializes the charts by settings passed.
+    #
+    #  * <tt>attrs</tt>:: A +Hash+ of attributes to initialize the chart with.
+    #
+    def find_or_initialize_with(attrs)
+      countries, genres, kinds = attrs[:country].to_a, attrs[:genre].to_a, attrs[:kind].to_a
+      countries.product(genres).product(kinds).map(&:flatten).map do |settings|
+        find_or_initialize_by_country_and_genre_and_kind(*settings)
+      end
+    end
+    
+  end
+  
   #  Returns the RSS url for fetching chart-specific data
   #
   def url

@@ -8,3 +8,11 @@
 #   inflect.irregular 'person', 'people'
 #   inflect.uncountable %w( fish sheep )
 # end
+
+# I want this shit!
+class Object
+  def to_a
+    return self if self.is_a?(Array)
+    [self]
+  end
+end

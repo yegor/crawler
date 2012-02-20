@@ -37,12 +37,12 @@ module AppStore
         
         ActiveRecord::Base.establish_connection
         
-        pids = Chart.group("country").all.map do |chart|
+        pids = Chart.all.group_by(&:country).map do |country, charts|
           fork do
             ActiveRecord::Base.establish_connection
             
-            features = AppStore::ItunesStore.crawl(chart.country)
-            snapshots = GameSnapshot.select("game_snapshots.*").joins("INNER JOIN chart_snapshots ON chart_snapshots.chart_id = #{chart.id} AND chart_snapshots.import_id = #{ import_id.to_i } AND chart_snapshots.id = game_snapshots.chart_snapshot_id").where(:itunes_id => features.keys)
+            features = AppStore::ItunesStore.crawl(country)
+            snapshots = GameSnapshot.select("game_snapshots.*").group("game_snapshots.id").joins("INNER JOIN chart_snapshots ON chart_snapshots.chart_id IN (#{charts.map(&:id).join ", "}) AND chart_snapshots.import_id = #{ import_id.to_i } AND chart_snapshots.id = game_snapshots.chart_snapshot_id").where(:itunes_id => features.keys)
             
             bulk_sql = snapshots.map do |snapshot|
               features[ snapshot.itunes_id.to_s ].map do |feature|
@@ -50,7 +50,7 @@ module AppStore
               end
             end.flatten.join(", ")
             
-            GameSnapshot.connection.execute "INSERT INTO featurings_game_snapshots (game_snapshot_id, featuring_id) VALUES #{ bulk_sql }"
+            GameSnapshot.connection.execute "INSERT IGNORE INTO featurings_game_snapshots (game_snapshot_id, featuring_id) VALUES #{ bulk_sql }"
           end
         end
         

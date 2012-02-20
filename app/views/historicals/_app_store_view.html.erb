@@ -65,8 +65,8 @@
     </div>
   
     <div class="span8">
-      <blockquote>
-        <% meta_data.screenshots.each do |url| -%>
+      <blockquote><!--
+     --><% meta_data.screenshots.each do |url| -%>
           <%= image_tag(url, :width => 250) if url.ends_with?(".png") -%>
         <% end -%>
       </blockquote>

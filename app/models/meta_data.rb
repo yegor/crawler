@@ -108,7 +108,7 @@ class MetaData < ActiveRecord::Base
   end
   
   def countries
-    @countries ||= self.country_array.split("|").uniq.map { |full_name| COUNTRIES[full_name] }.join(", ")
+    @countries ||= self.country_array.split("|").uniq.compact.map { |full_name| COUNTRIES[full_name] }.join(", ")
   end
   
   def ensure_hashcode!

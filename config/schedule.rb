@@ -11,6 +11,7 @@ set :job_template, "bash -l -c 'rvm 1.9.2 && :job'"
 
 every 1.hour do
   rake "crawler:sync"
+  rake "crawler:features"
   rake "ts:index"
 end
 #

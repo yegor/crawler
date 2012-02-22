@@ -34,9 +34,10 @@ module AppStore
           
           pids.each { |pid| Process.wait(pid) }
         end
-        
-        ActiveRecord::Base.establish_connection
-        
+      end
+      
+      def fetch_features
+        import_id = Import.last.id
         pids = Chart.all.group_by(&:country).map do |country, charts|
           fork do
             ActiveRecord::Base.establish_connection

@@ -148,25 +148,46 @@ body {
         .accordion .accordion-group {
             margin-bottom: 10px;
             
-            .app-pill {
-                display: inline-block;
-                padding: 5px 8px 0px 0px;
+            accordion-inner {
             
-                img {
-                    width: 100px;
-                    display: block;
+                .app-pill {
+                    display: inline-block;
+                    padding: 5px 8px 0px 0px;
+            
+                    img {
+                        width: 100px;
+                        display: block;
                     
-                    -webkit-border-radius: 15px;
-                    -moz-border-radius: 15px;
-                    border-radius: 15px;
+                        -webkit-border-radius: 15px;
+                        -moz-border-radius: 15px;
+                        border-radius: 15px;
+                    }
+                
+                    span {
+                        display: inline-block;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        width: 100px;
+                        text-overflow: ellipsis;
+                    }
                 }
                 
-                span {
-                    display: inline-block;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    width: 100px;
-                    text-overflow: ellipsis;
+                .super {
+                    .app-pill img, .app-pill span {
+                        width: 128px;
+                    }
+                }
+                
+                .room {
+                    .app-pill img, .app-pill span {
+                        width: 90px;
+                    }
+                }
+                
+                .item {
+                    .app-pill img, .app-pill span {
+                        width: 64px;
+                    }
                 }
             }
         }

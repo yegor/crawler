@@ -15,6 +15,7 @@ protected
   def parse_params
     params[:country]    = (params[:country] || "United States").split(",")
     params[:genre]      = (params[:genre] || "games").split(",")
+    params[:genre]      = [nil] if params[:genre].blank?
     params[:kind]       = (params[:kind] || "toppaidapplications").split(",")
     
     params[:game_id]    ||= 343200656

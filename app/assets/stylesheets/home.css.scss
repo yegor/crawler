@@ -211,7 +211,11 @@ body {
     
     .app-chart { 
         .app-icon {
-            width: 24px;
+            width: 32px;
+        }
+        
+        td p {
+            margin: 0px;
         }
     }
     

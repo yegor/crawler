@@ -13,7 +13,7 @@
     <% (snapshot.try(:game_snapshots) || []).each do |game_snapshot| %>
     <tr>
       <td><%= game_snapshot.rank %></td>
-      <td class="app-icon"><%= image_tag game_snapshot.meta_data.itunes_artwork_url, :width => "32", :height => "32" %></td>
+      <td class="app-icon"><%= image_tag game_snapshot.meta_data.itunes_artwork_url %></td>
       <td>
         <p><%= link_to game_snapshot.meta_data.name, itunes_game_url(game_snapshot.game) %></p>
         <p><small><%= game_snapshot.meta_data.publisher %></small></p>

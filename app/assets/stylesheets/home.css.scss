@@ -148,6 +148,10 @@ body {
         .accordion {
             .accordion-heading {
                 background: #eee;
+                
+                a {
+                    font-weight: 800;
+                }
             }
             
             .accordion-group {
@@ -259,11 +263,18 @@ body {
         margin-top: 20px;
         width: 300px;
         
-        background: white;
-          border: 1px solid #e5e5e5;
-          -webkit-border-radius: 4px;
-             -moz-border-radius: 4px;
-                  border-radius: 4px;
+        border-color: rgba(0, 0, 0, 0.2);
+        border-style: solid;
+        border-width: 1px;
+        -webkit-border-radius: 0 0 5px 5px;
+        -moz-border-radius: 0 0 5px 5px;
+        border-radius: 0 0 5px 5px;
+        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        -webkit-background-clip: padding-box;
+        -moz-background-clip: padding;
+        background-clip: padding-box;
                   
         li {
             padding: 3px 5px;

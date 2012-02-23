@@ -124,8 +124,8 @@ $(function() {
       $(".country-featuring .app-pill-" + itunesId).css({"display": "inline-block"});
       
       $(".country-featuring .accordion .featuring-type").hide();
-      $(".country-featuring .accordion .featuring-type").has("app-pill-" + itunesId).show();
-      $(".country-featuring .accordion .accordion-body").has("app-pill-" + itunesId).addClass("in").css("height", "");
+      $(".country-featuring .accordion .featuring-type").has(".app-pill-" + itunesId).show();
+      $(".country-featuring .accordion .accordion-body").has(".app-pill-" + itunesId).addClass("in").css("height", "");
     }
   }
   

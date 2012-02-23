@@ -26,6 +26,10 @@ $(function() {
       $("ul.ui-autocomplete").css("margin-top", "3px");
     });
     
+    $( "input.search-query" ).bind( "autocompletefocus", function(event, ui) {
+      $(this).val(ui.item.label);
+    });
+    
     $("input.search-query").bind("autocompleteselect", function(e, ui) {
       $(this).attr("data-value", ui.item.value);
       $(this).val(ui.item.label);

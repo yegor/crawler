@@ -1,4 +1,4 @@
-<ul class="nav nav-pills featurings-filter">
+<ul class="nav nav-pills featurings-filter" data-uberform-url="<%= featurings_path(:format => :js) %>">
   <%= text_field_tag :application_name, "", :class => "input-medium search-query", "data-autocomplete-url" => game_autocomplete_path, "data-name" => "game_id", "data-value" => params[:game_id] %>
   
   <%= bootstrap_dropdown :genre,   filter_categories,    :multiple => true,   :value => @charts.map(&:genre).map { |v| v || "all" }.uniq %>

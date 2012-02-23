@@ -61,10 +61,19 @@ $(function() {
   
   ***************************************************************************************************************/
   
-  $.fn.uberFormData = function() {
-    var data = {};
+  $.fn.identify = function() {
+    $.fn.__identify_id_counter = $.fn.__identify_id_counter || 0;
+    if (!$(this).attr("id")) {
+      $(this).attr("id", "id-" + $.fn.__identify_id_counter++)
+    }
     
-    $.each($(this).children("*[data-name]"), function() {
+    return $(this).attr("id");
+  }
+  
+  $.fn.uberFormData = function() {
+    var data = {"uberform_container_id": $(this).identify()};
+    
+    $(this).find("*[data-name]").each(function() {
       data[ $(this).attr("data-name") ] = $(this).attr("data-value");
     });
     
@@ -105,23 +114,16 @@ $(function() {
     }
   })
   
-  $.fn.historicalChart = function(params) {
-    $.getScript(window.historical_url + "?" + $.param(params));
-	}
-	
-	$.fn.currentFeaturings = function(params) {
-    $.getScript(window.featurings_url + "?" + $.param(params));
-	}
+  $.fn.uberForm = function() {
+    var form = $(this).parents("[data-uberform-url]");
+    $.getScript(form.data("uberform-url") + "?" + $.param( form.uberFormData() ));
+  }
   
   /**************************************************************************************************************
   
                                                   UI handler functions
   
   ***************************************************************************************************************/ 
-  
-  var updateFeaturings = function() {
-    $(".featurings #current-featurings").currentFeaturings($(".featurings-filter").uberFormData());
-  }
   
   var filterFeaturings = function() {
     var itunesId = $(this).attr("data-value");
@@ -141,41 +143,20 @@ $(function() {
     }
   }
   
-  $(".featurings-filter .dropdown-menu li a").live("click", updateFeaturings);
-  $(".featurings-filter .date-select").live("date-picker:changed", updateFeaturings);
+  $(".featurings-filter .dropdown-menu li a").live("click",          $.fn.uberForm);
+  $(".featurings-filter .date-select").live("date-picker:changed",   $.fn.uberForm);
   $(".featurings-filter .search-query").live("search-query:changed", filterFeaturings);
   $(".featurings-filter .search-query").live("search-query:cleared", filterFeaturings);
   
   // ************************************************************************************************************
   
-  var updateHistoricalChart = function() {
-    $(".historical-graph-chart #fusion-chart").historicalChart($(".historical-graph-filter").uberFormData());
-  }
-  
-  $(".historical-graph-filter .dropdown-menu li a").live("click", updateHistoricalChart);
-  $(".historical-graph-filter .date-select").live("date-picker:changed", updateHistoricalChart);
-  $(".historical-graph-filter input.search-query").live("search-query:changed", updateHistoricalChart);
+  $(".historical-graph-filter .dropdown-menu li a").live("click",               $.fn.uberForm);
+  $(".historical-graph-filter .date-select").live("date-picker:changed",        $.fn.uberForm);
+  $(".historical-graph-filter input.search-query").live("search-query:changed", $.fn.uberForm);
   
   // ************************************************************************************************************
   
-  var updateCharts = function() {
-    var data = $(this).parents(".chart-config").uberFormData();
-	  var chartContainer = $(this).parents(".subnav");
-	  
-	  chartContainer.html(window.loading_span);
-	  
-	  $.ajax({
-	    "url": window.show_chart_url + ".js", 
-	    "data": data, 
-	    "success": function(html) {
-	      chartContainer.html(html);
-      },
-      "type": "get",
-      "dataType": "html"
-	  });
-  }
-  
-	$(".chart-config .dropdown-menu li a").live("click", updateCharts);
+	$(".chart-config .dropdown-menu li a").live("click", $.fn.uberForm);
 	
 	$.setupUI();
 	

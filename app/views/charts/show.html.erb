@@ -1,7 +1,7 @@
 <div class="row current-charts">
 <% @charts.each do |chart| %>
   <div class="span4">
-    <div class="subnav">
+    <div class="subnav" data-uberform-url="<%= charts_path(:format => :js) %>">
       <%= render "top", :chart => chart, :snapshot => @snapshots.detect { |sn| sn.chart == chart } %>
     </div>
   </div>

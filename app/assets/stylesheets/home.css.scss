@@ -28,6 +28,10 @@ body {
       }
     }
     
+    .dropdown-menu {
+        z-index: 100000 !important;
+    }
+    
     .meta {
         .row {
             margin-bottom: 20px;

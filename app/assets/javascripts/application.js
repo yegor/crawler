@@ -71,6 +71,20 @@ $(function() {
     return data;
   }
   
+  $(".dropdown-menu li a input").live("click", function(e) {
+    var checkbox = $(this).find("input");
+  
+    if (checkbox.attr("checked")) {
+      checkbox.removeAttr("checked");
+    } else {
+      checkbox.attr("checked", "");
+    }
+    
+    $(this).parent("a").toggle("click");
+    
+    return false;
+  });
+  
   $(".dropdown-menu li a").live("click", function(e) {
     var dropdown = $(this).parents(".dropdown");
     

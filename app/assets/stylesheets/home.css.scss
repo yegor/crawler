@@ -263,6 +263,9 @@ body {
         margin-top: 20px;
         width: 300px;
         
+        z-index: 1000000;
+        background: white;
+        
         border-color: rgba(0, 0, 0, 0.2);
         border-style: solid;
         border-width: 1px;

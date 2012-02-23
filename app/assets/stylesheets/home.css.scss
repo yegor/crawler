@@ -205,8 +205,10 @@ body {
     }
     
     .current-charts .subnav .chart-config .dropdown > a {
-        overflow: ellipse;
-        max-width: 100px;
+        text-overflow: ellipsis;
+        max-width: 90px;
+        overflow: hidden;
+        white-space: nowrap;
     }
     
     .app-chart { 

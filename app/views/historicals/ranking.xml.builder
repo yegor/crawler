@@ -1,4 +1,4 @@
-dates = @rankings.values.map { |v| v.values.map(&:keys) }.flatten.uniq 
+dates = @timespan.map { |date| (0..23).map { |h| (date.to_time(:utc) + h.hours).beginning_of_hour } }.flatten
 max = @rankings.values.map { |v| v.values.map { |vv| vv.values.map(&:rank).max }.max }.max
 
 xml.instruct!
@@ -20,7 +20,7 @@ xml.chart :caption => "Rankings over time",
     game_ranks.each do |game, ranks|
       xml.dataset :seriesName => series_name(chart, game) do
         dates.each do |date|
-          xml.set :value => (ranks[date].try(:rank) || 400), :showValue => 0, :anchorAlpha => 0
+          xml.set :value => ranks[date].try(:rank), :showValue => 0, :anchorAlpha => 0
         end
       end
     end

@@ -5,7 +5,6 @@
   
   <%= javascript_tag do %>
     window.show_chart_url = <%= raw charts_path.inspect %>;
-    window.game_autocomplete_url = <%= raw game_autocomplete_path.inspect %>;
     
     window.historical_url = <%= raw historicals_path(:format => :js).inspect %>;
     window.table_ranking_chart_url = <%= raw table_historicals_path.inspect %>;

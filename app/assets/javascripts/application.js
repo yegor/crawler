@@ -14,19 +14,27 @@
 $(function() {
   
   $.setupUI = function() {
-    $(".historical-graph-filter input.search-query").autocomplete({source: window.game_autocomplete_url});
+    $("input.search-query[data-autocomplete-url]").each(function() {
+      $(this).autocomplete({source: $(this).data("autocomplete-url")});
+    });
     
-    $(".historical-graph-filter input.search-query").bind("autocompletesearch", function(e, ui) {
+    $("input.search-query").bind("autocompletesearch", function(e, ui) {
       $(this).removeAttr("data-value");
     });
     
-    $(".historical-graph-filter input.search-query").bind("autocompleteselect", function(e, ui) {
+    $("input.search-query").bind("autocompleteselect", function(e, ui) {
       $(this).attr("data-value", ui.item.value);
       $(this).val(ui.item.label);
-
-      $(".historical-graph-chart #fusion-chart").historicalChart($(this).parents(".historical-graph-filter").uberFormData());
+      $(this).trigger("search-query:changed");
 
       return false;
+    });
+    
+    $("input.search-query").bind("blur", function() {
+      if ($(this).val() == "") {
+        $(this).attr("data-value", 0);
+        $(this).trigger("search-query:cleared");
+      }
     });
     
     $('.automagic-tabs li').removeClass('active');
@@ -99,28 +107,43 @@ $(function() {
   
   ***************************************************************************************************************/ 
   
-  $(".featurings-filter .dropdown-menu li a").live("click", function() {
+  var updateFeaturings = function() {
     $(".featurings #current-featurings").currentFeaturings($(".featurings-filter").uberFormData());
-  });
+  }
   
-  $(".featurings-filter .date-select").live("date-picker:changed", function() {
-    $(".featurings #current-featurings").currentFeaturings($(".featurings-filter").uberFormData());
-  });
+  var filterFeaturings = function() {
+    var itunesId = $(this).data("value");
+    
+    $(".country-featuring .accordion .accordion-body").removeClass("in");
+    $(".country-featuring .accordion .accordion-body:first").addClass("in");
+    $(".country-featuring .app-pill").css({"display": "inline-block"});
+    
+    if (itunesId + 0 != 0) {
+      $(".country-featuring .app-pill").css({"display": "none"});
+      $(".country-featuring .app-pill-" + itunesId).css({"display": "inline-block"});
+      $(".country-featuring .accordion .accordion-body").has("app-pill-" + itunesId).addClass("in");
+    }
+  }
+  
+  $(".featurings-filter .dropdown-menu li a").live("click", updateFeaturings);
+  $(".featurings-filter .date-select").live("date-picker:changed", updateFeaturings);
+  $(".featurings-filter .search-query").live("search-query:changed", filterFeaturings);
+  $(".featurings-filter .search-query").live("search-query:cleared", filterFeaturings);
   
   // ************************************************************************************************************
   
-  $(".historical-graph-filter .dropdown-menu li a").live("click", function() {
+  var updateHistoricalChart = function() {
     $(".historical-graph-chart #fusion-chart").historicalChart($(".historical-graph-filter").uberFormData());
-  });
+  }
   
-  $(".historical-graph-filter .date-select").live("date-picker:changed", function() {
-    $(".historical-graph-chart #fusion-chart").historicalChart($(this).parents(".historical-graph-filter").uberFormData());
-  });
+  $(".historical-graph-filter .dropdown-menu li a").live("click", updateHistoricalChart);
+  $(".historical-graph-filter .date-select").live("date-picker:changed", updateHistoricalChart);
+  $(".historical-graph-filter input.search-query").live("search-query:changed", updateHistoricalChart);
   
   // ************************************************************************************************************
   
-	$(".chart-config .dropdown-menu li a").live("click", function() {
-	  var data = $(this).parents(".chart-config").uberFormData();
+  var updateCharts = function() {
+    var data = $(this).parents(".chart-config").uberFormData();
 	  var chartContainer = $(this).parents(".subnav");
 	  
 	  chartContainer.html(window.loading_span);
@@ -134,7 +157,9 @@ $(function() {
       "type": "get",
       "dataType": "html"
 	  });
-	});
+  }
+  
+	$(".chart-config .dropdown-menu li a").live("click", updateCharts);
 	
 	$.setupUI();
 	

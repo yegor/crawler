@@ -1,17 +1,14 @@
 <% @features.group_by(&:chart_country).each do |country, features| %>
-
+  <div class="country-featuring">
     <h3><%= country %></h3>
 
     <div class="accordion">
-      <% features_by_page = features.group_by(&:page_type)  %>
-      <% %w(Featuring::Page::Main Featuring::Page::Category Featuring::Page::Room).each.with_index do |page_type, index| %>
-      
-        <% page_features = features_by_page[page_type] %>
-        <% next if page_features.blank? %>
+      <% features_by_page = features.group_by(&:page_title)  %>
+      <% features_by_page.each do |title, page_features| %>
       
         <div class="accordion-group">
-          <div class="accordion-heading"><%= link_to page_features.first.page_title, "#pid#{ page_features.object_id }", "data-toggle" => "collapse", "class" => "accordion-toggle" %></div>
-          <div class="accordion-body <%= "in" if index == 0 %> collapse" id="pid<%= page_features.object_id %>">
+          <div class="accordion-heading"><%= link_to title, "#pid#{ page_features.object_id }", "data-toggle" => "collapse", "class" => "accordion-toggle" %></div>
+          <div class="accordion-body <%= "in" if page_features.first.page_type == "Featuring::Page::Main" %> collapse" id="pid<%= page_features.object_id %>">
             <div class="accordion-inner">
         
               <% features_by_type = page_features.group_by(&:featuring_type) %>
@@ -21,17 +18,19 @@
                 <% type_features = features_by_type[featuring_type] %>
                 <% next if type_features.blank? %>
         
-                <h4><%= title %></h4>
-                <%= content_tag :p, :class => featuring_type.split(":").last.downcase do %>
-                  <% type_features.index_by(&:itunes_id).values.sort_by(&:featuring_rank).each do |featuring| %>
+                <div class="featuring-type">
+                  <h4><%= title %></h4>
+                  <%= content_tag :p, :class => featuring_type.split(":").last.downcase do %>
+                    <% type_features.index_by(&:itunes_id).values.sort_by(&:featuring_rank).each do |featuring| %>
                   
-                  <a href="<%= historicals_path(:game_id => featuring.itunes_id) %>" class="app-pill">
-                    <%= image_tag featuring.itunes_artwork_url %>
-                    <span><%= featuring.name %></span>
-                  </a>
+                    <a href="<%= historicals_path(:game_id => featuring.itunes_id) %>" class="app-pill-<%= featuring.itunes_id %> app-pill">
+                      <%= image_tag featuring.itunes_artwork_url %>
+                      <span><%= featuring.name %></span>
+                    </a>
                   
+                    <% end %>
                   <% end %>
-                <% end %>
+                </div>
               
               <% end %>
         
@@ -41,5 +40,5 @@
       
       <% end %>
     </div>
-
+  </div>
 <% end %>

@@ -74,7 +74,7 @@ $(function() {
   $(".dropdown-menu li a input").live("click", function(e) {
     var checkbox = $(this).find("input");
     
-    $(this).parent("a").toggle("click");
+    $(this).parents("a").toggle("click");
     
     return false;
   });

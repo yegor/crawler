@@ -145,56 +145,62 @@ body {
     }
     
     #current-featurings {
-        .accordion .accordion-group {
-            margin-bottom: 10px;
+        .accordion {
+            .accordion-heading {
+                background: #eee;
+            }
             
-            .accordion-inner {
+            .accordion-group {
+                margin-bottom: 10px;
             
-                .app-pill {
-                    display: inline-block;
-                    padding: 5px 8px 0px 0px;
-            
-                    img {
-                        width: 100px;
-                        display: block;
-                    
-                        -webkit-border-radius: 15px;
-                        -moz-border-radius: 15px;
-                        border-radius: 15px;
-                    }
+                .accordion-inner {
                 
-                    span {
+                    .app-pill {
                         display: inline-block;
-                        white-space: nowrap;
-                        overflow: hidden;
-                        width: 100px;
-                        text-overflow: ellipsis;
-                    }
-                }
+                        padding: 5px 8px 0px 0px;
+            
+                        img {
+                            width: 100px;
+                            display: block;
+                    
+                            -webkit-border-radius: 15px;
+                            -moz-border-radius: 15px;
+                            border-radius: 15px;
+                        }
                 
-                .super {
-                    .app-pill img, .app-pill span {
-                        width: 128px;
+                        span {
+                            display: inline-block;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            width: 100px;
+                            text-overflow: ellipsis;
+                        }
                     }
-                }
                 
-                .room {
-                    .app-pill img, .app-pill span {
-                        width: 90px;
+                    .super {
+                        .app-pill img, .app-pill span {
+                            width: 128px;
+                        }
                     }
-                }
                 
-                .item {
-                    .app-pill img, .app-pill span {
-                        width: 64px;
+                    .room {
+                        .app-pill img, .app-pill span {
+                            width: 90px;
+                        }
+                    }
+                
+                    .item {
+                        .app-pill img, .app-pill span {
+                            width: 64px;
+                        }
                     }
                 }
             }
-        }
         
-        h3 {
-            padding: 0px 0px 0px 15px;
-            margin-bottom: 10px;
+            h3 {
+                padding: 0px 0px 0px 15px;
+                margin-bottom: 10px;
+            }
         }
     }
     

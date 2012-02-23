@@ -15,11 +15,15 @@ $(function() {
   
   $.setupUI = function() {
     $("input.search-query[data-autocomplete-url]").each(function() {
-      $(this).autocomplete({source: $(this).data("autocomplete-url")});
+      $(this).autocomplete({source: $(this).attr("data-autocomplete-url")});
     });
     
     $("input.search-query").bind("autocompletesearch", function(e, ui) {
       $(this).removeAttr("data-value");
+    });
+    
+    $("input.search-query").bind("autocompleteopen", function(e, ui) {
+      $("ul.ui-autocomplete").css("margin-top", "3px");
     });
     
     $("input.search-query").bind("autocompleteselect", function(e, ui) {
@@ -112,14 +116,14 @@ $(function() {
   }
   
   var filterFeaturings = function() {
-    var itunesId = $(this).data("value");
+    var itunesId = $(this).attr("data-value");
     
     $(".country-featuring .accordion .accordion-body").removeClass("in");
     $(".country-featuring .accordion .accordion-body:first").addClass("in");
     $(".country-featuring .accordion .featuring-type").show();
     $(".country-featuring .app-pill").css({"display": "inline-block"});
     
-    if (itunesId + 0 != 0) {
+    if (parseInt(itunesId + '') > 0) {
       $(".country-featuring .app-pill").css({"display": "none"});
       $(".country-featuring .app-pill-" + itunesId).css({"display": "inline-block"});
       

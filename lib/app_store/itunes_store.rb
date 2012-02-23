@@ -1,6 +1,7 @@
 require "open-uri"
 require "hpricot"
 require "net/http"
+require "cgi"
 
 module AppStore
   

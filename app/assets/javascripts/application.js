@@ -30,7 +30,7 @@ $(function() {
       return false;
     });
     
-    $("input.search-query").bind("blur", function() {
+    $("input.search-query").bind("change", function() {
       if ($(this).val() == "") {
         $(this).attr("data-value", 0);
         $(this).trigger("search-query:cleared");
@@ -123,8 +123,8 @@ $(function() {
       $(".country-featuring .app-pill").css({"display": "none"});
       $(".country-featuring .app-pill-" + itunesId).css({"display": "inline-block"});
       
-      $(".country-featuring .accordion .featuring-type").hide();
-      $(".country-featuring .accordion .featuring-type").has(".app-pill-" + itunesId).show();
+      $(".country-featuring .accordion .accordion-body .featuring-type").hide();
+      $(".country-featuring .accordion .accordion-body .featuring-type").has(".app-pill-" + itunesId).show();
       $(".country-featuring .accordion .accordion-body").has(".app-pill-" + itunesId).addClass("in").css("height", "");
     }
   }

@@ -1,0 +1,44 @@
+<% @features.group_by(&:chart_country).each do |country, features| %>
+
+    <h3><%= country %></h3>
+
+    <div class="accordion">
+      <% features_by_page = features.group_by(&:page_type)  %>
+      <% %w(Featuring::Page::Main Featuring::Page::Category Featuring::Page::Room).each do |page_type| %>
+      
+        <% page_features = features_by_page[page_type] %>
+        <% next if page_features.blank? %>
+      
+        <div class="accordion-group">
+          <div class="accordion-heading"><%= link_to page_features.first.page_title, "#pid#{ page_features.object_id }", "data-toggle" => "collapse", "class" => "accordion-toggle" %></div>
+          <div class="accordion-body in collapse" id="pid<%= page_features.object_id %>">
+            <div class="accordion-inner">
+        
+              <% features_by_type = page_features.group_by(&:featuring_type) %>
+              
+              <% {'Featuring::Feature::Super' => "Super", 'Featuring::Feature::Brick' => "Brick", 'Featuring::Feature::Item' => "Item"}.each do |featuring_type, title| %>
+        
+                <% type_features = features_by_type[featuring_type] %>
+        
+                <h4><%= title %></h4>
+                <p>
+                  <% type_features.index_by(&:itunes_id).values.sort_by(&:featuring_rank).each do |featuring| %>
+                  
+                  <a href="<%= historicals_path(:game_id => featuring.itunes_id) %>" class="app-pill">
+                    <%= image_tag featuring.itunes_artwork_url %>
+                    <span><%= featuring.name %></span>
+                  </a>
+                  
+                  <% end %>
+                </p>
+              
+              <% end %>
+        
+            </div>
+          </div>
+        </div>
+      
+      <% end %>
+    </div>
+
+<% end %>

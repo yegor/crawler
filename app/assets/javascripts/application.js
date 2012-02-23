@@ -38,7 +38,7 @@ $(function() {
       
       onClose: function(dateText, inst) {
          $(this).parents(".date-select").attr("data-value", dateText);
-         $(".historical-graph-chart #fusion-chart").historicalChart($(this).parents(".historical-graph-filter").uberFormData());
+         $(this).parents(".date-select").trigger("date-picker:changed");
        }
     });
   }
@@ -88,6 +88,10 @@ $(function() {
   $.fn.historicalChart = function(params) {
     $.getScript(window.historical_url + "?" + $.param(params));
 	}
+	
+	$.fn.currentFeaturings = function(params) {
+    $.getScript(window.featurings_url + "?" + $.param(params));
+	}
   
   /**************************************************************************************************************
   
@@ -95,9 +99,25 @@ $(function() {
   
   ***************************************************************************************************************/ 
   
+  $(".featurings-filter .dropdown-menu li a").live("click", function() {
+    $(".featurings #current-featurings").currentFeaturings($(".featurings-filter").uberFormData());
+  });
+  
+  $(".featurings-filter .date-select").live("date-picker:changed", function() {
+    $(".featurings #current-featurings").currentFeaturings($(".featurings-filter").uberFormData());
+  });
+  
+  // ************************************************************************************************************
+  
   $(".historical-graph-filter .dropdown-menu li a").live("click", function() {
     $(".historical-graph-chart #fusion-chart").historicalChart($(".historical-graph-filter").uberFormData());
-  })
+  });
+  
+  $(".historical-graph-filter .date-select").live("date-picker:changed", function() {
+    $(".historical-graph-chart #fusion-chart").historicalChart($(this).parents(".historical-graph-filter").uberFormData());
+  });
+  
+  // ************************************************************************************************************
   
 	$(".chart-config .dropdown-menu li a").live("click", function() {
 	  var data = $(this).parents(".chart-config").uberFormData();

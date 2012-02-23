@@ -1,2 +1,13 @@
-<h1>Featurings#show</h1>
-<p>Find me in app/views/featurings/show.html.erb</p>
+<div class="row featurings-filter">
+  <div class="span12">
+    <div class="subnav" id="current-featurings-filter">
+      <%= render "filter" %>
+    </div>
+  </div>
+</div>
+
+<div class="row featurings">
+  <div class="span12" id="current-featurings">
+    <%= render "featurings" %>
+  </div>
+</div>

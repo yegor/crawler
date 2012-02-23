@@ -10,6 +10,8 @@
     window.historical_url = <%= raw historicals_path(:format => :js).inspect %>;
     window.table_ranking_chart_url = <%= raw table_historicals_path.inspect %>;
     
+    window.featurings_url = <%= raw featurings_url(:format => :js).inspect %>;
+    
     window.loading_span = '<span class="loading-stub">Loading...</span>';
     window.no_data_span = '<span class="no-data-stub">No data to display</span>';
   <% end %>

@@ -7,7 +7,6 @@ class ConvertIdsToBigint < ActiveRecord::Migration
     [MetaData, Chart, ChartSnapshot, Featuring::Feature::Base, Featuring::Page::Base, Game, GameSnapshot, Import].each do |model|
       change_table model.table_name do |t|
         model.columns.select { |col| col.name =~ /(^id$)|(_id$)/ }.each do |column|
-          #p [column.name, "BIGINT(20)", :null => column.null, :default => column.default, :primary => column.primary]
           t.change column.name, "BIGINT(20)", :null => column.null, :default => column.default, :primary => column.primary
         end
       end

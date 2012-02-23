@@ -11,11 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120220202435) do
+ActiveRecord::Schema.define(:version => 20120223190009) do
 
   create_table "chart_snapshots", :force => true do |t|
-    t.integer  "import_id"
-    t.integer  "chart_id"
+    t.integer  "import_id",  :limit => 8
+    t.integer  "chart_id",   :limit => 8
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(:version => 20120220202435) do
   create_table "featurings", :force => true do |t|
     t.string   "type",       :limit => 0
     t.integer  "rank",                    :null => false
-    t.integer  "page_id",                 :null => false
+    t.integer  "page_id",    :limit => 8, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -53,9 +53,9 @@ ActiveRecord::Schema.define(:version => 20120220202435) do
   create_table "game_snapshots", :force => true do |t|
     t.integer  "rank"
     t.float    "rating"
-    t.integer  "game_id"
-    t.integer  "meta_data_id"
-    t.integer  "chart_snapshot_id"
+    t.integer  "game_id",                                 :limit => 8
+    t.integer  "meta_data_id",                            :limit => 8
+    t.integer  "chart_snapshot_id",                       :limit => 8
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal  "average_user_rating_for_current_version",              :precision => 2, :scale => 1
@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(:version => 20120220202435) do
     t.string   "name"
     t.text     "summary"
     t.boolean  "new_version",                      :default => false
-    t.integer  "game_id"
+    t.integer  "game_id",             :limit => 8
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "publisher"

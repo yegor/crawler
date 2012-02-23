@@ -13,6 +13,7 @@ protected
     params[:country] ||= "United States"
     params[:date] ||= Date.today
     params[:genre] ||= "games"
+    params[:genre].gsub!("all", "")
     
     @imports  = Import.where(["imports.created_at >= ? AND imports.created_at < ?", params[:date].to_date.beginning_of_day, params[:date].to_date.beginning_of_day + 24.hours]).order
     @charts   = Chart.where(:country => params[:country].split(","), :genre => params[:genre].split(",")).all

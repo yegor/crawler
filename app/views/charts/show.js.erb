@@ -1,1 +1,1 @@
-$(<%= raw params[:uberform_container_id].inspect %>).html(<%= raw render("top", :chart => @chart, :snapshot => @snapshot).inspect %>);
+$("#" + <%= raw params[:uberform_container_id].inspect %>).html(<%= raw render("top", :chart => @chart, :snapshot => @snapshot).inspect %>);

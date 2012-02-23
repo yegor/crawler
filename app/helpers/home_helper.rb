@@ -38,7 +38,7 @@ module HomeHelper
   #  Returns available charts to draw.
   #
   def filter_charts
-    KINDS_TO_SHORTCUTS.inject({}) { |m, (c, d)| m.merge(c => "Top #{d}") }
+    KINDS_TO_SHORTCUTS.inject({}) { |m, (c, d)| m.merge(c => d.capitalize) }
   end
   
   def filter_categories

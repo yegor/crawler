@@ -24,7 +24,7 @@
                     <% type_features.index_by(&:itunes_id).values.sort_by(&:featuring_rank).each do |featuring| %>
                   
                     <a href="<%= historicals_path(:game_id => featuring.itunes_id) %>" class="app-pill-<%= featuring.itunes_id %> app-pill">
-                      <%= image_tag featuring.itunes_artwork_icon_url %>
+                      <%= image_tag(featuring_type == "Featuring::Feature::Item" ? featuring.itunes_artwork_icon_url : featuring.itunes_artwork_url) %>
                       <span><%= featuring.name %></span>
                     </a>
                   

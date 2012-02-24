@@ -9,7 +9,7 @@
           <span><%= meta.map(&:name).uniq.join(", ") %></span>
         <% end %>
         
-        <%= link_to historicals_path(:game_id => itunes_id) do %>
+        <%= link_to historicals_path(:game_id => itunes_id), :class => "actions" do %>
           <span>view graph</span>
         <% end %>
       </div>

@@ -39,6 +39,10 @@ group :test do
   gem 'turn', :require => false
 end
 
+# group :production do
+#   gem 'rack-google_analytics', :require => "rack/google_analytics"
+# end
+
 group :development do
   gem 'mongrel', '>= 1.2.0.pre2'
   gem 'annotate', :git => 'git://github.com/jeremyolliver/annotate_models.git', :branch => 'rake_compatibility'

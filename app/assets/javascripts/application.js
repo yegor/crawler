@@ -87,18 +87,12 @@ $(function() {
     return data;
   }
   
-  $(".dropdown-menu li a input").live("click", function(e) {
+  $(".dropdown-menu li a input").live("change", function(e) {
     var checkbox = $(this).find("input");
-    
-    if (checkbox.attr("checked")) {
-      checkbox.removeAttr("checked");
-    } else {
-      checkbox.attr("checked", "");
-    }
     
     $(this).parents("a").click();
     
-    return false;
+    return true;
   });
   
   $(".dropdown-menu li a").live("click", function(e) {
@@ -106,7 +100,7 @@ $(function() {
     
     if (dropdown.hasClass("multiple-options")) {
       
-      if (e.target.tagName == "A") {
+      if (e.target.tagName == "A" && !e.isTrigger) {
         var checkbox = $(this).find("input");
       
         if (checkbox.attr("checked")) {
@@ -117,7 +111,7 @@ $(function() {
       }
       
       var currentOptions = [];
-      $.each(dropdown.find("input[checked]"), function(i) {
+      $.each(dropdown.find("input:checked"), function(i) {
         currentOptions.push( $(this).val() );
       });
       

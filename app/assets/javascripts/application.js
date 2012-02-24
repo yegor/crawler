@@ -169,6 +169,10 @@ $(function() {
   
 	$(".chart-config .dropdown-menu li a").live("click", $.fn.uberForm);
 	
+	// ************************************************************************************************************
+	
+	$(".publishers-filter input.search-query").live("search-query:changed", $.fn.uberForm);
+	
 	$.setupUI();
 	
 });

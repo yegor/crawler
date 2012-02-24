@@ -1,9 +1,9 @@
 <ul class="nav nav-pills chart-config">
-  <%= bootstrap_dropdown :kind, filter_charts, :value => chart.kind %>
+  <%= bootstrap_dropdown :kind,    filter_charts, :value => chart.kind %>
 
-  <%= bootstrap_dropdown :genre, filter_categories, :value => chart.genre || "all" %>
+  <%= bootstrap_dropdown :genre,   filter_categories, :value => chart.genre || "all" %>
 
-  <%= bootstrap_dropdown :country, filter_countries, :value => chart.country %>
+  <%= bootstrap_dropdown :country, filter_countries,  :display_value => country_shortcuts[chart.country], :value => chart.country %>
 </ul>
 
 <table class="table table-striped table-bordered table-condensed app-chart">

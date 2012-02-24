@@ -1,0 +1,33 @@
+<% @metas.each do |itunes_id, meta| %>
+<div class="meta">
+  <div class="row">
+    <div class="span4">
+      <%= link_to historicals_path(:game_id => itunes_id) do %>
+        <%= image_tag meta.itunes_artwork_url %>
+      <% end %>
+    </div>
+  
+    <div class="span8">
+      
+      <div class="row">
+        <div class="span2">Name</div>
+        <div class="span6">
+          <%= link_to historicals_path(:game_id => itunes_id) do %>
+            <%= meta.map(&:name).uniq.join(", ") %>
+          <% end %>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="span2">Current rankings</div>
+        <div class="span6">
+          <% (@ranks[itunes_id] || []).each do |rank| %>
+            <p><%= rank.rank %> in <%= country_shortcuts[rank.country] %> <%= kind_shortcuts[rank.kind] %> <%= rank.genre || "apps" %></p>
+          <% end %>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<% end %>

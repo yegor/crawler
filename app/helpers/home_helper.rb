@@ -28,6 +28,10 @@ module HomeHelper
   def country_shortcuts
     COUNTRIES
   end
+  
+  def kind_shortcuts
+    KINDS_TO_SHORTCUTS
+  end
     
   #  Returns filter countries to be used.
   #

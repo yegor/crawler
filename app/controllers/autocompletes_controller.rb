@@ -6,6 +6,8 @@ class AutocompletesController < ApplicationController
   end
 
   def publisher
+    meta_data = MetaData.where(:id => MetaData.search_for_ids(:conditions => {:publisher => params[:term]})).group(:publisher)
+    render :json => meta_data.map { |meta| {:value => meta.publisher, :label => meta.publisher} }
   end
 
 end

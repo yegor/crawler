@@ -100,7 +100,7 @@ $(function() {
     
     if (dropdown.hasClass("multiple-options")) {
       
-      if (e.target.tagName != "INPUT") {
+      if (e.target.tagName == "A") {
         var checkbox = $(this).find("input");
       
         if (checkbox.attr("checked")) {

@@ -1,3 +1,7 @@
 <ul class="nav nav-pills featurings-filter" data-uberform-url="<%= publishers_path(:format => :js) %>">
-  <%= text_field_tag :publisher_name, "", :class => "input-medium search-query", "data-autocomplete-url" => publisher_autocomplete_path, "data-name" => "publisher", "data-value" => params[:publisher] %>
+  <%= text_field_tag :publisher_name, params[:publisher], 
+                     :class => "input-medium search-query", 
+                     "data-autocomplete-url" => publisher_autocomplete_path, 
+                     "data-name" => "publisher", 
+                     "data-value" => params[:publisher] %>
 </ul>

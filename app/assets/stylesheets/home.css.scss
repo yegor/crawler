@@ -28,6 +28,13 @@ body {
       }
     }
     
+    img.itunes-artwork {
+        width: 200px;
+    
+        -webkit-border-radius: 10px;
+             -moz-border-radius: 10px;
+                  border-radius: 10px;
+    }
     
     .modal-backdrop {
         z-index: 100000 !important;

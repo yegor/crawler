@@ -28,6 +28,9 @@ $(function() {
     
     $( "input.search-query" ).bind( "autocompletefocus", function(event, ui) {
       $(this).val(ui.item.label);
+      // alert(ui.item.label);
+      
+      return false;
     });
     
     $("input.search-query").bind("autocompleteselect", function(e, ui) {
@@ -87,7 +90,7 @@ $(function() {
   $(".dropdown-menu li a input").live("click", function(e) {
     var checkbox = $(this).find("input");
     
-    $(this).parents("a").toggle("click");
+    $(this).parents("a").click();
     
     return false;
   });

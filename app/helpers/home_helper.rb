@@ -42,7 +42,7 @@ module HomeHelper
   end
   
   def filter_categories
-    %w(all games).inject({}) { |m, c| m.merge(c => c.capitalize) }
+    %w(all games social\ networking).inject({}) { |m, c| m.merge(c => c.capitalize) }
   end
   
   #  Returns options for game select.

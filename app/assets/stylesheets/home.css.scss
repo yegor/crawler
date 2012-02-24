@@ -294,6 +294,10 @@ body {
     .publishers {
         
         .accordion .accordion-heading {
+            a {
+                line-height: 10px;
+            }
+        
             a span {
                 position: relative;
                 top: -8px;

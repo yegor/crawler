@@ -90,8 +90,8 @@ ActiveRecord::Schema.define(:version => 20120223201220) do
   create_table "meta_data", :force => true do |t|
     t.string   "name"
     t.text     "summary"
-    t.boolean  "new_version",                      :default => false
-    t.integer  "game_id",             :limit => 8
+    t.boolean  "new_version",                          :default => false
+    t.integer  "game_id",                 :limit => 8
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "publisher"
@@ -99,13 +99,14 @@ ActiveRecord::Schema.define(:version => 20120223201220) do
     t.datetime "release_date"
     t.integer  "file_size_bytes"
     t.string   "itunes_artwork_url"
-    t.integer  "itunes_id",           :limit => 8
+    t.integer  "itunes_id",               :limit => 8
     t.string   "release_notes"
     t.boolean  "game_center_enabled"
     t.string   "genres"
     t.string   "screenshots"
     t.string   "version"
-    t.string   "hashcode",                         :default => "",    :null => false
+    t.string   "hashcode",                             :default => "",    :null => false
+    t.string   "itunes_artwork_icon_url",              :default => "",    :null => false
   end
 
   add_index "meta_data", ["game_id", "hashcode"], :name => "index_meta_data_on_game_id_and_hashcode", :unique => true

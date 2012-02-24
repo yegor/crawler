@@ -10,6 +10,8 @@
     window.ajax_loader_gif_url = <%= raw asset_path("ajax-loader.gif").inspect %>;
   <% end %>
   
+  <%= render :partial => "common/google_analitycs" %>
+  
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
   

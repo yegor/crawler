@@ -296,6 +296,11 @@ body {
         .accordion .accordion-heading {
             a {
                 line-height: 10px;
+                display: inline-block;
+            }
+            
+            a:hover {
+                text-decoration: none;
             }
         
             a span {

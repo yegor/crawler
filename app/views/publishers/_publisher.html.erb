@@ -10,10 +10,13 @@
         <% end %>
       </div>
       
-      <div class="accordion-body" id="pid<%= meta.object_id %>">
+      <div class="accordion-body collapse" id="pid<%= meta.object_id %>">
         <div class="accordion-inner">
-          <% (@ranks[itunes_id] || []).each do |rank| %>
-            <p><%= rank.rank %> in <%= country_shortcuts[rank.country] %> <%= kind_shortcuts[rank.kind] %> <%= rank.genre || "apps" %></p>
+          <% (@ranks[itunes_id] || []).group_by(&:country).each do |country, ranks| %>
+            <p>
+              <strong><%= country %></strong>: 
+              <%= ranks.map { |rank| "#{rank.rank} in #{kind_shortcuts[rank.kind]} #{rank.genre || "apps"}" }.join(", ") %>
+            </p>
           <% end %>
         </div>
       </div>

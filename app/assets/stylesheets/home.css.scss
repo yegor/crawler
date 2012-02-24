@@ -37,10 +37,10 @@ body {
     }
     
     img.itunes-artwork-icon {
-        width: 48px;
-        -webkit-border-radius: 5px;
-           -moz-border-radius: 5px;
-                border-radius: 5px;
+        width: 24px;
+        -webkit-border-radius: 3px;
+           -moz-border-radius: 3px;
+                border-radius: 3px;
     }
     
     .modal-backdrop {
@@ -294,8 +294,9 @@ body {
     .publishers {
         
         .accordion .accordion-heading {
-            a {
-                display: inline-block;
+            a span {
+                position: relative;
+                top: -8px;
             }
         }
         

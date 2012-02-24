@@ -62,7 +62,7 @@ module AppStore
       "lifestyle"=>"6012", "medical"=>"6020", "music"=>"6011", "navigation"=>"6010", "news"=>"6009", "newsstand"=>"6021", " video"=>"6008",
       "productivity"=>"6007", "reference"=>"6006", "social networking"=>"6005", "sports"=>"6004", "travel"=>"6003", "utilities"=>"6002", "weather"=>"6001"}
       
-    SUPER_GENRES = ["games", nil]
+    SUPER_GENRES = ["games", "social networking", nil]
     
     module URI
       def url_for(opt = {})

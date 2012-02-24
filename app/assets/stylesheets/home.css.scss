@@ -28,6 +28,22 @@ body {
       }
     }
     
+    
+    .modal-backdrop {
+        z-index: 100000 !important;
+        
+        text-align: center;
+        
+        p {
+            margin-top: 250px;
+        
+            span {
+                color: #bbb;
+                display: block;
+            }
+        }
+    }
+    
     .dropdown-menu {
         z-index: 100000 !important;
     }

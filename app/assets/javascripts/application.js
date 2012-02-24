@@ -124,7 +124,7 @@ $(function() {
   $.fn.uberForm = function() {
     var form = $(this).parents("[data-uberform-url]");
     
-    var backdrop = $('<div class="modal-backdrop fade"><span>Loading...</span></div>').appendTo(document.body);
+    var backdrop = $('<div class="modal-backdrop fade"><p><img src="' + window.ajax_loader_gif_url + '" /><span>Running hardcore SQL...</span></p></div>').appendTo(document.body);
     backdrop.addClass("in");
     
     $.getScript(form.data("uberform-url") + "?" + $.param( form.uberFormData() ), function() { backdrop.fadeOut(); });

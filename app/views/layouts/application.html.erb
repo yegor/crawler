@@ -6,6 +6,8 @@
   <%= javascript_tag do %>
     window.loading_span = '<span class="loading-stub">Loading...</span>';
     window.no_data_span = '<span class="no-data-stub">No data to display</span>';
+    
+    window.ajax_loader_gif_url = <%= raw asset_path("ajax-loader.gif").inspect %>;
   <% end %>
   
   <%= stylesheet_link_tag    "application" %>

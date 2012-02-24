@@ -287,6 +287,20 @@ body {
         }
     }
     
+    .publishers-filter {
+        margin-bottom: 20px;
+    }
+    
+    .publishers {
+        
+        .accordion .accordion-heading {
+            a {
+                display: inline-block;
+            }
+        }
+        
+    }
+    
     ul.ui-autocomplete {
         z-index: 100000 !important;
     

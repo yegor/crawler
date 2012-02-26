@@ -24,14 +24,15 @@ protected
     
     @timespan = (params[:date_since].to_date .. params[:date_till].to_date)
     
-    @charts = Chart.find_or_initialize_with(params)
-    @game = Game.find_by_itunes_id(params[:game_id])
+    @charts   = Chart.find_or_initialize_with(params)
+    @game     = Game.find_by_itunes_id(params[:game_id])
     
     @rankings = Stats.raking_over_time(:games => [@game], :charts => @charts, :timespan => @timespan) rescue {}   
-    @dates =  @rankings.values.map { |v| v.values.map(&:keys) }.flatten.uniq.sort.reverse rescue []
+    @dates    = @rankings.values.map { |v| v.values.map(&:keys) }.flatten.uniq.sort.reverse rescue []
+    @events   = Event.collect_events_over(@rankings)
     
-    @metas = MetaData.with_country.includes(:game).where(:itunes_id => params[:game_id]).order("updated_at desc").all
-    @meta = @metas.detect { |m| (params[:country].to_a & m.country_array).present? } || @metas.sort_by(&:updated_at).last
+    @metas    = MetaData.with_country.includes(:game).where(:itunes_id => params[:game_id]).order("updated_at desc").all
+    @meta     = @metas.detect { |m| (params[:country].to_a & m.country_array).present? } || @metas.sort_by(&:updated_at).last
   end
 
 end

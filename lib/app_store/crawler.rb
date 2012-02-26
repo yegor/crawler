@@ -42,17 +42,32 @@ module AppStore
           fork do
             ActiveRecord::Base.establish_connection
             
+            puts "Crawling #{country} App Store..."
             features = AppStore::ItunesStore.crawl(country)
-            snapshots = GameSnapshot.select("game_snapshots.*").group("game_snapshots.id").joins("INNER JOIN chart_snapshots ON chart_snapshots.chart_id IN (#{charts.map(&:id).join ", "}) AND chart_snapshots.import_id = #{ import_id.to_i } AND chart_snapshots.id = game_snapshots.chart_snapshot_id").where(:itunes_id => features.keys)
             
-            bulk_sql = snapshots.map do |snapshot|
-              features[ snapshot.itunes_id.to_s ].map do |feature|
-                "(#{ snapshot.id }, #{ feature.id })"
+            puts "Fetching existing metas"
+            ids = MetaData.select("DISTINCT itunes_id").map(&:itunes_id).index_by(&:to_i)
+            
+            puts "Creating missing games and metas..."
+            entries = features.map { |itunes_id, featurings| AppStore::ChartEntry.new(:itunes_id => itunes_id) }.select { |entry| ids[entry.itunes_id].blank? }
+            entries = entries.index_by(&:itunes_id)
+            
+            puts "Has to fetch #{ entries.size } metas..."
+            
+            self.fetch_meta_data(entries, country)
+            entries = entries.select { |i, e| e.lookup_entry.present? }
+            
+            games = Game.bulk_create(entries)
+            MetaData.bulk_create(games, entries)
+            
+            bulk_sql = features.map do |itunes_id, featurings|
+              featurings.map do |featuring|
+                "(0, #{ itunes_id.to_i }, #{ MetaData.connection.quote(country) }, #{ import_id.to_i }, #{ featuring.id })"
               end
             end.flatten.join(", ")
             
-            GameSnapshot.connection.execute "INSERT IGNORE INTO featurings_game_snapshots (game_snapshot_id, featuring_id) VALUES #{ bulk_sql }"
-          end
+            FeaturingSnapshot.connection.execute "INSERT IGNORE INTO featuring_snapshots (id, itunes_id, country, import_id, featuring_id) VALUES #{ bulk_sql }"
+           end
         end
         
         pids.each { |pid| Process.wait(pid) }
@@ -68,7 +83,16 @@ module AppStore
         all_ids.each_slice(200).each do |ids|
           AppStore::Crawler.load(URI("#{AppStore::ChartConfig::ITUNES_LOOKUP_BASE_URL}?id=#{ids.join(",")}&country=#{AppStore::ChartConfig::COUNTRIES[country]}"))["results"].each do |game_meta_data|
             lookup_entry = AppStore::JSON::LookupEntry.new(game_meta_data)
-            entries[ lookup_entry.itunes_id ].lookup_entry = lookup_entry
+            
+            if entry = entries[ lookup_entry.itunes_id ]
+              entry.lookup_entry = lookup_entry
+            
+              entry.name = game_meta_data["trackName"]
+              entry.summary = game_meta_data["description"] || ""
+              entry.publisher = game_meta_data["artistName"]
+              entry.rights = ""
+              entry.release_date = Time.parse(game_meta_data["releaseDate"])
+            end
           end
         end
       end

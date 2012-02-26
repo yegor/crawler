@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120223201220) do
+ActiveRecord::Schema.define(:version => 20120226163154) do
 
   create_table "chart_snapshots", :force => true do |t|
     t.integer  "import_id",  :limit => 8
@@ -31,6 +31,17 @@ ActiveRecord::Schema.define(:version => 20120223201220) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "featuring_snapshots", :force => true do |t|
+    t.integer "itunes_id",    :limit => 8, :null => false
+    t.string  "country",                   :null => false
+    t.integer "import_id",                 :null => false
+    t.integer "featuring_id",              :null => false
+  end
+
+  add_index "featuring_snapshots", ["featuring_id"], :name => "index_featuring_snapshots_on_featuring_id"
+  add_index "featuring_snapshots", ["import_id"], :name => "index_featuring_snapshots_on_import_id"
+  add_index "featuring_snapshots", ["itunes_id"], :name => "index_featuring_snapshots_on_itunes_id"
 
   create_table "featurings", :force => true do |t|
     t.string   "type",       :limit => 0
@@ -90,8 +101,8 @@ ActiveRecord::Schema.define(:version => 20120223201220) do
   create_table "meta_data", :force => true do |t|
     t.string   "name"
     t.text     "summary"
-    t.boolean  "new_version",                          :default => false
-    t.integer  "game_id",                 :limit => 8
+    t.boolean  "new_version",                      :default => false
+    t.integer  "game_id",             :limit => 8
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "publisher"
@@ -99,14 +110,13 @@ ActiveRecord::Schema.define(:version => 20120223201220) do
     t.datetime "release_date"
     t.integer  "file_size_bytes"
     t.string   "itunes_artwork_url"
-    t.integer  "itunes_id",               :limit => 8
+    t.integer  "itunes_id",           :limit => 8
     t.string   "release_notes"
     t.boolean  "game_center_enabled"
     t.string   "genres"
     t.string   "screenshots"
     t.string   "version"
-    t.string   "hashcode",                             :default => "",    :null => false
-    t.string   "itunes_artwork_icon_url",              :default => "",    :null => false
+    t.string   "hashcode",                         :default => "",    :null => false
   end
 
   add_index "meta_data", ["game_id", "hashcode"], :name => "index_meta_data_on_game_id_and_hashcode", :unique => true

@@ -12,15 +12,17 @@ protected
   def parse_params
     params[:country] ||= "United States"
     params[:date] ||= Date.today
-    params[:genre] ||= "games"
-    params[:genre].gsub!("all", "")
+    
+    @countries = params[:country].split(",").uniq
     
     @imports  = Import.where(["imports.created_at >= ? AND imports.created_at < ?", params[:date].to_date.beginning_of_day, params[:date].to_date.beginning_of_day + 24.hours]).order
-    @charts   = Chart.where(:country => params[:country].split(","), :genre => params[:genre].split(",")).all
 
-    @features = @charts.group_by(&:country).values.map do |charts|
-      ChartSnapshot.select("game_snapshots.*, charts.country as chart_country, meta_data.*, pages.id as page_id, pages.type as page_type, pages.title as page_title, featurings.type as featuring_type, featurings.rank as featuring_rank").where(:chart_id => charts, :import_id => @imports).joins([:chart, {:game_snapshots => [:meta_data, {:featurings => :page}]}])
-    end.flatten
+    @features = FeaturingSnapshot.where(:import_id => @imports, :country => @countries).
+                                  joins("INNER JOIN featurings ON featurings.id = featuring_snapshots.featuring_id").
+                                  joins("INNER JOIN pages ON pages.id = featurings.page_id").
+                                  select("featuring_snapshots.itunes_id as itunes_id, featuring_snapshots.country as chart_country, pages.id as page_id, pages.type as page_type, pages.title as page_title, featurings.type as featuring_type, featurings.rank as featuring_rank")
+  
+    @metas = MetaData.where(:itunes_id => @features.map(&:itunes_id).uniq).group(:itunes_id).index_by(&:itunes_id)
   end
 
 end

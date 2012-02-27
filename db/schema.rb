@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120226163154) do
+ActiveRecord::Schema.define(:version => 20120227175259) do
 
   create_table "chart_snapshots", :force => true do |t|
     t.integer  "import_id",  :limit => 8
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20120226163154) do
   end
 
   add_index "featuring_snapshots", ["featuring_id"], :name => "index_featuring_snapshots_on_featuring_id"
+  add_index "featuring_snapshots", ["import_id", "country", "itunes_id", "featuring_id"], :name => "idx_featuring_snapshots_main", :unique => true
   add_index "featuring_snapshots", ["import_id"], :name => "index_featuring_snapshots_on_import_id"
   add_index "featuring_snapshots", ["itunes_id"], :name => "index_featuring_snapshots_on_itunes_id"
 

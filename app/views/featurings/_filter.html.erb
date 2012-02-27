@@ -1,9 +1,7 @@
 <ul class="nav nav-pills featurings-filter" data-uberform-url="<%= featurings_path(:format => :js) %>">
   <%= text_field_tag :application_name, "", :class => "input-medium search-query", "data-autocomplete-url" => game_autocomplete_path, "data-name" => "game_id", "data-value" => params[:game_id] %>
   
-  <%= bootstrap_dropdown :genre,   filter_categories,    :multiple => true,   :value => @charts.map(&:genre).map { |v| v || "all" }.uniq %>
-
-  <%= bootstrap_dropdown :country, filter_countries,     :multiple => true,   :value => @charts.map(&:country).uniq, :display_value => @charts.map(&:country).uniq.map { |c| country_shortcuts[c] }.join(", ") %>
+  <%= bootstrap_dropdown :country, filter_countries,     :multiple => true,   :value => @countries, :display_value => @countries.map { |c| country_shortcuts[c] }.join(", ") %>
   
   <li class="date-select rightmost" data-name="date" data-value="<%= params[:date].to_date %>">
     <%= text_field_tag :date, params[:date].to_date %>

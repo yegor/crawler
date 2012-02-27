@@ -33,7 +33,7 @@ class Event
         if (last_featuring != current_featuring)
           result[ hour ]  = Event.new.tap do |e|
             e.description = current_featuring.blank? ? "Not featured anymore" : "Featured as #{current_featuring}"
-            e.label = (result.size + "a".ord).chr.upcase
+            e.label = result.size + 1
             
             last_featuring = current_featuring
           end

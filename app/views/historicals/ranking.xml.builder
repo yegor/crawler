@@ -12,6 +12,9 @@ xml.chart :caption => "Rankings over time",
   xml.categories do
     @hours.each do |date|
       xml.category :label => (date.hour == 0 ? date.strftime("%h %d") : date.hour)
+      if @events[ date ]
+        xml.vLine :label => @events[date].label
+      end
     end
   end
    

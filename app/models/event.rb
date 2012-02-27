@@ -2,7 +2,7 @@ class Event
   
   attr_accessor :type
   attr_accessor :description
-  attr_accessor :game
+  attr_accessor :label
   
   class << self
     
@@ -18,22 +18,23 @@ class Event
       result = {}
       
       imports_by_id = imports.index_by(&:id)
-      imports_by_hour = imports.index_by { |i| i.created_at.beginning_of_hour }
+      imports_by_hour = imports.index_by { |i| i.created_at.to_time.beginning_of_hour }
       
       featurings = FeaturingSnapshot.where(:import_id => imports_by_id.keys, :country => countries, :itunes_id => itunes_id).
-                   order("id ASC").
                    joins("INNER JOIN featurings ON featurings.id = featuring_snapshots.featuring_id").
                    joins("INNER JOIN pages ON pages.id = featurings.page_id").
-                   select("featurings.import_id as import_id, featurings.type as featuring_type, pages.type as page_type").group_by(&:import_id)
+                   select("featuring_snapshots.import_id as import_id, featurings.type as featuring_type, pages.title as page_title, pages.type as page_type").group_by(&:import_id)
                    
-      last_featuring = nil
+      last_featuring = ""
       
       hours.each do |hour|
-        current_featuring = featurings[ imports_by_hour[ hour ] ].map { |f| "#{f.featuring_type} on #{f.page_type}" }.join(", ")
+        current_featuring = (featurings[ imports_by_hour[ hour ].try(:id) ] || []).map { |f| "#{f.featuring_type.split(":").last} on #{f.page_title}" }.join(", ")
         
         if (last_featuring != current_featuring)
-          result[ hour ]  = Event.tap do |e|
+          result[ hour ]  = Event.new.tap do |e|
             e.description = current_featuring.blank? ? "Not featured anymore" : "Featured as #{current_featuring}"
+            e.label = (result.size + "a".ord).chr.upcase
+            
             last_featuring = current_featuring
           end
         end

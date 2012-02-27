@@ -57,8 +57,8 @@ module AppStore
             self.fetch_meta_data(entries, country)
             entries = entries.select { |i, e| e.lookup_entry.present? }
             
-            games = Game.bulk_create(entries)
-            MetaData.bulk_create(games, entries)
+            games = Game.bulk_create(entries) rescue []
+            MetaData.bulk_create(games, entries) rescue []
             
             bulk_sql = features.map do |itunes_id, featurings|
               featurings.map do |featuring|

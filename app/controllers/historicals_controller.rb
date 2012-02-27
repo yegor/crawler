@@ -29,7 +29,10 @@ protected
     
     @rankings = Stats.raking_over_time(:games => [@game], :charts => @charts, :timespan => @timespan) rescue {}   
     @dates    = @rankings.values.map { |v| v.values.map(&:keys) }.flatten.uniq.sort.reverse rescue []
-    @events   = Event.collect_events_over(@rankings)
+    @hours    = @timespan.map { |date| (0..23).map { |h| (date.to_time(:utc) + h.hours).beginning_of_hour } }.flatten
+    
+    @imports  = Import.where("date(created_at) >= ? and date(created_at) <= ?", params[:date_since], params[:date_till]).all
+    @events   = Event.collect_events_over(@hours, params[:country], @imports, params[:game_id])
     
     @metas    = MetaData.with_country.includes(:game).where(:itunes_id => params[:game_id]).order("updated_at desc").all
     @meta     = @metas.detect { |m| (params[:country].to_a & m.country_array).present? } || @metas.sort_by(&:updated_at).last

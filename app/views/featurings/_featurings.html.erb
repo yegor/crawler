@@ -23,6 +23,8 @@
                   <%= content_tag :p, :class => featuring_type.split(":").last.downcase do %>
                     <% type_features.index_by(&:itunes_id).values.sort_by(&:featuring_rank).each do |featuring| %>
                     <% meta = @metas[featuring.itunes_id.to_i] %>
+                    
+                    <% next if meta.blank? %>
                   
                     <a href="<%= historicals_path(:game_id => featuring.itunes_id) %>" class="app-pill-<%= featuring.itunes_id %> app-pill">
                       <%= image_tag(featuring_type == "Featuring::Feature::Item" ? meta.itunes_artwork_icon_url : meta.itunes_artwork_url) %>
